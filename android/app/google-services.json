@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1020621847486",
+    "project_id": "coffee-f12cd",
+    "storage_bucket": "coffee-f12cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020621847486:android:57f2f988b804620ad057ef",
+        "android_client_info": {
+          "package_name": "com.example.resume_builder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020621847486-q81iio1dej0mrr5r8r8fe2ubi1nhdsra.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.resume_builder",
+            "certificate_hash": "d7e94e3ff446fb42777006de7929de2d64272cbc"
+          }
+        },
+        {
+          "client_id": "1020621847486-9t3nmhbu28n1ug1t8h2l4034n5vofh25.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkBXTQIh8n7_pTdrssW7EweH9JJ2zu94o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020621847486-4jprr4ao1e5vd2h3pgopaubn934kbr2p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1020621847486-5v9dcvjs0cc1rbrn15o9nrogk1nr4ehs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.resumeBuilder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
