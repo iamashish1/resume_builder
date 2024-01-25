@@ -6,7 +6,7 @@ import 'package:resume_builder/features/authentication/presentation/pages/signin
 import 'package:resume_builder/features/home/downloads_page.dart';
 import 'package:resume_builder/features/home/home_view.dart';
 import 'package:resume_builder/features/home/homepage.dart';
-import 'package:resume_builder/features/home/resume_preview_page.dart';
+import 'package:resume_builder/features/resume/resume_preview_page.dart';
 import 'package:resume_builder/firebase_options.dart';
 
 import 'core/app_exceptions/app_exceptions.dart';

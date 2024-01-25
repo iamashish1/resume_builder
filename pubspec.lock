@@ -451,10 +451,11 @@ packages:
   printing:
     dependency: "direct main"
     description:
-      name: printing
-      sha256: ad39a42a5f83125952457dfd94f395c8cf0eb1f7759583dadb769be5c7f99d24
-      url: "https://pub.dev"
-    source: hosted
+      path: printing
+      ref: HEAD
+      resolved-ref: "366b8e6b52e1a70e4ffcd4066858f2f5c5525004"
+      url: "https://github.com/iamashish1/dart_pdf.git"
+    source: git
     version: "5.11.1"
   qr:
     dependency: transitive

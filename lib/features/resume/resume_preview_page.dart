@@ -16,11 +16,16 @@ class ResumePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Your CV Looks Amazing!'),),
+      appBar: AppBar(
+        title: const Text('Your CV Looks Amazing!'),
+      ),
       body: PdfPreview(
-        
+        actionButtonBarColor: Colors.grey,
         canDebug: false,
-        useActions: false,
+        allowPrinting: false,
+        canChangePageFormat: false,
+        canChangeOrientation: false,
+        // useActions: false,
         maxPageWidth: 700,
         build: (format) async => generateResume(format, 'data'),
         actions: const [
