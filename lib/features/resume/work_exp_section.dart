@@ -9,35 +9,75 @@ class WorkExpSection extends StatefulWidget {
 }
 
 class _WorkExpSectionState extends State<WorkExpSection> {
-  List experiences = [];
+  List<Map<String, TextEditingController>> experiences = [];
+  void addExperience() {
+    setState(() {
+      experiences.add({
+        "company": TextEditingController(),
+        "position": TextEditingController(),
+        "dateRange": TextEditingController(),
+        "responsibilities": TextEditingController()
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        //
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                width: 1,
-              )),
-          child: Column(
-            children: [
-              TextfieldWidget(
-                maxLines: 1,
-                  controller: TextEditingController(), label: 'Company Name'),
-                  SizedBox(height: 10,),
-              TextfieldWidget(
-                  controller: TextEditingController(), label: 'Position'),
-            ],
-          ),
+        ListView.builder(
+          shrinkWrap: true,
+          primary: false,
+          itemCount: experiences.length,
+          itemBuilder: (context, index) {
+            final workExp = experiences[index];
+            return ExpansionTile(
+              initiallyExpanded: true,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Experience ${index + 1}"),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        experiences.removeAt(index);
+                      });
+                    },
+                    icon: Icon(Icons.delete_outline_outlined),
+                  )
+                ],
+              ),
+              children: [
+                TextfieldWidget(
+                  maxLines: 1,
+                  controller: workExp["company"],
+                  label: 'Company Name',
+                ),
+                SizedBox(height: 10),
+                TextfieldWidget(
+                  maxLines: 1,
+                  controller: workExp["position"],
+                  label: 'Position',
+                ),
+                // You can add more fields here
+              ],
+            );
+          },
         ),
-        //
-        OutlinedButton.icon(
-            onPressed: () {},
-            icon: Icon(Icons.add),
-            label: Text('Add experience'))
+        OutlinedButton(
+          onPressed: addExperience,
+          child: Icon(Icons.add),
+        ),
+        OutlinedButton(
+            onPressed: () {
+              print(experiences[0]['company']?.text);
+              experiences.map((e) {
+                print('HEY');
+                print(e['position']?.text.toString());
+                print(e['company']?.text);
+              });
+            },
+            child: Icon(Icons.save))
       ],
     );
   }
