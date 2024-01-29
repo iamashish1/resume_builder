@@ -6,13 +6,19 @@ import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'dart:math';
 
 import 'package:printing/printing.dart';
+import 'package:resume_builder/features/home/template_model/template_model.dart';
 
-class ResumePreview extends StatelessWidget {
+class ResumePreview extends StatefulWidget {
   const ResumePreview({super.key});
 
+  @override
+  State<ResumePreview> createState() => _ResumePreviewState();
+}
+
+class _ResumePreviewState extends State<ResumePreview> {
+  final myResume = sampleData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +32,8 @@ class ResumePreview extends StatelessWidget {
         canChangePageFormat: false,
         canChangeOrientation: false,
         // useActions: false,
-        maxPageWidth: 700,
-        build: (format) async => generateResume(format, 'data'),
+        // maxPageWidth: 700,
+        build: (format) async => generateResume(format, myResume),
         actions: const [
           PdfPreviewAction(
             icon: Icon(Icons.save),
@@ -49,137 +55,141 @@ Future<void> _saveAsFile(
   final appDocDir = await getApplicationDocumentsDirectory();
   final appDocPath = appDocDir.path;
   final file = File('$appDocPath/document.pdf');
-  print('Save as file ${file.path} ...');
   await file.writeAsBytes(bytes);
   await OpenFile.open(file.path);
 }
 
-const PdfColor green = PdfColor.fromInt(0xff9ce5d0);
-const PdfColor lightGreen = PdfColor.fromInt(0xffcdf1e7);
-const sep = 120.0;
-
-Future<Uint8List> generateResume(format, data) async {
-  final doc = pw.Document(title: 'My Résumé', author: 'David PHAM-VAN');
-
-  final profileImage = pw.MemoryImage(
-    (await rootBundle.load('assets/remove.png')).buffer.asUint8List(),
-  );
-
-  final pageTheme = await _myPageTheme(format);
+Future<Uint8List> generateResume(format, Template1Model resume) async {
+  final doc = pw.Document();
 
   doc.addPage(
     pw.MultiPage(
-      pageTheme: pageTheme,
       build: (pw.Context context) => [
-        pw.Partitions(
-          children: [
-            pw.Partition(
-              child: pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
+        pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: <pw.Widget>[
+            pw.Align(
+              child: pw.Text(resume.name ?? '',
+                  textScaleFactor: 2,
+                  textAlign: pw.TextAlign.center,
+                  style: pw.Theme.of(context)
+                      .defaultTextStyle
+                      .copyWith(fontWeight: pw.FontWeight.bold)),
+            ),
+            pw.SizedBox(height: 10),
+            pw.Align(
+              child: pw.Text('Electrotyper',
+                  textScaleFactor: 1.2,
+                  style: pw.Theme.of(context).defaultTextStyle.copyWith(
+                        fontWeight: pw.FontWeight.bold,
+                      )),
+            ),
+            pw.SizedBox(height: 10),
+            pw.Container(
+              // color: PdfColor(1, 0, 0.3),
+              width: double.infinity,
+              child: pw.Wrap(
+                alignment: pw.WrapAlignment.center,
+                runAlignment: pw.WrapAlignment.center,
+                // crossAxisAlignment: pw.CrossAxisAlignment.center,
                 children: <pw.Widget>[
-                  pw.Container(
-                    padding: const pw.EdgeInsets.only(left: 30, bottom: 20),
-                    child: pw.Column(
-                      crossAxisAlignment: pw.CrossAxisAlignment.start,
-                      children: <pw.Widget>[
-                        pw.Text('Parnella Charlesbois',
-                            textScaleFactor: 2,
-                            style: pw.Theme.of(context)
-                                .defaultTextStyle
-                                .copyWith(fontWeight: pw.FontWeight.bold)),
-                        pw.Padding(padding: const pw.EdgeInsets.only(top: 10)),
-                        pw.Text('Electrotyper',
-                            textScaleFactor: 1.2,
-                            style: pw.Theme.of(context)
-                                .defaultTextStyle
-                                .copyWith(
-                                    fontWeight: pw.FontWeight.bold,
-                                    color: green)),
-                        pw.Padding(padding: const pw.EdgeInsets.only(top: 20)),
-                        pw.Row(
-                          crossAxisAlignment: pw.CrossAxisAlignment.start,
-                          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                          children: <pw.Widget>[
-                            pw.Column(
-                              crossAxisAlignment: pw.CrossAxisAlignment.start,
-                              children: <pw.Widget>[
-                                pw.Text('568 Port Washington Road'),
-                                pw.Text('Nordegg, AB T0M 2H0'),
-                                pw.Text('Canada, ON'),
-                              ],
-                            ),
-                            pw.Column(
-                              crossAxisAlignment: pw.CrossAxisAlignment.start,
-                              children: <pw.Widget>[
-                                pw.Text('+1 403-721-6898'),
-                                _UrlText('p.charlesbois@yahoo.com',
-                                    'mailto:p.charlesbois@yahoo.com'),
-                                _UrlText(
-                                    'wholeprices.ca', 'https://wholeprices.ca'),
-                              ],
-                            ),
-                            pw.Padding(padding: pw.EdgeInsets.zero)
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  _Category(title: 'Work Experience'),
-                  _Block(
-                      title: 'Tour bus driver',
-                      icon: const pw.IconData(0xe530)),
-                  _Block(
-                      title: 'Logging equipment operator',
-                      icon: const pw.IconData(0xe30d)),
-                  _Block(title: 'Foot doctor', icon: const pw.IconData(0xe3f3)),
-                  _Block(
-                      title: 'Unicorn trainer',
-                      icon: const pw.IconData(0xf0cf)),
-                  _Block(
-                      title: 'Chief chatter', icon: const pw.IconData(0xe0ca)),
-                  pw.SizedBox(height: 20),
-                  _Category(title: 'Education'),
-                  _Block(title: 'Bachelor Of Commerce'),
-                  _Block(title: 'Bachelor Interior Design'),
+                  pw.Text('${resume.phoneNumber}'),
+                  pw.Text(" / "),
+                  pw.Text('${resume.phoneNumber}'),
+                  if (resume.yourPortfolioSite != "") ...[
+                    pw.Text(" / "),
+                    pw.Text('${resume.yourPortfolioSite}'),
+                  ],
                 ],
               ),
             ),
-            pw.Partition(
-              width: sep,
-              child: pw.Column(
-                children: [
-                  pw.Container(
-                    height: pageTheme.pageFormat.availableHeight,
-                    child: pw.Column(
-                      crossAxisAlignment: pw.CrossAxisAlignment.center,
-                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                      children: <pw.Widget>[
-                        pw.ClipOval(
-                          child: pw.Container(
-                            width: 100,
-                            height: 100,
-                            color: lightGreen,
-                            child: pw.Image(profileImage),
-                          ),
-                        ),
-                        pw.Column(children: <pw.Widget>[
-                          _Percent(size: 60, value: .7, title: pw.Text('Word')),
-                          _Percent(
-                              size: 60, value: .4, title: pw.Text('Excel')),
-                        ]),
-                        pw.BarcodeWidget(
-                          data: 'Parnella Charlesbois',
-                          width: 60,
-                          height: 60,
-                          barcode: pw.Barcode.qrCode(),
-                          drawText: false,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )
+            pw.Divider(
+                height: 20, thickness: 1, color: const PdfColor(0.5, 0.5, 0.5)),
+            pw.Text('PROFILE:',
+                style:
+                    pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
+            pw.SizedBox(height: 4),
+            pw.Text('${resume.profileSummary}'),
+            pw.Divider(
+                height: 35, thickness: 1, color: const PdfColor(0.5, 0.5, 0.5)),
+            if (resume.workExperience?.isNotEmpty ?? false) ...[
+              pw.Text('WORK EXPERIENCE:',
+                  style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold, fontSize: 18)),
+              ...resume.workExperience?.map((e) {
+                    return pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        children: [
+                          pw.SizedBox(height: 4),
+                          pw.Text('${e.designation}'),
+                          pw.SizedBox(height: 4),
+                          pw.Text('${e.companyName}',
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                              )),
+                          pw.SizedBox(height: 4),
+                          pw.Text('${e.dateRange}'),
+                          ...e.jobResponsibilities!.map((item) {
+                            return pw.Padding(
+                              padding:
+                                  const pw.EdgeInsets.symmetric(vertical: 3.0),
+                              child: BulletPoint(item: item),
+                            );
+                          }).toList(),
+                          pw.SizedBox(height: 10)
+                        ]);
+                  }).toList() ??
+                  [pw.SizedBox()]
+            ],
+
+            //START OF EDUCATION SECTION
+            if (resume.education?.isNotEmpty ?? false) ...[
+              pw.Text('EDUCATION:',
+                  style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold, fontSize: 18)),
+              pw.SizedBox(height: 6),
+              ...?resume.education?.map((e) {
+                return pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: [
+                      pw.Text('${e.university}'),
+                      pw.Text('${e.studyDateRange}'),
+                      pw.Text('${e.studyCourse}'),
+                    ]);
+              }).toList()
+            ],
+            //END OF STUDY SECTION
+            pw.SizedBox(height: 30),
+
+            //START OF CERTIFICATION SECTION
+            if (resume.certifications?.isNotEmpty ?? false) ...[
+              pw.Text('CERTIFICATIONS:',
+                  style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold, fontSize: 18)),
+              pw.SizedBox(height: 6),
+              ...?resume.certifications?.map((e) {
+                return BulletPoint(item: e);
+              }).toList()
+            ],
+              pw.SizedBox(height: 30),
+
+            //END OF CERTIFICATION SECTION
+
+            //SKILLS SECTION START 
+
+              if (resume.certifications?.isNotEmpty ?? false) ...[
+                              pw.SizedBox(height: 6),
+
+              pw.Text('SKILLS:',
+                  style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold, fontSize: 18)),
+              pw.SizedBox(height: 6),
+              ...?resume.skills?.map((e) {
+                return BulletPoint(item: e);
+              }).toList()
+            ]
+
+            //SKILLS SECTION END
           ],
         ),
       ],
@@ -188,179 +198,35 @@ Future<Uint8List> generateResume(format, data) async {
   return doc.save();
 }
 
-Future<pw.PageTheme> _myPageTheme(PdfPageFormat format) async {
-  final bgShape = await rootBundle.loadString('assets/resume.svg');
+class BulletPoint extends pw.StatelessWidget {
+  final String item;
 
-  format = format.applyMargin(
-      left: 2.0 * PdfPageFormat.cm,
-      top: 4.0 * PdfPageFormat.cm,
-      right: 2.0 * PdfPageFormat.cm,
-      bottom: 2.0 * PdfPageFormat.cm);
-  return pw.PageTheme(
-    pageFormat: format,
-    buildBackground: (pw.Context context) {
-      return pw.FullPage(
-        ignoreMargins: true,
-        child: pw.Stack(
-          children: [
-            pw.Positioned(
-              child: pw.SvgImage(svg: bgShape),
-              left: 0,
-              top: 0,
-            ),
-            pw.Positioned(
-              child: pw.Transform.rotate(
-                  angle: pi, child: pw.SvgImage(svg: bgShape)),
-              right: 0,
-              bottom: 0,
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
-
-class _Block extends pw.StatelessWidget {
-  _Block({
-    required this.title,
-    this.icon,
-  });
-
-  final String title;
-
-  final pw.IconData? icon;
+  BulletPoint({required this.item});
 
   @override
   pw.Widget build(pw.Context context) {
-    return pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: <pw.Widget>[
-          pw.Row(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: <pw.Widget>[
-                pw.Container(
-                  width: 6,
-                  height: 6,
-                  margin: const pw.EdgeInsets.only(top: 5.5, left: 2, right: 5),
-                  decoration: const pw.BoxDecoration(
-                    color: green,
-                    shape: pw.BoxShape.circle,
-                  ),
-                ),
-                pw.Text(title,
-                    style: pw.Theme.of(context)
-                        .defaultTextStyle
-                        .copyWith(fontWeight: pw.FontWeight.bold)),
-                pw.Spacer(),
-                if (icon != null) pw.Icon(icon!, color: lightGreen, size: 18),
-              ]),
-          pw.Container(
-            decoration: const pw.BoxDecoration(
-                border: pw.Border(left: pw.BorderSide(color: green, width: 2))),
-            padding: const pw.EdgeInsets.only(left: 10, top: 5, bottom: 5),
-            margin: const pw.EdgeInsets.only(left: 5),
-            child: pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                children: <pw.Widget>[
-                  pw.Lorem(length: 20),
-                ]),
+    return pw.Row(
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
+      children: [
+        pw.Padding(
+          padding: pw.EdgeInsets.only(
+              top: 6.0, right: 8.0), // Reduce top padding to 0.0
+          child: pw.Container(
+            height: 8,
+            width: 8,
+            decoration: pw.BoxDecoration(
+              color: PdfColor.fromInt(0x000000),
+              shape: pw.BoxShape.circle,
+            ),
           ),
-        ]);
-  }
-}
-
-class _Category extends pw.StatelessWidget {
-  _Category({required this.title});
-
-  final String title;
-
-  @override
-  pw.Widget build(pw.Context context) {
-    return pw.Container(
-      decoration: const pw.BoxDecoration(
-        color: lightGreen,
-        borderRadius: pw.BorderRadius.all(pw.Radius.circular(6)),
-      ),
-      margin: const pw.EdgeInsets.only(bottom: 10, top: 20),
-      padding: const pw.EdgeInsets.fromLTRB(10, 4, 10, 4),
-      child: pw.Text(
-        title,
-        textScaleFactor: 1.5,
-      ),
-    );
-  }
-}
-
-class _Percent extends pw.StatelessWidget {
-  _Percent({
-    required this.size,
-    required this.value,
-    required this.title,
-  });
-
-  final double size;
-
-  final double value;
-
-  final pw.Widget title;
-
-  static const fontSize = 1.2;
-
-  PdfColor get color => green;
-
-  static const backgroundColor = PdfColors.grey300;
-
-  static const strokeWidth = 5.0;
-
-  @override
-  pw.Widget build(pw.Context context) {
-    final widgets = <pw.Widget>[
-      pw.Container(
-        width: size,
-        height: size,
-        child: pw.Stack(
-          alignment: pw.Alignment.center,
-          fit: pw.StackFit.expand,
-          children: <pw.Widget>[
-            pw.Center(
-              child: pw.Text(
-                '${(value * 100).round().toInt()}%',
-                textScaleFactor: fontSize,
-              ),
-            ),
-            pw.CircularProgressIndicator(
-              value: value,
-              backgroundColor: backgroundColor,
-              color: color,
-              strokeWidth: strokeWidth,
-            ),
-          ],
         ),
-      )
-    ];
-
-    widgets.add(title);
-
-    return pw.Column(children: widgets);
-  }
-}
-
-class _UrlText extends pw.StatelessWidget {
-  _UrlText(this.text, this.url);
-
-  final String text;
-  final String url;
-
-  @override
-  pw.Widget build(pw.Context context) {
-    return pw.UrlLink(
-      destination: url,
-      child: pw.Text(text,
-          style: const pw.TextStyle(
-            decoration: pw.TextDecoration.underline,
-            color: PdfColors.blue,
-          )),
+        pw.Expanded(
+          child: pw.Text(
+            item,
+            style: pw.TextStyle(fontSize: 16.0), // Adjust text style as needed
+          ),
+        ),
+      ],
     );
   }
 }

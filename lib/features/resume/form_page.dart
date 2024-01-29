@@ -27,81 +27,76 @@ class _FormPageState extends State<FormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Enter details')),
-      body: Form(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.all(18),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Profile Section'),
-                    TextFormField(
-                      controller: nameController,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        border: OutlineInputBorder(),
-                        label: Text('Name'),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    TextFormField(
-                      controller: phoneNumber,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        border: OutlineInputBorder(),
-                        label: Text('Phone Number'),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    TextFormField(
-                      controller: email,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        border: OutlineInputBorder(),
-                        label: Text('Email'),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    TextFormField(
-                      controller: yourPortfolioSite,
-                      decoration: InputDecoration(
+      body: SafeArea(
+        child: Form(
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.all(18),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Profile Section'),
+                      TextFormField(
+                        controller: nameController,
+                        decoration: InputDecoration(
                           isDense: true,
                           border: OutlineInputBorder(),
-                          label: Text('Your Portfolio Site'),
-                          hintText: 'yourname.xyz.com',
-                          hintStyle: TextStyle(color: Colors.grey)),
-                    ),
-                    SizedBox(height: 10),
-                    TextfieldWidget(
-                      controller: profileSummary,
-                      maxLines: 3,
-                      hintText:'I am an experienced and highly motivated ...' ,
-                      label: 'Profile summary',
-                    ),
-                   
-                    Text('Work Experience Section'),
-                    WorkExpSection()
-
-                    
-                   
-                  ],
+                          label: Text('Name'),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        controller: phoneNumber,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          border: OutlineInputBorder(),
+                          label: Text('Phone Number'),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        controller: email,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          border: OutlineInputBorder(),
+                          label: Text('Email'),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        controller: yourPortfolioSite,
+                        decoration: InputDecoration(
+                            isDense: true,
+                            border: OutlineInputBorder(),
+                            label: Text('Your Portfolio Site'),
+                            hintText: 'yourname.xyz.com',
+                            hintStyle: TextStyle(color: Colors.grey)),
+                      ),
+                      SizedBox(height: 10),
+                      TextfieldWidget(
+                        controller: profileSummary,
+                        maxLines: 3,
+                        hintText:
+                            'I am an experienced and highly motivated ...',
+                        label: 'Profile summary',
+                      ),
+                      WorkExpSection()
+                    ],
+                  ),
                 ),
               ),
-            ),
-         
-       ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ResumePreview()));
-              },
-              child: const Text('Generate Resume'),
-            )
-          ],
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ResumePreview()));
+                },
+                child: const Text('Generate Resume'),
+              )
+            ],
+          ),
         ),
-             
-             
       ),
     );
   }

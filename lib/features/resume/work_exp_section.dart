@@ -25,6 +25,16 @@ class _WorkExpSectionState extends State<WorkExpSection> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Work Experience'),
+            IconButton(
+              onPressed: addExperience,
+              icon: Icon(Icons.add),
+            ),
+          ],
+        ),
         ListView.builder(
           shrinkWrap: true,
           primary: false,
@@ -32,19 +42,11 @@ class _WorkExpSectionState extends State<WorkExpSection> {
           itemBuilder: (context, index) {
             final workExp = experiences[index];
             return ExpansionTile(
-              initiallyExpanded: true,
+              tilePadding: EdgeInsets.symmetric(horizontal: 0),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Experience ${index + 1}"),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        experiences.removeAt(index);
-                      });
-                    },
-                    icon: Icon(Icons.delete_outline_outlined),
-                  )
                 ],
               ),
               children: [
@@ -59,25 +61,21 @@ class _WorkExpSectionState extends State<WorkExpSection> {
                   controller: workExp["position"],
                   label: 'Position',
                 ),
-                // You can add more fields here
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        experiences.removeAt(index);
+                      });
+                    },
+                    icon: Icon(Icons.delete_outline_outlined),
+                  ),
+                )
               ],
             );
           },
         ),
-        OutlinedButton(
-          onPressed: addExperience,
-          child: Icon(Icons.add),
-        ),
-        OutlinedButton(
-            onPressed: () {
-              print(experiences[0]['company']?.text);
-              experiences.map((e) {
-                print('HEY');
-                print(e['position']?.text.toString());
-                print(e['company']?.text);
-              });
-            },
-            child: Icon(Icons.save))
       ],
     );
   }
