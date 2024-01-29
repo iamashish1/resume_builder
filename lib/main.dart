@@ -2,14 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:resume_builder/core/theme/custom_theme.dart';
 import 'package:resume_builder/features/authentication/presentation/pages/signin_page.dart';
 import 'package:resume_builder/features/home/downloads_page.dart';
 import 'package:resume_builder/features/home/home_view.dart';
 import 'package:resume_builder/features/home/homepage.dart';
 import 'package:resume_builder/features/resume/resume_preview_page.dart';
 import 'package:resume_builder/firebase_options.dart';
-
-import 'core/app_exceptions/app_exceptions.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,11 +26,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: Homepage(),
+      theme: CustomTheme.lightTheme,
+      home: const Homepage(),
     );
   }
 }

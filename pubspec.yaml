@@ -51,6 +51,7 @@ dependencies:
       
 
   firebase_storage: ^11.6.0
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +78,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/static/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -89,3 +91,11 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: assets/static/Montserrat-Regular.ttf
+        - asset: assets/static/Montserrat-Bold.ttf
+          weight: 700
+        - asset: assets/static/Montserrat-Italic.ttf
+          style: italic

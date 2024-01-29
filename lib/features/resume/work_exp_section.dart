@@ -1,4 +1,8 @@
+import 'dart:ffi';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:resume_builder/features/resume/textfield_widget.dart';
 
 class WorkExpSection extends StatefulWidget {
@@ -9,20 +13,25 @@ class WorkExpSection extends StatefulWidget {
 }
 
 class _WorkExpSectionState extends State<WorkExpSection> {
-  List<Map<String, TextEditingController>> experiences = [];
+  List<Map<String, dynamic>> experiences = [];
+  final dateFormat = DateFormat("MMMM d, yyyy");
+
   void addExperience() {
     setState(() {
       experiences.add({
         "company": TextEditingController(),
         "position": TextEditingController(),
-        "dateRange": TextEditingController(),
-        "responsibilities": TextEditingController()
+        "startDate": "",
+        "endDate": "",
+        "isCurrentlyWorking": false,
+        "responsibilities": ""
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final double width = (MediaQuery.maybeOf(context)?.size.width ?? 40) - 40;
     return Column(
       children: [
         Row(
@@ -55,22 +64,140 @@ class _WorkExpSectionState extends State<WorkExpSection> {
                   controller: workExp["company"],
                   label: 'Company Name',
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextfieldWidget(
                   maxLines: 1,
                   controller: workExp["position"],
                   label: 'Position',
                 ),
+             
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () async {
+                        final picked = await showDatePicker(
+                            context: context,
+                            firstDate: DateTime(1980),
+                            lastDate: DateTime.now());
+
+                        if (picked != null) {
+                          setState(() {
+                            workExp["startDate"] = dateFormat.format(picked);
+                          });
+                        }
+                      },
+                      child: Container(
+                        width: width / 2,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'From',
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 10),
+                                  ),
+                                  Text(workExp["startDate"] != ""
+                                      ? workExp["startDate"]
+                                      : 'Start Date'),
+                                ],
+                              ),
+                              IconButton(
+                                  onPressed: null,
+                                  icon: Icon(Icons.expand_more))
+                            ]),
+                      ),
+                    ),
+                    Container(
+                      width: width / 2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          InkWell(
+                            onTap: workExp["isCurrentlyWorking"]
+                                ? null
+                                : () async {
+                                    final picked = await showDatePicker(
+                                        context: context,
+                                        firstDate: DateTime(1980),
+                                        lastDate: DateTime.now());
+
+                                    if (picked != null) {
+                                      setState(() {
+                                        workExp["endDate"] =
+                                            dateFormat.format(picked);
+                                      });
+                                    }
+                                  },
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'From',
+                                        style: TextStyle(
+                                            color: Colors.grey, fontSize: 10),
+                                      ),
+                                      Text(
+                                        workExp["endDate"] != ""
+                                            ? workExp["endDate"]
+                                            : 'End Date:',
+                                        style: TextStyle(
+                                          decoration:
+                                              workExp["isCurrentlyWorking"]
+                                                  ? TextDecoration.lineThrough
+                                                  : null,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  IconButton(
+                                      onPressed: null,
+                                      icon: Icon(Icons.expand_more))
+                                ]),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Flexible(child: Text('Currently working')),
+                              Checkbox(
+                                value: workExp["isCurrentlyWorking"],
+                                onChanged: (value) {
+                                  setState(() {
+                                    workExp["isCurrentlyWorking"] =
+                                        !workExp["isCurrentlyWorking"];
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+
                 Align(
-                  alignment: Alignment.centerRight,
-                  child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        experiences.removeAt(index);
-                      });
-                    },
-                    icon: Icon(Icons.delete_outline_outlined),
-                  ),
+                  alignment: Alignment.center,
+                  child: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          experiences.removeAt(index);
+                        });
+                      },
+                      child: Text(
+                        "Delete Experience",
+                        style: TextStyle(color: Colors.redAccent),
+                      )),
                 )
               ],
             );

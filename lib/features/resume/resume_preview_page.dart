@@ -171,15 +171,14 @@ Future<Uint8List> generateResume(format, Template1Model resume) async {
                 return BulletPoint(item: e);
               }).toList()
             ],
-              pw.SizedBox(height: 30),
+            pw.SizedBox(height: 30),
 
             //END OF CERTIFICATION SECTION
 
-            //SKILLS SECTION START 
+            //SKILLS SECTION START
 
-              if (resume.certifications?.isNotEmpty ?? false) ...[
-                              pw.SizedBox(height: 6),
-
+            if (resume.certifications?.isNotEmpty ?? false) ...[
+              pw.SizedBox(height: 6),
               pw.Text('SKILLS:',
                   style: pw.TextStyle(
                       fontWeight: pw.FontWeight.bold, fontSize: 18)),
