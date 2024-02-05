@@ -11,16 +11,20 @@ import 'package:printing/printing.dart';
 import 'package:resume_builder/features/home/template_model/template_model.dart';
 
 class ResumePreview extends StatefulWidget {
-  const ResumePreview({super.key});
+  final Template1Model resume;
+  const ResumePreview({
+    super.key,
+    required this.resume,
+  });
 
   @override
   State<ResumePreview> createState() => _ResumePreviewState();
 }
 
 class _ResumePreviewState extends State<ResumePreview> {
-  final myResume = sampleData;
   @override
   Widget build(BuildContext context) {
+    final myResume = widget.resume;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your CV Looks Amazing!'),

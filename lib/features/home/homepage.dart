@@ -108,7 +108,13 @@ class _HomepageState extends State<Homepage> {
                 height: 25,
                 fit: BoxFit.contain,
               ),
-              Text('Resume Maker'),
+             
+              Expanded(
+                child: Center(
+                  child: Text('Resume Maker', style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black),),
+                ),
+              ),
             ],
           ),
           centerTitle: true,

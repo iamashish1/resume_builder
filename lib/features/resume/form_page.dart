@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:resume_builder/core/theme/custom_theme.dart';
+import 'package:resume_builder/features/home/template_model/template_model.dart';
 import 'package:resume_builder/features/resume/resume_preview_page.dart';
+import 'package:resume_builder/features/resume/skills_section.dart';
 import 'package:resume_builder/features/resume/textfield_widget.dart';
 import 'package:resume_builder/features/resume/work_exp_section.dart';
 
@@ -22,13 +25,20 @@ class _FormPageState extends State<FormPage> {
   //WORK EXP CONTROLLERS
   final companyController = TextEditingController();
   final positionController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Enter details')),
+      appBar: AppBar(
+          title: Text(
+        'Enter details',
+        style: TextStyle(
+            fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black),
+      )),
       body: SafeArea(
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
               Expanded(
@@ -37,42 +47,37 @@ class _FormPageState extends State<FormPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Profile Section'),
-                      TextFormField(
-                        controller: nameController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          border: OutlineInputBorder(),
-                          label: Text('Name'),
-                        ),
+                      Text(
+                        'Profile Section',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: blueAccent),
                       ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: phoneNumber,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          border: OutlineInputBorder(),
-                          label: Text('Phone Number'),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
+                      SizedBox(height: 5),
+                      TextfieldWidget(
                         controller: email,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          border: OutlineInputBorder(),
-                          label: Text('Email'),
-                        ),
+                        hintText: 'John Doe',
+                        label: 'Name',
                       ),
                       SizedBox(height: 10),
-                      TextFormField(
+                      TextfieldWidget(
+                        controller: email,
+                        hintText: 'xxx-xxx-xxx',
+                        label: 'Phone Number',
+                      ),
+                      SizedBox(height: 10),
+                      TextfieldWidget(
+                        controller: email,
+                        hintText: 'someone@xyz.com',
+                        label: 'Email',
+                      ),
+                      SizedBox(height: 10),
+                      TextfieldWidget(
+                        doNotValidate: true,
                         controller: yourPortfolioSite,
-                        decoration: InputDecoration(
-                            isDense: true,
-                            border: OutlineInputBorder(),
-                            label: Text('Your Portfolio Site'),
-                            hintText: 'yourname.xyz.com',
-                            hintStyle: TextStyle(color: Colors.grey)),
+                        hintText: 'yourname.xyz.com',
+                        label: 'Your Portfolio Site',
                       ),
                       SizedBox(height: 10),
                       TextfieldWidget(
@@ -82,17 +87,34 @@ class _FormPageState extends State<FormPage> {
                             'I am an experienced and highly motivated ...',
                         label: 'Profile summary',
                       ),
-                      WorkExpSection()
+                      WorkExpSection(
+                        sectionHeading: 'Experience',
+                        firstLabel: 'Company Name',
+                        secondLabel: 'Position',
+                      ),
+                      WorkExpSection(
+                        sectionHeading: 'Education',
+                        firstLabel: 'Institution name',
+                        secondLabel: 'Program/Course',
+                      ),
+                      SkillsSection()
                     ],
                   ),
                 ),
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ResumePreview()));
+                  if (_formKey.currentState?.validate() ?? false) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ResumePreview(
+                              resume: Template1Model(),
+                            )));
+                  }
                 },
-                child: const Text('Generate Resume'),
+                child: const Text(
+                  'Generate Resume',
+                  style: TextStyle(color: Colors.white),
+                ),
               )
             ],
           ),

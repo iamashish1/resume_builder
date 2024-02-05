@@ -6,14 +6,16 @@ class TextfieldWidget extends StatelessWidget {
   final String label;
   final String? hintText;
   final FocusNode? focusNode;
+  final bool? doNotValidate;
   final void Function(String)? onChanged;
   const TextfieldWidget({
     Key? key,
-     this.controller,
+    this.controller,
     this.maxLines,
     this.hintText,
     this.focusNode,
     this.onChanged,
+    this.doNotValidate,
     required this.label,
   })  : assert(maxLines == null || maxLines > 0,
             'maxLines must be null or greater than 0'),
@@ -26,6 +28,7 @@ class TextfieldWidget extends StatelessWidget {
       controller: controller,
       maxLines: maxLines ?? 1,
       focusNode: focusNode,
+      validator: doNotValidate == true ? null : _validateNotEmpty,
       decoration: InputDecoration(
           isDense: true,
           border: const OutlineInputBorder(),
@@ -37,4 +40,11 @@ class TextfieldWidget extends StatelessWidget {
           hintStyle: const TextStyle(color: Colors.grey)),
     );
   }
+}
+
+String? _validateNotEmpty(String? value) {
+  if (value?.isEmpty ?? false) {
+    return 'Please enter a value';
+  }
+  return null;
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:resume_builder/core/theme/custom_theme.dart';
 import 'package:resume_builder/features/resume/form_page.dart';
 
 class HomeView extends StatefulWidget {
@@ -51,9 +52,9 @@ class _HomeViewState extends State<HomeView> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            width: selectedImageIndex == index ? 4 : 3,
+                            width: selectedImageIndex == index ? 4 : 1,
                             color: selectedImageIndex == index
-                                ? Theme.of(context).primaryColor
+                                ? Colors.black
                                 : Theme.of(context).dividerColor,
                           ),
                         ),
@@ -76,7 +77,12 @@ class _HomeViewState extends State<HomeView> {
                                                 const FormPage()));
                                   }
                                 : null,
-                            child: const Text('Select Template'),
+                            child: const Text(
+                              'Select Template',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Montserrat'),
+                            ),
                           ),
                         ),
                       ),
