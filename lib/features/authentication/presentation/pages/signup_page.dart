@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:resume_builder/features/authentication/presentation/pages/signin_page.dart';
 import 'package:resume_builder/features/home/homepage.dart';
@@ -42,13 +43,29 @@ class _SignupPageState extends State<SignupPage> {
             ),
             ElevatedButton(
                 onPressed: () async {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Homepage()));
+                   try {
+                    final credential = await FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
+                      email: "iamashishkoirala1@gmail.com",
+                      password: "11111@@@@",
+                    );
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'weak-password') {
+                      print('The password provided is too weak.');
+                    } else if (e.code == 'email-already-in-use') {
+                      print('The account already exists for that email.');
+                    }
+                  } catch (e) {
+                    print(e);
+                  }
+                  // Navigator.pushReplacement(context,
+                  //     MaterialPageRoute(builder: (context) => Homepage()));
                 },
                 child: Text('Sign Up')),
             Text('Already a member?'),
             TextButton(
                 onPressed: () {
+                  
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => SigninPage()));
                 },
@@ -62,6 +79,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 onPressed: () async {
                   // final result = await signInWithGoogle();
+
                 },
                 label: Text('Continue with google'))
           ],

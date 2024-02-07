@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:resume_builder/core/theme/custom_theme.dart';
-import './textfield_widget.dart';
 
 class SkillsSection extends StatefulWidget {
   const SkillsSection({super.key});

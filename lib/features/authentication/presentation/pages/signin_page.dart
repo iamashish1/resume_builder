@@ -13,7 +13,9 @@ class SigninPage extends StatefulWidget {
 }
 
 class _SigninPageState extends State<SigninPage> {
- Future<UserCredential?> signInWithGoogle() async {
+  final email = TextEditingController();
+  final password = TextEditingController();
+  Future<UserCredential?> signInWithGoogle() async {
     try {
       // Trigger the authentication flow
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -48,9 +50,8 @@ class _SigninPageState extends State<SigninPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-              Text(
-                'Welcome back!'),
-                 SizedBox(
+            Text('Welcome back!'),
+            SizedBox(
               height: 20,
             ),
             TextField(
@@ -68,14 +69,37 @@ class _SigninPageState extends State<SigninPage> {
                   border: OutlineInputBorder(),
                   hintText: 'Password'),
             ),
-            ElevatedButton(onPressed: () async {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Homepage()));
+            TextButton(
+                onPressed: () async {
+                  await FirebaseAuth.instance.sendPasswordResetEmail(
+                      email: "iamashishkoirala1@gmail.com");
+                },
+                child: Text("Forgot Password?Send Reset Link ")),
+            ElevatedButton(
+                onPressed: () async {
+                  try {
+                    final credential = await FirebaseAuth.instance
+                        .signInWithEmailAndPassword(
+                            email: "iamashishkoirala1@gmail.com",
+                            password: "11111@@@@");
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'user-not-found') {
+                      print('No user found for that email.');
+                    } else if (e.code == 'wrong-password') {
+                      print('Wrong password provided for that user.');
+                    }
+                  }
 
-            }, child: Text('Sign in')),
+                  // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Homepage()));
+                },
+                child: Text('Sign in')),
             Text('Not a member?'),
-            TextButton(onPressed: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignupPage()));
-            }, child: Text('Sign up')),
+            TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => SignupPage()));
+                },
+                child: Text('Sign up')),
             Text('OR'),
             ElevatedButton.icon(
                 icon: Image.asset(

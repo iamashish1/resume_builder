@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:resume_builder/core/theme/custom_theme.dart';
 import 'package:resume_builder/features/home/home_view.dart';
 
 class Homepage extends StatefulWidget {
@@ -11,21 +12,17 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-
-
-
-
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static const List<Widget> _widgetOptions = <Widget>[
-   HomeView(),
+    HomeView(),
     Text(
       'Likes',
       style: optionStyle,
     ),
     Text(
-      'Search',
+      'Downloads',
       style: optionStyle,
     ),
     Text(
@@ -78,12 +75,12 @@ class _HomepageState extends State<Homepage> {
                   text: 'Likes',
                 ),
                 GButton(
-                  icon: LineIcons.draft2Digital,
-                  text: 'My Designs',
-                ),
-                GButton(
                   icon: LineIcons.download,
                   text: 'Downloads',
+                ),
+                GButton(
+                  icon: LineIcons.optinMonster,
+                  text: 'Profile',
                 ),
               ],
               selectedIndex: _selectedIndex,
@@ -100,44 +97,53 @@ class _HomepageState extends State<Homepage> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       appBar: AppBar(
-          title: Row(
-            children: [
-              Image.asset(
-                'assets/remove.png',
-                width: 25,
-                height: 25,
-                fit: BoxFit.contain,
-              ),
-             
-              Expanded(
-                child: Center(
-                  child: Text('Resume Maker', style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black),),
-                ),
-              ),
-            ],
-          ),
-          centerTitle: true,
-          actions: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    radius: 15,
-                    backgroundImage: NetworkImage(
-                        'https://lh3.googleusercontent.com/a/ACg8ocKYGU6CTxn2ZW5cKYxDx6IhyhtIr_qw8HknjVSiRi5B8W0=s96-c'),
-                  ),
-                  Text(
-                    'Ash Ish',
-                    style: TextStyle(fontSize: 10),
-                  ),
-                ],
-              ),
-            )
-          ]),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'CResume',
+              style: TextStyle(
+                  fontWeight: FontWeight.w900, fontSize: 15, color: green),
+            ),
+            Icon(
+              Icons.forest,
+              color: green,
+            ),
+            // Expanded(
+            //   child: Center(
+            //     child: Text(
+            //       'Homepage',
+            //       style: TextStyle(
+            //           fontSize: 16,
+            //           fontWeight: FontWeight.w800,
+            //           color: Colors.black),
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
+        centerTitle: true,
+        //  actions: [
+        //   Padding(
+        //     padding:
+        //         const EdgeInsets.symmetric(horizontal: 18.0, vertical: 5),
+        //     child: Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         CircleAvatar(
+        //           radius: 15,
+        //           backgroundImage: NetworkImage(
+        //               'https://lh3.googleusercontent.com/a/ACg8ocKYGU6CTxn2ZW5cKYxDx6IhyhtIr_qw8HknjVSiRi5B8W0=s96-c'),
+        //         ),
+        //         Text(
+        //           'Ash Ish',
+        //           style: TextStyle(fontSize: 10),
+        //         ),
+        //       ],
+        //     ),
+        //   )
+        // ]
+      ),
     );
   }
 }

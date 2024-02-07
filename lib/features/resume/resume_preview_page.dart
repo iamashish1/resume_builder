@@ -11,7 +11,7 @@ import 'package:printing/printing.dart';
 import 'package:resume_builder/features/home/template_model/template_model.dart';
 
 class ResumePreview extends StatefulWidget {
-  final Template1Model resume;
+  final ResumeModel resume;
   const ResumePreview({
     super.key,
     required this.resume,
@@ -63,7 +63,7 @@ Future<void> _saveAsFile(
   await OpenFile.open(file.path);
 }
 
-Future<Uint8List> generateResume(format, Template1Model resume) async {
+Future<Uint8List> generateResume(format, ResumeModel resume) async {
   final doc = pw.Document();
 
   doc.addPage(
@@ -132,7 +132,7 @@ Future<Uint8List> generateResume(format, Template1Model resume) async {
                                 fontWeight: pw.FontWeight.bold,
                               )),
                           pw.SizedBox(height: 4),
-                          pw.Text('${e.dateRange}'),
+                          pw.Text('${e.endDate}'),
                           ...e.jobResponsibilities!.map((item) {
                             return pw.Padding(
                               padding:
