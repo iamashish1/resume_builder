@@ -9,7 +9,7 @@ import 'package:resume_builder/features/home/downloads_page.dart';
 import 'package:resume_builder/features/home/home_view.dart';
 import 'package:resume_builder/features/home/homepage.dart';
 import 'package:resume_builder/features/home/template_model/template_model.dart';
-import 'package:resume_builder/features/resume/resume_data_bloc.dart';
+import 'package:resume_builder/features/resume/bloc/resume_data_bloc.dart';
 import 'package:resume_builder/firebase_options.dart';
 
 void main() async {
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       title: '',
       debugShowCheckedModeBanner: false,
       theme: CustomTheme.lightTheme,
-      home: const SigninPage(),
+      home: const Homepage(),
     );
   }
 }

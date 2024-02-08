@@ -157,7 +157,7 @@ Future<Uint8List> generateResume(format, ResumeModel resume) async {
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
                       pw.Text('${e.university}'),
-                      pw.Text('${e.studyDateRange}'),
+                      pw.Text('${e.startDate}'),
                       pw.Text('${e.studyCourse}'),
                     ]);
               }).toList()

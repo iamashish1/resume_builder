@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:resume_builder/core/theme/app_colors.dart';
 import 'package:resume_builder/core/theme/custom_theme.dart';
 import 'package:resume_builder/features/home/home_view.dart';
+
+import '../profile/profile_view.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -25,10 +28,7 @@ class _HomepageState extends State<Homepage> {
       'Downloads',
       style: optionStyle,
     ),
-    Text(
-      'Profile',
-      style: optionStyle,
-    ),
+    ProfileView()
   ];
   @override
   Widget build(BuildContext context) {
@@ -103,11 +103,11 @@ class _HomepageState extends State<Homepage> {
             Text(
               'CResume',
               style: TextStyle(
-                  fontWeight: FontWeight.w900, fontSize: 15, color: green),
+                  fontWeight: FontWeight.w900, fontSize: 15, color: AppColors.primaryGreen),
             ),
             Icon(
               Icons.forest,
-              color: green,
+              color: AppColors.primaryGreen,
             ),
             // Expanded(
             //   child: Center(

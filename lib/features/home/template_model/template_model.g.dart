@@ -120,11 +120,13 @@ extension $WorkExperienceCopyWith on WorkExperience {
 }
 
 abstract class _$EducationCWProxy {
-  Education university(String? university);
+  Education university(String university);
 
-  Education studyDateRange(String? studyDateRange);
+  Education startDate(String startDate);
 
-  Education studyCourse(String? studyCourse);
+  Education endDate(String endDate);
+
+  Education studyCourse(String studyCourse);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `Education(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -134,7 +136,8 @@ abstract class _$EducationCWProxy {
   /// ````
   Education call({
     String? university,
-    String? studyDateRange,
+    String? startDate,
+    String? endDate,
     String? studyCourse,
   });
 }
@@ -146,14 +149,16 @@ class _$EducationCWProxyImpl implements _$EducationCWProxy {
   final Education _value;
 
   @override
-  Education university(String? university) => this(university: university);
+  Education university(String university) => this(university: university);
 
   @override
-  Education studyDateRange(String? studyDateRange) =>
-      this(studyDateRange: studyDateRange);
+  Education startDate(String startDate) => this(startDate: startDate);
 
   @override
-  Education studyCourse(String? studyCourse) => this(studyCourse: studyCourse);
+  Education endDate(String endDate) => this(endDate: endDate);
+
+  @override
+  Education studyCourse(String studyCourse) => this(studyCourse: studyCourse);
 
   @override
 
@@ -165,22 +170,29 @@ class _$EducationCWProxyImpl implements _$EducationCWProxy {
   /// ````
   Education call({
     Object? university = const $CopyWithPlaceholder(),
-    Object? studyDateRange = const $CopyWithPlaceholder(),
+    Object? startDate = const $CopyWithPlaceholder(),
+    Object? endDate = const $CopyWithPlaceholder(),
     Object? studyCourse = const $CopyWithPlaceholder(),
   }) {
     return Education(
-      university: university == const $CopyWithPlaceholder()
-          ? _value.university
+      university:
+          university == const $CopyWithPlaceholder() || university == null
+              ? _value.university
+              // ignore: cast_nullable_to_non_nullable
+              : university as String,
+      startDate: startDate == const $CopyWithPlaceholder() || startDate == null
+          ? _value.startDate
           // ignore: cast_nullable_to_non_nullable
-          : university as String?,
-      studyDateRange: studyDateRange == const $CopyWithPlaceholder()
-          ? _value.studyDateRange
+          : startDate as String,
+      endDate: endDate == const $CopyWithPlaceholder() || endDate == null
+          ? _value.endDate
           // ignore: cast_nullable_to_non_nullable
-          : studyDateRange as String?,
-      studyCourse: studyCourse == const $CopyWithPlaceholder()
-          ? _value.studyCourse
-          // ignore: cast_nullable_to_non_nullable
-          : studyCourse as String?,
+          : endDate as String,
+      studyCourse:
+          studyCourse == const $CopyWithPlaceholder() || studyCourse == null
+              ? _value.studyCourse
+              // ignore: cast_nullable_to_non_nullable
+              : studyCourse as String,
     );
   }
 }

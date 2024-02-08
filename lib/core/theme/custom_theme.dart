@@ -6,7 +6,7 @@ class CustomTheme {
   }
 
   static final ThemeData _lightTheme = ThemeData(
-    fontFamily: "Montserrat",
+    fontFamily: "Manrope",
     primaryColorLight: green,
     scaffoldBackgroundColor: Colors.white,
     primaryColor: green, // Change primary color to green

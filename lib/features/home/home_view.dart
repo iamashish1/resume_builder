@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:resume_builder/core/theme/app_colors.dart';
 import 'package:resume_builder/core/theme/custom_theme.dart';
-import 'package:resume_builder/features/resume/form_page.dart';
+import 'package:resume_builder/features/resume/pages/form_page.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -52,10 +53,10 @@ class _HomeViewState extends State<HomeView> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            width: selectedImageIndex == index ? 4 : 1,
+                            width: selectedImageIndex == index ? 3 : 1,
                             color: selectedImageIndex == index
-                                ? Colors.black
-                                : Theme.of(context).dividerColor,
+                                ? Colors.blueGrey
+                                : Colors.grey,
                           ),
                         ),
                         child: ClipRRect(
@@ -68,7 +69,13 @@ class _HomeViewState extends State<HomeView> {
                         child: AnimatedOpacity(
                           opacity: selectedImageIndex == index ? 1.0 : 0.0,
                           duration: const Duration(milliseconds: 300),
-                          child: ElevatedButton(
+                          child: OutlinedButton(
+                            style: ButtonStyle(
+                              backgroundColor:MaterialStateProperty.all(Colors.blueGrey) ,
+                              side: MaterialStateProperty.all(BorderSide(
+                                  color: Colors
+                                      .grey)), // Set the color of the outline
+                            ),
                             onPressed: (selectedImageIndex == index)
                                 ? () {
                                     Navigator.of(context).push(

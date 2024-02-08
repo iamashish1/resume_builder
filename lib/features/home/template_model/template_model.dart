@@ -10,7 +10,6 @@ class WorkExperience {
   List<String> jobResponsibilities;
   bool isCurrentlyWorking;
 
-
   WorkExperience({
     this.designation = '',
     this.companyName = '',
@@ -23,14 +22,18 @@ class WorkExperience {
 
 @CopyWith()
 class Education {
-  String? university;
-  String? studyDateRange;
-  String? studyCourse;
+  String university;
+  String startDate;
+  String endDate;
+  String studyCourse;
+  bool isCurrentlyStudying;
 
   Education({
-    this.university,
-    this.studyDateRange,
-    this.studyCourse,
+    this.university = "",
+    this.startDate = '',
+    this.endDate = '',
+    this.studyCourse = '',
+    this.isCurrentlyStudying = false,
   });
 }
 
