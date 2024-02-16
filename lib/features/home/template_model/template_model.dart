@@ -16,7 +16,7 @@ class WorkExperience {
     this.startDate = '',
     this.endDate = '',
     this.isCurrentlyWorking = false,
-    this.jobResponsibilities = const [],
+    this.jobResponsibilities = const [""],
   });
 }
 

@@ -56,6 +56,9 @@ dependencies:
   copy_with_extension_gen: ^5.0.4
   copy_with_extension: ^5.0.4
   cloud_firestore: ^4.15.4
+  path: ^1.8.3
+  firebase_app_check: ^0.2.1+13
+  gap: ^3.0.1
 
 dev_dependencies:
   flutter_test:

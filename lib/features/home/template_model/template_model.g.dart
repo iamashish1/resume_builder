@@ -237,7 +237,7 @@ abstract class _$ResumeModelCWProxy {
     String? email,
     String? yourPortfolioSite,
     String? profileSummary,
-    List<WorkExperience>? workExperience,
+    List<WorkExperience?>? workExperience,
     List<Education>? education,
     List<String>? certifications,
     List<String>? skills,

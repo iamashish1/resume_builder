@@ -77,6 +77,8 @@ class _SkillsSectionState extends State<SkillsSection> {
             ]);
           },
         ),
+    
+    
       ],
     );
   }

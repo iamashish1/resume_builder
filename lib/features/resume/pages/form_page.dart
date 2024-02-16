@@ -9,7 +9,6 @@ import 'package:resume_builder/features/resume/bloc/resume_data_bloc.dart';
 import 'package:resume_builder/features/resume/pages/resume_preview_page.dart';
 import 'package:resume_builder/features/resume/widgets/education_section.dart';
 import 'package:resume_builder/features/resume/widgets/skills_section.dart';
-import 'package:resume_builder/features/resume/textfield_widget.dart';
 import 'package:resume_builder/features/resume/widgets/work_experience_widget.dart';
 
 class FormPage extends StatefulWidget {
@@ -57,14 +56,14 @@ class _FormPageState extends State<FormPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                         Text(
+                        Text(
                           'Profile Section'.toUpperCase(),
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                     const    SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         // TextfieldWidget(
                         //   controller: nameController,
                         //   hintText: 'John Doe',

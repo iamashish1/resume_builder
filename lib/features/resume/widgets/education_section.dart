@@ -5,7 +5,6 @@ import 'package:resume_builder/core/theme/app_colors.dart';
 import 'package:resume_builder/core/widgets/primary_textfield.dart';
 import 'package:resume_builder/features/home/template_model/template_model.dart';
 import 'package:resume_builder/features/resume/bloc/resume_data_bloc.dart';
-import 'package:resume_builder/features/resume/textfield_widget.dart';
 
 import '../../../core/theme/custom_theme.dart';
 

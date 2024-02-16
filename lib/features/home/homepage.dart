@@ -3,6 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:resume_builder/core/theme/app_colors.dart';
 import 'package:resume_builder/core/theme/custom_theme.dart';
+import 'package:resume_builder/features/home/downloads_page.dart';
 import 'package:resume_builder/features/home/home_view.dart';
 
 import '../profile/profile_view.dart';
@@ -18,16 +19,15 @@ class _HomepageState extends State<Homepage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
-  static const List<Widget> _widgetOptions = <Widget>[
+  static  List<Widget> _widgetOptions = <Widget>[
     HomeView(),
-    Text(
-      'Likes',
-      style: optionStyle,
-    ),
-    Text(
-      'Downloads',
-      style: optionStyle,
-    ),
+    // Text(
+    //   'Drafts',
+    //   style: optionStyle,
+    // ),
+   DownloadedPDFsPage(
+
+   ),
     ProfileView()
   ];
   @override
@@ -70,10 +70,10 @@ class _HomepageState extends State<Homepage> {
                   icon: LineIcons.home,
                   text: 'Home',
                 ),
-                GButton(
-                  icon: LineIcons.heart,
-                  text: 'Likes',
-                ),
+                // GButton(
+                //   icon: LineIcons.draft2Digital,
+                //   text: 'Draft',
+                // ),
                 GButton(
                   icon: LineIcons.download,
                   text: 'Downloads',

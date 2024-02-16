@@ -10,6 +10,8 @@ class PrimaryTextfield extends StatelessWidget {
   final bool? isObscure;
   final int? maxLines;
   final String? label;
+  final void Function(String)? onSubmit;
+  final Function(String)? onChanged;
 
   const PrimaryTextfield(
       {Key? key,
@@ -20,7 +22,9 @@ class PrimaryTextfield extends StatelessWidget {
       this.nextFocus,
       this.maxLines,
       this.label,
-      this.focusNode})
+      this.onChanged,
+      this.focusNode,
+      this.onSubmit})
       : super(key: key);
 
   @override
@@ -35,7 +39,7 @@ class PrimaryTextfield extends StatelessWidget {
             child: Text(
               "$label",
               style: TextStyle(
-                  color: Color.fromARGB(255, 13, 5, 47).withOpacity(1),
+                  color: const Color.fromARGB(255, 13, 5, 47).withOpacity(1),
                   fontWeight: FontWeight.w600),
             ),
           ),
@@ -43,16 +47,18 @@ class PrimaryTextfield extends StatelessWidget {
             focusNode: focusNode,
             controller: controller,
             obscureText: isObscure ?? false,
-            onFieldSubmitted: (value) {
+            onChanged: onChanged,
+            onFieldSubmitted: (v) {
               nextFocus?.requestFocus();
+              onSubmit != null ? onSubmit!(v) : ();
             },
             validator: (value) {
               if (value?.isEmpty ?? false) {
-                return 'Please enter a value';
+                return 'The field needs some value';
               }
               return null;
             },
-            maxLines: maxLines??1,
+            maxLines: maxLines ?? 1,
             decoration: InputDecoration(
                 filled: true,
                 fillColor: const Color(0xffF6F6F6),

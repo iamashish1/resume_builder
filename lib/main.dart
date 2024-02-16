@@ -16,12 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(BlocProvider<ResumeDataBloc>(
-    child: const MyApp(),
-    create: (BuildContext context) {
-      return ResumeDataBloc();
-    },
-  ));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
