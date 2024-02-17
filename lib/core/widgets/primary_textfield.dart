@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:resume_builder/core/theme/app_colors.dart';
 
 class PrimaryTextfield extends StatelessWidget {
   final String hintText;

@@ -20,7 +20,6 @@ class WorkExperienceWidget extends StatefulWidget {
 }
 
 class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
-  final dateFormat = DateFormat("MMMM d, yyyy");
   List<WorkExperience> exp = [];
 
   @override
@@ -44,7 +43,7 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  exp.add(WorkExperience());
+                  exp.add(WorkExperience(jobResponsibilities: ['']));
                 });
               },
               icon: Icon(
@@ -54,6 +53,7 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
             ),
           ],
         ),
+       
         ListView.separated(
           shrinkWrap: true,
           primary: false,
@@ -80,7 +80,7 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                       hintText: "Company Name",
                       label: "Company Name",
                       onSubmit: (value) {
-                        workExp.designation = value;
+                        workExp.companyName = value;
                       },
                     ),
                     PrimaryTextfield(
@@ -251,7 +251,12 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                                 children: [
                                   IconButton(
                                     tooltip: 'Delete current responsibility',
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      setState(() {
+                                        workExp.jobResponsibilities
+                                            .removeAt(resIndex);
+                                      });
+                                    },
                                     icon: Icon(
                                       Icons.delete,
                                     ),
@@ -266,6 +271,9 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                                     IconButton(
                                       tooltip: 'Add Responsibility',
                                       onPressed: () {
+                                        setState(() {
+                                          workExp.jobResponsibilities.add("");
+                                        });
                                         // resBloc.addJobResponsibility(index);
                                       },
                                       icon: Icon(
@@ -308,6 +316,7 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                 ),
               ],
             );
+          
           },
         ),
       ],

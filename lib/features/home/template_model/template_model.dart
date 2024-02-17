@@ -1,15 +1,11 @@
-import 'package:copy_with_extension/copy_with_extension.dart';
-part 'template_model.g.dart';
-
-@CopyWith()
 class Profile {
-  String? name;
-  String? position;
-  String? phoneNumber;
-  String? email;
-  String? yourPortfolioSite;
+  String name;
+  String position;
+  String phoneNumber;
+  String email;
+  String yourPortfolioSite;
 
-  String? profileSummary;
+  String profileSummary;
   Profile(
       {this.email = "",
       this.name = "",
@@ -19,7 +15,6 @@ class Profile {
       this.yourPortfolioSite = ""});
 }
 
-@CopyWith()
 class WorkExperience {
   String designation;
   String companyName;
@@ -34,11 +29,10 @@ class WorkExperience {
     this.startDate = '',
     this.endDate = '',
     this.isCurrentlyWorking = false,
-    this.jobResponsibilities = const [""],
+    required this.jobResponsibilities,
   });
 }
 
-@CopyWith()
 class Education {
   String university;
   String startDate;
@@ -55,18 +49,17 @@ class Education {
   });
 }
 
-@CopyWith()
 class ResumeModel {
-  Profile? profile;
-  List<WorkExperience>? workExperience;
-  List<Education>? education;
-  List<String>? certifications;
-  List<String>? skills;
+  Profile profile;
+  List<WorkExperience> workExperience;
+  List<Education> education;
+  List<String> certifications;
+  List<String> skills;
 
   ResumeModel(
-      {this.profile,
-      this.workExperience,
-      this.education,
-      this.certifications,
-      this.skills});
+      {required this.profile,
+      required this.workExperience,
+      required this.education,
+      required this.certifications,
+      required this.skills});
 }

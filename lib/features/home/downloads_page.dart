@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:printing/printing.dart';
 import 'package:path/path.dart' as path;
 
 class DownloadedPDFsPage extends StatefulWidget {
+  const DownloadedPDFsPage({super.key});
+
   @override
   _DownloadedPDFsPageState createState() => _DownloadedPDFsPageState();
 }
@@ -58,7 +59,7 @@ class _DownloadedPDFsPageState extends State<DownloadedPDFsPage> {
               );
             },
           )
-        : Center(
+        : const Center(
             child: Text('No PDFs downloaded yet.'),
           );
   }
