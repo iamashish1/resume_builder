@@ -73,7 +73,7 @@ Future<Uint8List> generateResume(format, ResumeModel resume) async {
           crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: <pw.Widget>[
             pw.Align(
-              child: pw.Text(resume.name ?? '',
+              child: pw.Text(resume.profile?.name ?? '',
                   textScaleFactor: 2,
                   textAlign: pw.TextAlign.center,
                   style: pw.Theme.of(context)
@@ -97,12 +97,12 @@ Future<Uint8List> generateResume(format, ResumeModel resume) async {
                 runAlignment: pw.WrapAlignment.center,
                 // crossAxisAlignment: pw.CrossAxisAlignment.center,
                 children: <pw.Widget>[
-                  pw.Text('${resume.phoneNumber}'),
+                  pw.Text('${resume.profile?.phoneNumber}'),
                   pw.Text(" / "),
-                  pw.Text('${resume.phoneNumber}'),
-                  if (resume.yourPortfolioSite != "") ...[
+                  pw.Text('${resume.profile?.phoneNumber}'),
+                  if (resume.profile?.yourPortfolioSite != "") ...[
                     pw.Text(" / "),
-                    pw.Text('${resume.yourPortfolioSite}'),
+                    pw.Text('${resume.profile?.yourPortfolioSite}'),
                   ],
                 ],
               ),
@@ -113,7 +113,7 @@ Future<Uint8List> generateResume(format, ResumeModel resume) async {
                 style:
                     pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
             pw.SizedBox(height: 4),
-            pw.Text('${resume.profileSummary}'),
+            pw.Text('${resume.profile?.profileSummary}'),
             pw.Divider(
                 height: 35, thickness: 1, color: const PdfColor(0.5, 0.5, 0.5)),
             if (resume.workExperience?.isNotEmpty ?? false) ...[
@@ -133,7 +133,7 @@ Future<Uint8List> generateResume(format, ResumeModel resume) async {
                               )),
                           pw.SizedBox(height: 4),
                           pw.Text('${e.endDate}'),
-                          ...e.jobResponsibilities!.map((item) {
+                          ...e.jobResponsibilities.map((item) {
                             return pw.Padding(
                               padding:
                                   const pw.EdgeInsets.symmetric(vertical: 3.0),

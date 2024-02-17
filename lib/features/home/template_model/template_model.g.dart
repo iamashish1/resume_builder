@@ -6,6 +6,112 @@ part of 'template_model.dart';
 // CopyWithGenerator
 // **************************************************************************
 
+abstract class _$ProfileCWProxy {
+  Profile email(String? email);
+
+  Profile name(String? name);
+
+  Profile phoneNumber(String? phoneNumber);
+
+  Profile position(String? position);
+
+  Profile profileSummary(String? profileSummary);
+
+  Profile yourPortfolioSite(String? yourPortfolioSite);
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `Profile(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// Profile(...).copyWith(id: 12, name: "My name")
+  /// ````
+  Profile call({
+    String? email,
+    String? name,
+    String? phoneNumber,
+    String? position,
+    String? profileSummary,
+    String? yourPortfolioSite,
+  });
+}
+
+/// Proxy class for `copyWith` functionality. This is a callable class and can be used as follows: `instanceOfProfile.copyWith(...)`. Additionally contains functions for specific fields e.g. `instanceOfProfile.copyWith.fieldName(...)`
+class _$ProfileCWProxyImpl implements _$ProfileCWProxy {
+  const _$ProfileCWProxyImpl(this._value);
+
+  final Profile _value;
+
+  @override
+  Profile email(String? email) => this(email: email);
+
+  @override
+  Profile name(String? name) => this(name: name);
+
+  @override
+  Profile phoneNumber(String? phoneNumber) => this(phoneNumber: phoneNumber);
+
+  @override
+  Profile position(String? position) => this(position: position);
+
+  @override
+  Profile profileSummary(String? profileSummary) =>
+      this(profileSummary: profileSummary);
+
+  @override
+  Profile yourPortfolioSite(String? yourPortfolioSite) =>
+      this(yourPortfolioSite: yourPortfolioSite);
+
+  @override
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `Profile(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// Profile(...).copyWith(id: 12, name: "My name")
+  /// ````
+  Profile call({
+    Object? email = const $CopyWithPlaceholder(),
+    Object? name = const $CopyWithPlaceholder(),
+    Object? phoneNumber = const $CopyWithPlaceholder(),
+    Object? position = const $CopyWithPlaceholder(),
+    Object? profileSummary = const $CopyWithPlaceholder(),
+    Object? yourPortfolioSite = const $CopyWithPlaceholder(),
+  }) {
+    return Profile(
+      email: email == const $CopyWithPlaceholder()
+          ? _value.email
+          // ignore: cast_nullable_to_non_nullable
+          : email as String?,
+      name: name == const $CopyWithPlaceholder()
+          ? _value.name
+          // ignore: cast_nullable_to_non_nullable
+          : name as String?,
+      phoneNumber: phoneNumber == const $CopyWithPlaceholder()
+          ? _value.phoneNumber
+          // ignore: cast_nullable_to_non_nullable
+          : phoneNumber as String?,
+      position: position == const $CopyWithPlaceholder()
+          ? _value.position
+          // ignore: cast_nullable_to_non_nullable
+          : position as String?,
+      profileSummary: profileSummary == const $CopyWithPlaceholder()
+          ? _value.profileSummary
+          // ignore: cast_nullable_to_non_nullable
+          : profileSummary as String?,
+      yourPortfolioSite: yourPortfolioSite == const $CopyWithPlaceholder()
+          ? _value.yourPortfolioSite
+          // ignore: cast_nullable_to_non_nullable
+          : yourPortfolioSite as String?,
+    );
+  }
+}
+
+extension $ProfileCopyWith on Profile {
+  /// Returns a callable class that can be used as follows: `instanceOfProfile.copyWith(...)` or like so:`instanceOfProfile.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
+  _$ProfileCWProxy get copyWith => _$ProfileCWProxyImpl(this);
+}
+
 abstract class _$WorkExperienceCWProxy {
   WorkExperience designation(String designation);
 
@@ -128,6 +234,8 @@ abstract class _$EducationCWProxy {
 
   Education studyCourse(String studyCourse);
 
+  Education isCurrentlyStudying(bool isCurrentlyStudying);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `Education(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -139,6 +247,7 @@ abstract class _$EducationCWProxy {
     String? startDate,
     String? endDate,
     String? studyCourse,
+    bool? isCurrentlyStudying,
   });
 }
 
@@ -161,6 +270,10 @@ class _$EducationCWProxyImpl implements _$EducationCWProxy {
   Education studyCourse(String studyCourse) => this(studyCourse: studyCourse);
 
   @override
+  Education isCurrentlyStudying(bool isCurrentlyStudying) =>
+      this(isCurrentlyStudying: isCurrentlyStudying);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `Education(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -173,6 +286,7 @@ class _$EducationCWProxyImpl implements _$EducationCWProxy {
     Object? startDate = const $CopyWithPlaceholder(),
     Object? endDate = const $CopyWithPlaceholder(),
     Object? studyCourse = const $CopyWithPlaceholder(),
+    Object? isCurrentlyStudying = const $CopyWithPlaceholder(),
   }) {
     return Education(
       university:
@@ -193,6 +307,12 @@ class _$EducationCWProxyImpl implements _$EducationCWProxy {
               ? _value.studyCourse
               // ignore: cast_nullable_to_non_nullable
               : studyCourse as String,
+      isCurrentlyStudying:
+          isCurrentlyStudying == const $CopyWithPlaceholder() ||
+                  isCurrentlyStudying == null
+              ? _value.isCurrentlyStudying
+              // ignore: cast_nullable_to_non_nullable
+              : isCurrentlyStudying as bool,
     );
   }
 }
@@ -204,17 +324,7 @@ extension $EducationCopyWith on Education {
 }
 
 abstract class _$ResumeModelCWProxy {
-  ResumeModel name(String? name);
-
-  ResumeModel position(String? position);
-
-  ResumeModel phoneNumber(String? phoneNumber);
-
-  ResumeModel email(String? email);
-
-  ResumeModel yourPortfolioSite(String? yourPortfolioSite);
-
-  ResumeModel profileSummary(String? profileSummary);
+  ResumeModel profile(Profile? profile);
 
   ResumeModel workExperience(List<WorkExperience>? workExperience);
 
@@ -231,13 +341,8 @@ abstract class _$ResumeModelCWProxy {
   /// ResumeModel(...).copyWith(id: 12, name: "My name")
   /// ````
   ResumeModel call({
-    String? name,
-    String? position,
-    String? phoneNumber,
-    String? email,
-    String? yourPortfolioSite,
-    String? profileSummary,
-    List<WorkExperience?>? workExperience,
+    Profile? profile,
+    List<WorkExperience>? workExperience,
     List<Education>? education,
     List<String>? certifications,
     List<String>? skills,
@@ -251,25 +356,7 @@ class _$ResumeModelCWProxyImpl implements _$ResumeModelCWProxy {
   final ResumeModel _value;
 
   @override
-  ResumeModel name(String? name) => this(name: name);
-
-  @override
-  ResumeModel position(String? position) => this(position: position);
-
-  @override
-  ResumeModel phoneNumber(String? phoneNumber) =>
-      this(phoneNumber: phoneNumber);
-
-  @override
-  ResumeModel email(String? email) => this(email: email);
-
-  @override
-  ResumeModel yourPortfolioSite(String? yourPortfolioSite) =>
-      this(yourPortfolioSite: yourPortfolioSite);
-
-  @override
-  ResumeModel profileSummary(String? profileSummary) =>
-      this(profileSummary: profileSummary);
+  ResumeModel profile(Profile? profile) => this(profile: profile);
 
   @override
   ResumeModel workExperience(List<WorkExperience>? workExperience) =>
@@ -295,42 +382,17 @@ class _$ResumeModelCWProxyImpl implements _$ResumeModelCWProxy {
   /// ResumeModel(...).copyWith(id: 12, name: "My name")
   /// ````
   ResumeModel call({
-    Object? name = const $CopyWithPlaceholder(),
-    Object? position = const $CopyWithPlaceholder(),
-    Object? phoneNumber = const $CopyWithPlaceholder(),
-    Object? email = const $CopyWithPlaceholder(),
-    Object? yourPortfolioSite = const $CopyWithPlaceholder(),
-    Object? profileSummary = const $CopyWithPlaceholder(),
+    Object? profile = const $CopyWithPlaceholder(),
     Object? workExperience = const $CopyWithPlaceholder(),
     Object? education = const $CopyWithPlaceholder(),
     Object? certifications = const $CopyWithPlaceholder(),
     Object? skills = const $CopyWithPlaceholder(),
   }) {
     return ResumeModel(
-      name: name == const $CopyWithPlaceholder()
-          ? _value.name
+      profile: profile == const $CopyWithPlaceholder()
+          ? _value.profile
           // ignore: cast_nullable_to_non_nullable
-          : name as String?,
-      position: position == const $CopyWithPlaceholder()
-          ? _value.position
-          // ignore: cast_nullable_to_non_nullable
-          : position as String?,
-      phoneNumber: phoneNumber == const $CopyWithPlaceholder()
-          ? _value.phoneNumber
-          // ignore: cast_nullable_to_non_nullable
-          : phoneNumber as String?,
-      email: email == const $CopyWithPlaceholder()
-          ? _value.email
-          // ignore: cast_nullable_to_non_nullable
-          : email as String?,
-      yourPortfolioSite: yourPortfolioSite == const $CopyWithPlaceholder()
-          ? _value.yourPortfolioSite
-          // ignore: cast_nullable_to_non_nullable
-          : yourPortfolioSite as String?,
-      profileSummary: profileSummary == const $CopyWithPlaceholder()
-          ? _value.profileSummary
-          // ignore: cast_nullable_to_non_nullable
-          : profileSummary as String?,
+          : profile as Profile?,
       workExperience: workExperience == const $CopyWithPlaceholder()
           ? _value.workExperience
           // ignore: cast_nullable_to_non_nullable

@@ -17,7 +17,6 @@ class PrimaryButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         onTap: onPressed,
         child: Container(
-          constraints: const BoxConstraints(maxWidth: 400),
           width: width,
           color: Colors.transparent,
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
