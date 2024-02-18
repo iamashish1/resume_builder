@@ -3,10 +3,13 @@ import 'package:gap/gap.dart';
 import 'package:resume_builder/core/theme/app_colors.dart';
 import 'package:resume_builder/core/widgets/primary_button.dart';
 import 'package:resume_builder/features/home/template_model/template_model.dart';
+import 'package:resume_builder/features/resume/pages/resume_preview_page.dart';
+import 'package:resume_builder/features/resume/widgets/education_section.dart';
 import 'package:resume_builder/features/resume/widgets/experience_widget.dart';
 import 'package:resume_builder/features/resume/widgets/profile_widget.dart';
 import 'package:resume_builder/features/resume/widgets/skills_section.dart';
 
+import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/custom_theme.dart';
 
 class FormPage extends StatefulWidget {
@@ -46,22 +49,27 @@ class _FormPageState extends State<FormPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ProfileWidget(
+                        onChangedTitle: (value) {
+                          resume.profile.title = value.trim();
+                        },
                         onChangedEmail: (value) {
-                          resume.profile.email = value;
+                          resume.profile.email = value.trim();
                         },
                         onChangedName: (value) {
-                          resume.profile.name = value;
+                          resume.profile.name = value.trim();
                         },
                         onChangedPhone: (value) {
-                          resume.profile.phoneNumber = value;
+                          resume.profile.phoneNumber = value.trim();
                         },
                         onChangedPortfolio: (value) {
-                          resume.profile.yourPortfolioSite = value;
+                          resume.profile.yourPortfolioSite = value.trim();
                         },
                         onChangedSummary: (value) {
-                          resume.profile.profileSummary = value;
+                          resume.profile.profileSummary = value.trim();
                         },
                       ),
+
+                      //START OF WORK EXPERIENCE
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -86,6 +94,7 @@ class _FormPageState extends State<FormPage> {
                           ),
                         ],
                       ),
+
                       ListView.separated(
                         shrinkWrap: true,
                         primary: false,
@@ -93,6 +102,51 @@ class _FormPageState extends State<FormPage> {
                         separatorBuilder: (_, __) => const Gap(20),
                         itemBuilder: (context, index) {
                           return ExperienceWidget(
+                            onCurrentlyWorking: (value) {
+                              setState(() {
+                                resume.workExperience[index]
+                                        .isCurrentlyWorking =
+                                    !(resume.workExperience[index]
+                                        .isCurrentlyWorking);
+                                if (resume.workExperience[index]
+                                        .isCurrentlyWorking ==
+                                    true) {
+                                  resume.workExperience[index].endDate =
+                                      "Present";
+                                } else {
+                                  resume.workExperience[index].endDate = "";
+                                }
+                              });
+                            },
+                            onFromDate: () async {
+                              final picked = await showDatePicker(
+                                  context: context,
+                                  firstDate: DateTime(1980),
+                                  lastDate: DateTime.now());
+
+                              if (picked != null) {
+                                setState(() {
+                                  resume.workExperience[index].startDate =
+                                      dateFormat.format(picked);
+                                });
+                              }
+                            },
+                            onToDate: resume.workExperience[index]
+                                        .isCurrentlyWorking ==
+                                    true
+                                ? null
+                                : () async {
+                                    final picked = await showDatePicker(
+                                        context: context,
+                                        firstDate: DateTime(1980),
+                                        lastDate: DateTime.now());
+                                    if (picked != null) {
+                                      setState(() {
+                                        resume.workExperience[index].endDate =
+                                            dateFormat.format(picked);
+                                      });
+                                    }
+                                  },
                             onNameChanged: (value) {
                               resume.workExperience[index].companyName = value;
                             },
@@ -104,10 +158,15 @@ class _FormPageState extends State<FormPage> {
                                   .jobResponsibilities[resIndex] = value;
                             },
                             onDeleteResponsibility: (reIndex) {
-                              setState(() {
-                                resume.workExperience[index].jobResponsibilities
-                                    .removeAt(reIndex);
-                              });
+                              if (resume.workExperience[index]
+                                      .jobResponsibilities.length !=
+                                  1) {
+                                setState(() {
+                                  resume
+                                      .workExperience[index].jobResponsibilities
+                                      .removeAt(reIndex);
+                                });
+                              }
                             },
                             onAddResponsibility: () {
                               setState(() {
@@ -125,21 +184,159 @@ class _FormPageState extends State<FormPage> {
                           );
                         },
                       ),
-                      const SkillsSection(),
+
+                      //END OF WORK EXPERIENCE
+
+                      //START OF EDUCATION
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Education section'.toUpperCase(),
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: blueAccent),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                resume.education.add(Education());
+                              });
+                            },
+                            icon: Icon(
+                              Icons.add_circle,
+                              color: AppColors.primaryGreen,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      ListView.separated(
+                        shrinkWrap: true,
+                        primary: false,
+                        itemCount: resume.education.length,
+                        separatorBuilder: (_, __) => const Gap(20),
+                        itemBuilder: (context, index) {
+                          return EducationWidget(
+                            isCurrentlyStudying: (value) {
+                              setState(() {
+                                resume.education[index].isCurrentlyStudying =
+                                    !(resume
+                                        .education[index].isCurrentlyStudying);
+                                if (resume
+                                        .education[index].isCurrentlyStudying ==
+                                    true) {
+                                  resume.education[index].endDate = "Present";
+                                } else {
+                                  resume.education[index].endDate = "";
+                                }
+                              });
+                            },
+                            onFromDate: () async {
+                              final picked = await showDatePicker(
+                                  context: context,
+                                  firstDate: DateTime(1980),
+                                  lastDate: DateTime.now());
+
+                              if (picked != null) {
+                                setState(() {
+                                  resume.education[index].startDate =
+                                      dateFormat.format(picked);
+                                });
+                              }
+                            },
+                            onToDate:
+                                resume.education[index].isCurrentlyStudying ==
+                                        true
+                                    ? null
+                                    : () async {
+                                        final picked = await showDatePicker(
+                                            context: context,
+                                            firstDate: DateTime(1980),
+                                            lastDate: DateTime.now());
+                                        if (picked != null) {
+                                          setState(() {
+                                            resume.education[index].endDate =
+                                                dateFormat.format(picked);
+                                          });
+                                        }
+                                      },
+                            onCourseChanged: (value) {
+                              resume.education[index].studyCourse = value;
+                            },
+                            onInstitutionChanged: (value) {
+                              resume.education[index].university = value;
+                            },
+                            onDeletePressed: () {
+                              setState(() {
+                                resume.education.removeAt(index);
+                              });
+                            },
+                            index: index,
+                            education: resume.education[index],
+                          );
+                        },
+                      ),
+
+                      //END OF EDUCATION SECTION
+
+                      //SKILLS SECTION
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Skills Section'.toUpperCase(),
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: blueAccent),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                resume.skills.add("");
+                              });
+                            },
+                            icon: Icon(
+                              Icons.add_circle,
+                              color: AppColors.primaryGreen,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      ListView.builder(
+                        shrinkWrap: true,
+                        primary: false,
+                        itemCount: resume.skills.length,
+                        itemBuilder: (context, index) {
+                          return SkillsSection(
+                            index: index,
+                            onSkillDeleted: (i) {
+                              setState(() {
+                                resume.skills.removeAt(i);
+                              });
+                            },
+                            onChnaged: (value, i) {
+                              resume.skills[i] = value;
+                            },
+                            skill: resume.skills[index],
+                          );
+                        },
+                      ),
+
+                      //END OF SKILLS SECTION
+
                       const Gap(20),
                       PrimaryButton(
                           label: "Generate Resume",
                           onPressed: () {
-                            print(resume.profile?.name);
-                            print(resume.profile?.phoneNumber);
-                            print(resume.profile?.profileSummary);
-
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //     builder: (context) => ResumePreview(
-                            //           resume: ResumeModel(
-                            //               workExperience: experiences,
-                            //               profile: profile),
-                            //         )));
+                            if (_formKey.currentState?.validate() ?? false) {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      ResumePreview(resume: resume)));
+                            }
                           }),
                     ],
                   ),

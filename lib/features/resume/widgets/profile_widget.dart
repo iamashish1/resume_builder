@@ -8,21 +8,23 @@ class ProfileWidget extends StatefulWidget {
   final Function(String)? onChangedPhone;
   final Function(String)? onChangedPortfolio;
   final Function(String)? onChangedSummary;
-
-  const ProfileWidget({
-    super.key,
-    this.onChangedName,
-    this.onChangedEmail,
-    this.onChangedPhone,
-    this.onChangedPortfolio,
-    this.onChangedSummary,
-  });
+  final Function(String)? onChangedTitle;
+  const ProfileWidget(
+      {super.key,
+      this.onChangedName,
+      this.onChangedEmail,
+      this.onChangedPhone,
+      this.onChangedPortfolio,
+      this.onChangedSummary,
+      this.onChangedTitle});
 
   @override
   State<ProfileWidget> createState() => _ProfileWidgetState();
 }
 
 class _ProfileWidgetState extends State<ProfileWidget> {
+  final FocusNode njNode = FocusNode();
+
   final FocusNode nNode = FocusNode();
   final FocusNode pNode = FocusNode();
   final FocusNode eNode = FocusNode();
@@ -41,6 +43,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           ),
         ),
         const Gap(5),
+        PrimaryTextfield(
+          label: "Job Title",
+          hintText: 'Enter you job title',
+          focusNode: njNode,
+          onChanged: widget.onChangedTitle,
+          nextFocus: nNode,
+        ),
+        const Gap(10),
         PrimaryTextfield(
           label: "Name",
           hintText: 'Enter your name',

@@ -1,4 +1,5 @@
 class Profile {
+  String title;
   String name;
   String position;
   String phoneNumber;
@@ -8,6 +9,7 @@ class Profile {
   String profileSummary;
   Profile(
       {this.email = "",
+      this.title="",
       this.name = "",
       this.phoneNumber = "",
       this.position = "",

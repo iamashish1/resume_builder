@@ -76,19 +76,6 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
                 Expanded(
                   child: InkWell(
                     onTap: widget.onFromDate,
-                    // onTap: () async {
-                    //   final picked = await showDatePicker(
-                    //       context: context,
-                    //       firstDate: DateTime(1980),
-                    //       lastDate: DateTime.now());
-
-                    //   if (picked != null) {
-                    //     setState(() {
-                    //       workExp?.startDate =
-                    //           dateFormat.format(picked);
-                    //     });
-                    //   }
-                    // },
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -100,10 +87,10 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
                                 style:
                                     TextStyle(color: Colors.grey, fontSize: 10),
                               ),
-                              // Text(workExp?.startDate != "" &&
-                              //         workExp?.startDate != null
-                              //     ? (workExp?.startDate ?? '')
-                              //     : 'Select Date'),
+                              Text(widget.experience?.startDate != "" &&
+                                      widget.experience?.startDate != null
+                                  ? (widget.experience?.startDate ?? '')
+                                  : 'Select Date'),
                             ],
                           ),
                           IconButton(
@@ -117,21 +104,6 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
                     children: [
                       InkWell(
                         onTap: widget.onToDate,
-                        // onTap: workExp?.isCurrentlyWorking == true
-                        //     ? null
-                        //     : () async {
-                        //         final picked =
-                        //             await showDatePicker(
-                        //                 context: context,
-                        //                 firstDate: DateTime(1980),
-                        //                 lastDate: DateTime.now());
-                        //         if (picked != null) {
-                        //           setState(() {
-                        //             workExp?.endDate =
-                        //                 dateFormat.format(picked);
-                        //           });
-                        //         }
-                        //       },
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -143,15 +115,15 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
                                     style: TextStyle(
                                         color: Colors.grey, fontSize: 10),
                                   ),
-                                  // Text(
-                                  //   workExp?.endDate != "" &&
-                                  //           workExp?.endDate != null
-                                  //       ? (workExp?.endDate ?? "")
-                                  //       : "Select Date",
-                                  //   style: TextStyle(
-                                  //     color: Colors.black,
-                                  //   ),
-                                  // ),
+                                  Text(
+                                    widget.experience?.endDate != "" &&
+                                            widget.experience?.endDate != null
+                                        ? (widget.experience?.endDate ?? "")
+                                        : "Select Date",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  ),
                                 ],
                               ),
                               IconButton(
@@ -165,8 +137,8 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
                         children: [
                           Flexible(child: Text('Currently Working')),
                           Checkbox(
-                              value: false,
-                              // value: workExp?.isCurrentlyWorking ?? false,
+                              value: widget.experience?.isCurrentlyWorking ??
+                                  false,
                               onChanged: widget.onCurrentlyWorking),
                         ],
                       ),

@@ -59,6 +59,8 @@ dependencies:
   path: ^1.8.3
   firebase_app_check: ^0.2.1+13
   gap: ^3.0.1
+  flutter_launcher_icons: ^0.13.1
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +73,13 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   build_runner: ^2.4.8
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/launcher.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -107,4 +116,12 @@ flutter:
           weight: 700
         - asset: assets/font/Manrope-ExtraBold.ttf
         - asset: assets/font/Manrope-Light.ttf
+    - family: Montserrat
+      fonts:
+       - asset: assets/font/Montserrat-Regular.ttf
+       - asset: assets/font/Montserrat-Bold.ttf
+       - asset: assets/font/Montserrat-Light.ttf
+       - asset: assets/font/Montserrat-Italic.ttf
+
+
 

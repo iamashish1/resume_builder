@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:resume_builder/core/widgets/primary_button.dart';
+import 'package:resume_builder/features/authentication/presentation/pages/signin_page.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -17,7 +19,12 @@ class ProfileView extends StatelessWidget {
           ),
           Text('Ashish koirala'),
           Text('Iamashishkoirala1@gmail.com'),
-          ElevatedButton(onPressed: () {}, child: Text('Log Out'))
+          PrimaryButton(
+              label: "Logout",
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (ctx) => SigninPage()));
+              })
         ],
       ),
     );
