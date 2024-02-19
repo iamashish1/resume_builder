@@ -61,6 +61,7 @@ dependencies:
   gap: ^3.0.1
   flutter_launcher_icons: ^0.13.1
   google_fonts: ^6.1.0
+  fluttertoast: ^8.2.4
 
 dev_dependencies:
   flutter_test:

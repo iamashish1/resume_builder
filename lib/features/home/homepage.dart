@@ -5,6 +5,7 @@ import 'package:resume_builder/core/theme/app_colors.dart';
 import 'package:resume_builder/core/theme/custom_theme.dart';
 import 'package:resume_builder/features/home/downloads_page.dart';
 import 'package:resume_builder/features/home/home_view.dart';
+import 'package:resume_builder/features/home/likes_page.dart';
 
 import '../profile/profile_view.dart';
 
@@ -19,16 +20,11 @@ class _HomepageState extends State<Homepage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
-  static  List<Widget> _widgetOptions = <Widget>[
-    HomeView(),
-    // Text(
-    //   'Drafts',
-    //   style: optionStyle,
-    // ),
-   DownloadedPDFsPage(
-
-   ),
-    ProfileView()
+  static final List<Widget> _widgetOptions = <Widget>[
+    const HomeView(isHome: true),
+    const HomeView(isHome: false),
+    const DownloadedPDFsPage(),
+    const ProfileView()
   ];
   @override
   Widget build(BuildContext context) {
@@ -70,10 +66,10 @@ class _HomepageState extends State<Homepage> {
                   icon: LineIcons.home,
                   text: 'Home',
                 ),
-                // GButton(
-                //   icon: LineIcons.draft2Digital,
-                //   text: 'Draft',
-                // ),
+                GButton(
+                  icon: LineIcons.heart,
+                  text: 'Likes',
+                ),
                 GButton(
                   icon: LineIcons.download,
                   text: 'Downloads',
@@ -103,7 +99,9 @@ class _HomepageState extends State<Homepage> {
             Text(
               'CResume',
               style: TextStyle(
-                  fontWeight: FontWeight.w900, fontSize: 15, color: AppColors.primaryGreen),
+                  fontWeight: FontWeight.w900,
+                  fontSize: 15,
+                  color: AppColors.primaryGreen),
             ),
             Icon(
               Icons.forest,

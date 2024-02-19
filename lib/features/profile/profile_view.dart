@@ -7,26 +7,40 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(18),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            radius: 40,
-            backgroundImage:
-                NetworkImage("https://www.w3schools.com/howto/img_avatar.png"),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+            child: SingleChildScrollView(
+          padding: EdgeInsets.all(18),
+          child: Column(
+            children: [
+              CircleAvatar(
+                radius: MediaQuery.of(context).size.width / 4,
+                backgroundImage: NetworkImage(
+                    "https://www.w3schools.com/howto/img_avatar.png"),
+              ),
+              Text(
+                'Ashish koirala',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              Text(
+                'Iamashishkoirala1@gmail.com',
+                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17),
+              ),
+            ],
           ),
-          Text('Ashish koirala'),
-          Text('Iamashishkoirala1@gmail.com'),
-          PrimaryButton(
+        )),
+        Padding(
+          padding: EdgeInsets.all(18),
+          child: PrimaryButton(
               label: "Logout",
               onPressed: () {
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (ctx) => SigninPage()));
-              })
-        ],
-      ),
+              }),
+        ),
+      ],
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gap/gap.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:resume_builder/core/app_exceptions/app_exceptions.dart';
 import 'package:resume_builder/core/theme/app_colors.dart';
@@ -56,13 +58,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
       );
 
       // Once signed in, return the UserCredential
-      final userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-
-      // Add user data to Firestore
-      await addUserToFirestore(userCredential.user);
-
-      return userCredential;
+      return await FirebaseAuth.instance.signInWithCredential(credential);
     } on FirebaseAuthException catch (firebaseException) {
       throw (AppException(
           code: firebaseException.code, message: firebaseException.message));
@@ -121,6 +117,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 width: double.infinity,
               ),
               PrimaryTextfield(
+                controller: email,
                   hintText: 'Email',
                   focusNode: emailFocus,
                   nextFocus: passwordFocus),
@@ -128,13 +125,14 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 height: 20,
               ),
               PrimaryTextfield(
+                controller: password,
                 isObscure: obscureText,
                 hintText: 'Password',
                 focusNode: passwordFocus,
                 suffix: InkWell(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
-                      obscureText= !obscureText;
+                      obscureText = !obscureText;
                     });
                   },
                   child: Text(
@@ -148,29 +146,31 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 height: 20,
               ),
               PrimaryButton(
-                
                 label: isSignInpage ? 'Login' : 'Signup',
                 onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    print('object');
-                  }
+                  if (_formKey.currentState!.validate()) {}
                   try {
-                    final credential = await FirebaseAuth.instance
-                        .signInWithEmailAndPassword(
-                            email: "iamashishkoirala1@gmail.com",
-                            password: "11111@@@@");
+                    if (widget.isSignIn == true) {
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(
+                          email: "ashish@gmail.com", password:"12345!@#");
+                    } else {
+                      FirebaseAuth.instance.createUserWithEmailAndPassword(
+                          email: email.text, password: password.text);
+                    }
                   } on FirebaseAuthException catch (e) {
                     if (e.code == 'user-not-found') {
-                      print('No user found for that email.');
+                      Fluttertoast.showToast(
+                        msg: "No user found for that email.",
+                      );
                     } else if (e.code == 'wrong-password') {
-                      print('Wrong password provided for that user.');
+                      Fluttertoast.showToast(
+                        msg: "Wrong password provided for that user.",
+                      );
                     }
                   }
                 },
               ),
-              SizedBox(
-                height: 10,
-              ),
+              Gap(10),
               if (isSignInpage)
                 InkWell(
                     onTap: () async {
@@ -196,7 +196,11 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 height: 20,
               ),
 
-              SocialLoginButton()
+              SocialLoginButton(
+                onTap: () async {
+                  await signInWithGoogle();
+                },
+              )
             ],
           ),
         ),

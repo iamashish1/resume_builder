@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 class SocialLoginButton extends StatelessWidget {
-  const SocialLoginButton({super.key});
+ final void Function()? onTap; 
+  const SocialLoginButton({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async {
-        // final result = await signInWithGoogle();
-      },
+      onTap:onTap,
       child: Container(
         constraints: const BoxConstraints(maxWidth: 300),
         decoration: BoxDecoration(

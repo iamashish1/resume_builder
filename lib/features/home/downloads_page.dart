@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
+import 'package:resume_builder/core/theme/app_colors.dart';
 
 class DownloadedPDFsPage extends StatefulWidget {
   const DownloadedPDFsPage({super.key});
@@ -55,13 +56,16 @@ class _DownloadedPDFsPageState extends State<DownloadedPDFsPage> {
   Widget build(BuildContext context) {
     return pdfFiles.isNotEmpty
         ? ListView.separated(
+            padding: const EdgeInsets.all(10),
             separatorBuilder: (_, __) => const Gap(15),
             itemCount: pdfFiles.length,
             itemBuilder: (context, index) {
               final file = File(pdfFiles[index].path);
               final lastModified = file.lastModifiedSync();
               return ListTile(
-                tileColor: getRandomLightColor(),
+                tileColor: index % 2 == 0
+                    ? Colors.green[50]?.withOpacity(0.5)
+                    : Colors.amber[50]?.withOpacity(0.5),
                 leading: Image.asset("assets/pdf_icon.png"),
                 trailing: IconButton(
                   onPressed: () async {
@@ -85,10 +89,13 @@ class _DownloadedPDFsPageState extends State<DownloadedPDFsPage> {
                       ),
                     );
                     if (action == true) {
-                     await deleteFile(index);
+                      await deleteFile(index);
                     }
                   },
-                  icon: const Icon(Icons.delete_sweep_outlined,color: Colors.red,),
+                  icon: const Icon(
+                    Icons.delete_sweep_outlined,
+                    color: AppColors.primaryGreen,
+                  ),
                 ),
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +118,7 @@ class _DownloadedPDFsPageState extends State<DownloadedPDFsPage> {
                   // Open the PDF file using your preferred PDF viewer
                   // You can use a package like 'flutter_pdfview' for this purpose
                   // Example: https://pub.dev/packages/flutter_pdfview
-                  print('Opening PDF: ${pdfFiles[index].path}');
+                  // print('Opening PDF: ${pdfFiles[index].path}');
                 },
               );
             },
@@ -120,15 +127,4 @@ class _DownloadedPDFsPageState extends State<DownloadedPDFsPage> {
             child: Text('No PDFs downloaded yet.'),
           );
   }
-}
-
-Color getRandomLightColor() {
-  Random random = Random();
-
-  int red = random.nextInt(128) + 128;
-  int green = 255;
-  int blue = random.nextInt(128) + 128;
-
-  // Return the generated color
-  return Color.fromRGBO(red, green, blue, 0.4);
 }

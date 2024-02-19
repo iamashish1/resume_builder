@@ -1,40 +1,119 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:resume_builder/core/theme/app_colors.dart';
-import 'package:resume_builder/core/theme/custom_theme.dart';
 import 'package:resume_builder/features/resume/pages/form_page.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
-
+  final bool isHome;
+  const HomeView({super.key, required this.isHome});
   @override
   State<HomeView> createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
   int? selectedImageIndex;
+  List<FirebaseTemplateModel> templates = [];
 
-  Future<List<String>> getImageUrls() async {
-    List<String> imageUrls = [];
+  Future<void> toggleLike(FirebaseTemplateModel? template) async {
+    String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+    print("${userId} MUJI");
 
-    var listResult = await FirebaseStorage.instance.ref().listAll();
+    String templateDocId = template?.docId ?? '';
+    print("${templateDocId} MUJI2");
 
-    for (var item in listResult.items) {
-      var downloadUrl = await item.getDownloadURL();
-      imageUrls.add(downloadUrl);
+    if (template?.likedBy.contains(userId) ?? false) {
+      // User has already liked, so remove like
+      await FirebaseFirestore.instance
+          .collection('Template')
+          .doc(templateDocId)
+          .update({
+        'likedBy': FieldValue.arrayRemove([userId]),
+      });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Item Removed From Favourite')));
+      }
+    } else {
+      // User has not liked, so add like
+      await FirebaseFirestore.instance
+          .collection('Template')
+          .doc(templateDocId)
+          .update({
+        'likedBy': FieldValue.arrayUnion([userId]),
+      });
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Item Added To Favourite')));
+      }
+    }
+  }
+
+  Future<List<FirebaseTemplateModel>> getImageUrls() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+        .instance
+        .collection('Template')
+        .orderBy('id')
+        .get();
+
+    for (var doc in snapshot.docs) {
+      var data = doc.data();
+      FirebaseTemplateModel template = FirebaseTemplateModel(
+        id: data['id'] ?? 0,
+        likedBy: List.from(data['likedBy'] ?? []),
+        url: data['url'] ?? "",
+        docId: doc.id,
+      );
+      templates.add(template);
     }
 
-    return imageUrls;
+    return templates;
   }
+    @override
+  void didUpdateWidget(covariant HomeView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Reset templates list when the view changes
+    if (widget.isHome != oldWidget.isHome) {
+      templates.clear();
+    }
+  }
+
+
+  //FOR LIKES PAGE
+
+  Future<List<FirebaseTemplateModel>> getLikedTemplates() async {
+    String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+    QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+        .instance
+        .collection('Template')
+        .where('likedBy', arrayContains: userId)
+        .get();
+
+    for (var doc in snapshot.docs) {
+      var data = doc.data();
+      FirebaseTemplateModel template = FirebaseTemplateModel(
+        id: data['id'] ?? 0,
+        likedBy: List.from(data['likedBy'] ?? []),
+        url: data['url'] ?? "",
+        docId: doc.id,
+      );
+      templates.add(template);
+    }
+
+    return templates;
+  }
+
+  //
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<String>>(
-      future: getImageUrls(),
+    return FutureBuilder<List<FirebaseTemplateModel>>(
+      future: widget.isHome == true ? getImageUrls() : getLikedTemplates(),
       builder: (ctx, snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(
-            itemCount: snapshot.data?.length ?? 0,
+            itemCount: templates.length,
             itemBuilder: (ctx, index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -61,9 +140,50 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: Image.network(snapshot.data?[index] ?? ""),
+                          child: Image.network(
+                            templates[index].url,
+                          ),
                         ),
                       ),
+                      Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.blueGrey.withOpacity(0.7),
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(12),
+                                    bottomLeft: Radius.circular(12))),
+                            padding: const EdgeInsets.all(3),
+                            child: IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () async {
+                                  // Toggle like
+                                  await toggleLike((templates[index]));
+
+                                  // Update the like status in the templates list
+                                  setState(() {
+                                    if (templates[index].likedBy.contains(
+                                        FirebaseAuth
+                                            .instance.currentUser?.uid)) {
+                                      templates[index].likedBy.remove(
+                                          FirebaseAuth
+                                              .instance.currentUser?.uid);
+                                    } else {
+                                      templates[index].likedBy.add(FirebaseAuth
+                                          .instance.currentUser?.uid);
+                                    }
+                                  });
+                                },
+                                icon: Icon(
+                                  (templates[index].likedBy.contains(
+                                          FirebaseAuth
+                                              .instance.currentUser?.uid))
+                                      ? Icons.favorite
+                                      : Icons.favorite_outline,
+                                  color: AppColors.primaryRed,
+                                )),
+                          )),
                       Positioned(
                         bottom: 10,
                         child: AnimatedOpacity(
@@ -71,7 +191,8 @@ class _HomeViewState extends State<HomeView> {
                           duration: const Duration(milliseconds: 300),
                           child: OutlinedButton(
                             style: ButtonStyle(
-                              backgroundColor:MaterialStateProperty.all(Colors.blueGrey) ,
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.blueGrey),
                               side: MaterialStateProperty.all(BorderSide(
                                   color: Colors
                                       .grey)), // Set the color of the outline
@@ -105,4 +226,17 @@ class _HomeViewState extends State<HomeView> {
       },
     );
   }
+}
+
+class FirebaseTemplateModel {
+  String url;
+  int id;
+  List likedBy;
+  String docId;
+
+  FirebaseTemplateModel(
+      {required this.id,
+      required this.likedBy,
+      required this.url,
+      required this.docId});
 }
