@@ -23,6 +23,7 @@ class ResumePreview extends StatefulWidget {
 }
 
 class _ResumePreviewState extends State<ResumePreview> {
+  TextEditingController name = TextEditingController();
   Future<void> _saveAsFile(
     BuildContext context,
     LayoutCallback build,
@@ -32,7 +33,8 @@ class _ResumePreviewState extends State<ResumePreview> {
 
     final appDocDir = await getApplicationDocumentsDirectory();
     final appDocPath = appDocDir.path;
-    final file = File('$appDocPath/document.pdf');
+    String documentName = name.text.isEmpty ? "document" : name.text;
+    final file = File('$appDocPath/$documentName.pdf');
     if (await file.exists() && mounted) {
       // If the file exists, prompt the user to decide
       final action = await showDialog(
@@ -59,20 +61,33 @@ class _ResumePreviewState extends State<ResumePreview> {
       // Based on user action, handle file saving
       if (action == 'overwrite') {
         await file.writeAsBytes(bytes);
-        await OpenFile.open(file.path);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Overwrite successful')));
+        }
+        // await OpenFile.open(file.path);
       } else if (action == 'copy') {
         // Generate a new file name by adding a timestamp to it
         final timestamp = DateTime.now().millisecondsSinceEpoch;
-        final newFileName = 'document_$timestamp.pdf';
+        final newFileName = '${documentName}_$timestamp.pdf';
         final newFile = File('$appDocPath/$newFileName');
 
         // Write bytes to the new file
         await newFile.writeAsBytes(bytes);
-        await OpenFile.open(newFile.path);
+        if (mounted) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('Copy successful')));
+        }
+
+        // await OpenFile.open(newFile.path);
       }
     } else {
       await file.writeAsBytes(bytes);
-      await OpenFile.open(file.path);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Download successful. Check downloads page')));
+      }
+      // await OpenFile.open(file.path);
     }
   }
 
@@ -81,12 +96,12 @@ class _ResumePreviewState extends State<ResumePreview> {
     final myResume = widget.resume;
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Your CV Looks Amazing!',
-          style: TextStyle(fontSize: 16),
-        ),
-      ),
+          centerTitle: true,
+          title: TextField(
+            controller: name,
+            decoration: const InputDecoration(
+                border: InputBorder.none, hintText: "document.pdf(Default)"),
+          )),
       body: PdfPreview(
         actionButtonBarColor: Colors.grey,
         canDebug: false,

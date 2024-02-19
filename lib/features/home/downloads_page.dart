@@ -17,6 +17,25 @@ class DownloadedPDFsPage extends StatefulWidget {
 class _DownloadedPDFsPageState extends State<DownloadedPDFsPage> {
   List<FileSystemEntity> pdfFiles = [];
 
+  Future<void> deleteFile(int index) async {
+    final file = File(pdfFiles[index].path);
+    try {
+      await file.delete();
+      setState(() {
+        pdfFiles.removeAt(index);
+      });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Document Successfully Deleted!')));
+      }
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Error deleting item!')));
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -44,6 +63,33 @@ class _DownloadedPDFsPageState extends State<DownloadedPDFsPage> {
               return ListTile(
                 tileColor: getRandomLightColor(),
                 leading: Image.asset("assets/pdf_icon.png"),
+                trailing: IconButton(
+                  onPressed: () async {
+                    final action = await showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Delete'),
+                        content: const Text('Do you wish to delete the file?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              return Navigator.pop(context, true);
+                            },
+                            child: const Text('Yes'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, false),
+                            child: const Text('Cancel'),
+                          ),
+                        ],
+                      ),
+                    );
+                    if (action == true) {
+                     await deleteFile(index);
+                    }
+                  },
+                  icon: const Icon(Icons.delete_sweep_outlined,color: Colors.red,),
+                ),
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
