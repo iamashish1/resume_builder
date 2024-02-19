@@ -1,9 +1,24 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:resume_builder/core/widgets/primary_button.dart';
 import 'package:resume_builder/features/authentication/presentation/pages/signin_page.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
+
+  @override
+  State<ProfileView> createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +33,15 @@ class ProfileView extends StatelessWidget {
               CircleAvatar(
                 radius: MediaQuery.of(context).size.width / 4,
                 backgroundImage: NetworkImage(
-                    "https://www.w3schools.com/howto/img_avatar.png"),
+                    FirebaseAuth.instance.currentUser?.photoURL ??
+                        "https://www.w3schools.com/howto/img_avatar.png"),
               ),
               Text(
-                'Ashish koirala',
+                FirebaseAuth.instance.currentUser?.displayName ?? "",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               Text(
-                'Iamashishkoirala1@gmail.com',
+                FirebaseAuth.instance.currentUser?.email ?? '',
                 style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17),
               ),
             ],
@@ -35,9 +51,20 @@ class ProfileView extends StatelessWidget {
           padding: EdgeInsets.all(18),
           child: PrimaryButton(
               label: "Logout",
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (ctx) => SigninPage()));
+              onPressed: () async {
+                try {
+                  final FirebaseAuth _auth = FirebaseAuth.instance;
+                  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+                  await _auth.signOut();
+                  await _googleSignIn.signOut();
+
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (ctx) => SigninPage()));
+                } catch (_) {
+                  Fluttertoast.showToast(msg: 'Error Signing out');
+                }
               }),
         ),
       ],

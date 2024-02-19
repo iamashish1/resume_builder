@@ -11,6 +11,7 @@ class PrimaryTextfield extends StatelessWidget {
   final String? label;
   final void Function(String)? onSubmit;
   final Function(String)? onChanged;
+  final String? Function(String?)? validator;
 
   const PrimaryTextfield(
       {Key? key,
@@ -23,6 +24,7 @@ class PrimaryTextfield extends StatelessWidget {
       this.label,
       this.onChanged,
       this.focusNode,
+      this.validator,
       this.onSubmit})
       : super(key: key);
 
@@ -49,12 +51,13 @@ class PrimaryTextfield extends StatelessWidget {
             nextFocus?.requestFocus();
             onSubmit != null ? onSubmit!(v) : ();
           },
-          validator: (value) {
-            if (value?.isEmpty ?? false) {
-              return 'The field needs some value';
-            }
-            return null;
-          },
+          validator: validator ??
+              (value) {
+                if (value?.isEmpty ?? false) {
+                  return 'The field needs some value';
+                }
+                return null;
+              },
           maxLines: maxLines ?? 1,
           decoration: InputDecoration(
               filled: true,

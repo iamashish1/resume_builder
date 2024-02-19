@@ -5,7 +5,6 @@ import 'package:resume_builder/core/theme/app_colors.dart';
 import 'package:resume_builder/core/theme/custom_theme.dart';
 import 'package:resume_builder/features/home/downloads_page.dart';
 import 'package:resume_builder/features/home/home_view.dart';
-import 'package:resume_builder/features/home/likes_page.dart';
 
 import '../profile/profile_view.dart';
 
@@ -21,8 +20,8 @@ class _HomepageState extends State<Homepage> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static final List<Widget> _widgetOptions = <Widget>[
-    const HomeView(isHome: true),
-    const HomeView(isHome: false),
+     HomeView(key: UniqueKey(),isHome: true,),
+     HomeView(key: UniqueKey(),isHome: false,),
     const DownloadedPDFsPage(),
     const ProfileView()
   ];

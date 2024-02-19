@@ -17,10 +17,8 @@ class _HomeViewState extends State<HomeView> {
 
   Future<void> toggleLike(FirebaseTemplateModel? template) async {
     String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
-    print("${userId} MUJI");
 
     String templateDocId = template?.docId ?? '';
-    print("${templateDocId} MUJI2");
 
     if (template?.likedBy.contains(userId) ?? false) {
       // User has already liked, so remove like
@@ -50,7 +48,7 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
-  Future<List<FirebaseTemplateModel>> getImageUrls() async {
+  Future<void> getImageUrls() async {
     QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
         .instance
         .collection('Template')
@@ -67,22 +65,16 @@ class _HomeViewState extends State<HomeView> {
       );
       templates.add(template);
     }
-
-    return templates;
-  }
-    @override
-  void didUpdateWidget(covariant HomeView oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // Reset templates list when the view changes
-    if (widget.isHome != oldWidget.isHome) {
-      templates.clear();
+    if (mounted) {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
-
   //FOR LIKES PAGE
 
-  Future<List<FirebaseTemplateModel>> getLikedTemplates() async {
+  Future<void> getLikedTemplates() async {
     String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
     QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
         .instance
@@ -100,131 +92,145 @@ class _HomeViewState extends State<HomeView> {
       );
       templates.add(template);
     }
-
-    return templates;
+    if (mounted) {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   //
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    widget.isHome == true ? getImageUrls() : getLikedTemplates();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<FirebaseTemplateModel>>(
-      future: widget.isHome == true ? getImageUrls() : getLikedTemplates(),
-      builder: (ctx, snapshot) {
-        if (snapshot.hasData) {
-          return ListView.builder(
-            itemCount: templates.length,
-            itemBuilder: (ctx, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      selectedImageIndex =
-                          selectedImageIndex == index ? null : index;
-                    });
-                  },
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            width: selectedImageIndex == index ? 3 : 1,
-                            color: selectedImageIndex == index
-                                ? Colors.blueGrey
-                                : Colors.grey,
-                          ),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.network(
-                            templates[index].url,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                          top: 0,
-                          right: 0,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.blueGrey.withOpacity(0.7),
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(12),
-                                    bottomLeft: Radius.circular(12))),
-                            padding: const EdgeInsets.all(3),
-                            child: IconButton(
-                                padding: EdgeInsets.zero,
-                                onPressed: () async {
-                                  // Toggle like
-                                  await toggleLike((templates[index]));
-
-                                  // Update the like status in the templates list
-                                  setState(() {
-                                    if (templates[index].likedBy.contains(
-                                        FirebaseAuth
-                                            .instance.currentUser?.uid)) {
-                                      templates[index].likedBy.remove(
-                                          FirebaseAuth
-                                              .instance.currentUser?.uid);
-                                    } else {
-                                      templates[index].likedBy.add(FirebaseAuth
-                                          .instance.currentUser?.uid);
-                                    }
-                                  });
-                                },
-                                icon: Icon(
-                                  (templates[index].likedBy.contains(
-                                          FirebaseAuth
-                                              .instance.currentUser?.uid))
-                                      ? Icons.favorite
-                                      : Icons.favorite_outline,
-                                  color: AppColors.primaryRed,
-                                )),
-                          )),
-                      Positioned(
-                        bottom: 10,
-                        child: AnimatedOpacity(
-                          opacity: selectedImageIndex == index ? 1.0 : 0.0,
+    if (isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    } else {
+      return templates.isEmpty
+          ? const Center(
+              child: Text('No Items found'),
+            )
+          : ListView.builder(
+              itemCount: templates.length,
+              itemBuilder: (ctx, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: () {
+                      print(templates.toList().toString() + "BEFORE BEFORE");
+                      setState(() {
+                        selectedImageIndex =
+                            selectedImageIndex == index ? null : index;
+                      });
+                      print(templates.toList().toString() + "BEFORE AFTER");
+                    },
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        AnimatedContainer(
                           duration: const Duration(milliseconds: 300),
-                          child: OutlinedButton(
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.blueGrey),
-                              side: MaterialStateProperty.all(BorderSide(
-                                  color: Colors
-                                      .grey)), // Set the color of the outline
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              width: selectedImageIndex == index ? 3 : 1,
+                              color: selectedImageIndex == index
+                                  ? Colors.blueGrey
+                                  : Colors.grey,
                             ),
-                            onPressed: (selectedImageIndex == index)
-                                ? () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const FormPage()));
-                                  }
-                                : null,
-                            child: const Text(
-                              'Select Template',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'Montserrat'),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              templates[index].url,
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        Positioned(
+                            top: 0,
+                            right: 0,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.blueGrey.withOpacity(0.7),
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(12),
+                                      bottomLeft: Radius.circular(12))),
+                              padding: const EdgeInsets.all(3),
+                              child: IconButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () async {
+                                    // Toggle like
+                                    await toggleLike((templates[index]));
+
+                                    // Update the like status in the templates list
+                                    setState(() {
+                                      if (templates[index].likedBy.contains(
+                                          FirebaseAuth
+                                              .instance.currentUser?.uid)) {
+                                        templates[index].likedBy.remove(
+                                            FirebaseAuth
+                                                .instance.currentUser?.uid);
+                                      } else {
+                                        templates[index].likedBy.add(
+                                            FirebaseAuth
+                                                .instance.currentUser?.uid);
+                                      }
+                                    });
+                                  },
+                                  icon: Icon(
+                                    (templates[index].likedBy.contains(
+                                            FirebaseAuth
+                                                .instance.currentUser?.uid))
+                                        ? Icons.favorite
+                                        : Icons.favorite_outline,
+                                    color: AppColors.primaryRed,
+                                  )),
+                            )),
+                        Positioned(
+                          bottom: 10,
+                          child: AnimatedOpacity(
+                            opacity: selectedImageIndex == index ? 1.0 : 0.0,
+                            duration: const Duration(milliseconds: 300),
+                            child: OutlinedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.blueGrey),
+                                side: MaterialStateProperty.all(BorderSide(
+                                    color: Colors
+                                        .grey)), // Set the color of the outline
+                              ),
+                              onPressed: (selectedImageIndex == index)
+                                  ? () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const FormPage()));
+                                    }
+                                  : null,
+                              child: const Text(
+                                'Select Template',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Montserrat'),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          );
-        } else {
-          return const CircularProgressIndicator();
-        }
-      },
-    );
+                );
+              },
+            );
+    }
   }
 }
 

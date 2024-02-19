@@ -9,8 +9,10 @@ import 'package:resume_builder/core/theme/app_colors.dart';
 import 'package:resume_builder/core/widgets/primary_button.dart';
 import 'package:resume_builder/core/widgets/primary_textfield.dart';
 import 'package:resume_builder/core/widgets/social_login_button.dart';
+import 'package:resume_builder/features/authentication/presentation/pages/forgot_password_page.dart';
 import 'package:resume_builder/features/authentication/presentation/pages/signin_page.dart';
 import 'package:resume_builder/features/authentication/presentation/pages/signup_page.dart';
+import 'package:resume_builder/features/home/homepage.dart';
 
 class AuthenticationPage extends StatefulWidget {
   final bool isSignIn;
@@ -117,7 +119,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 width: double.infinity,
               ),
               PrimaryTextfield(
-                controller: email,
+                  controller: email,
                   hintText: 'Email',
                   focusNode: emailFocus,
                   nextFocus: passwordFocus),
@@ -148,36 +150,79 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               PrimaryButton(
                 label: isSignInpage ? 'Login' : 'Signup',
                 onPressed: () async {
-                  if (_formKey.currentState!.validate()) {}
-                  try {
+                  if (_formKey.currentState!.validate()) {
                     if (widget.isSignIn == true) {
-                      await FirebaseAuth.instance.signInWithEmailAndPassword(
-                          email: "ashish@gmail.com", password:"12345!@#");
+                      try {
+                        await FirebaseAuth.instance.signInWithEmailAndPassword(
+                            email: email.text.trim(),
+                            password: password.text.trim());
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Homepage()));
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'user-not-found') {
+                          Fluttertoast.showToast(
+                            msg: "No user found for that email.",
+                          );
+                        } else if (e.code == 'wrong-password') {
+                          Fluttertoast.showToast(
+                            msg: "Wrong password provided for that user.",
+                          );
+                        } else if (e.code == 'too-many-requests') {
+                          Fluttertoast.showToast(
+                            msg: "Slow down- Too many requests.",
+                          );
+                        } else if (e.code == "user-disabled") {
+                          Fluttertoast.showToast(
+                            msg: "The user has been disabled by admin.",
+                          );
+                        } else if (e.code == 'operation-not-allowed') {
+                          Fluttertoast.showToast(
+                            msg: "The user has been disabled by admin.",
+                          );
+                        }
+                      }
                     } else {
-                      FirebaseAuth.instance.createUserWithEmailAndPassword(
-                          email: email.text, password: password.text);
-                    }
-                  } on FirebaseAuthException catch (e) {
-                    if (e.code == 'user-not-found') {
-                      Fluttertoast.showToast(
-                        msg: "No user found for that email.",
-                      );
-                    } else if (e.code == 'wrong-password') {
-                      Fluttertoast.showToast(
-                        msg: "Wrong password provided for that user.",
-                      );
+                      try {
+                        await FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                                email: email.text.trim(),
+                                password: password.text.trim());
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Homepage()));
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'email-already-in-use') {
+                          Fluttertoast.showToast(
+                            msg: "Email already in use.",
+                          );
+                        } else if (e.code == 'weak-password') {
+                          Fluttertoast.showToast(
+                            msg: "The password is too weak.",
+                          );
+                        } else if (e.code == 'invalid-email') {
+                          Fluttertoast.showToast(msg: "The email is invalid.");
+                        }
+                      }
                     }
                   }
                 },
               ),
-              Gap(10),
+              const Gap(10),
               if (isSignInpage)
                 InkWell(
                     onTap: () async {
-                      await FirebaseAuth.instance.sendPasswordResetEmail(
-                          email: "iamashishkoirala1@gmail.com");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ForgotPasswordPage()));
                     },
-                    child: Text(
+                    child: const Text(
                       "Forgot your password?",
                       style: TextStyle(
                           color: AppColors.primaryGreen,
@@ -198,7 +243,17 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
 
               SocialLoginButton(
                 onTap: () async {
-                  await signInWithGoogle();
+                  try {
+                    await signInWithGoogle();
+                    if (mounted) {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Homepage()));
+                    }
+                  } catch (_) {
+                    Fluttertoast.showToast(msg: "Something went wrong!");
+                  }
                 },
               )
             ],
