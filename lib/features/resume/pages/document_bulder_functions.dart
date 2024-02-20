@@ -174,12 +174,7 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
       pw.MultiPage(
         theme: pw.ThemeData(
             defaultTextStyle: pw.TextStyle(
-                letterSpacing: 0.5,
-                wordSpacing: 2,
-                lineSpacing: 5,
-                font: ttfRegular,
-                fontBold: ttfBold,
-                fontNormal: ttfRegular)),
+                font: ttfRegular, fontBold: ttfBold, fontNormal: ttfRegular)),
         build: (pw.Context context) => [
           pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -253,29 +248,141 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
                     //START OF EDUCATION SECTION
                     if (resume.education?.isNotEmpty ?? false) ...[
                       pw.Expanded(
-                          child: pw.Column(
+                          child: pw.Padding(
+                        padding: const pw.EdgeInsets.only(left: 20),
+                        child: pw.Column(
                             crossAxisAlignment: pw.CrossAxisAlignment.start,
                             children: [
-                        Heading("Education"),
-                        pw.SizedBox(height: 10),
-                        ...?resume.education?.map((e) {
-                          return pw.Column(
-                              crossAxisAlignment: pw.CrossAxisAlignment.start,
-                              children: [
-                                pw.Text(e.university,
-                                    style: pw.TextStyle(
-                                        fontWeight: pw.FontWeight.bold)),
-                                pw.SizedBox(height: 10),
-                                BodyText(
-                                    "${e.startDate} - ${e.endDate}", ttfLight),
-                                pw.SizedBox(height: 10),
-                                BodyText(e.studyCourse, ttfLight),
-                              ]);
-                        }).toList()
-                      ])),
+                              Heading("Education"),
+                              pw.SizedBox(height: 10),
+                              ...?resume.education?.map((e) {
+                                return pw.Column(
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.Text(e.university,
+                                          style: pw.TextStyle(
+                                              fontWeight: pw.FontWeight.bold)),
+                                      pw.SizedBox(height: 10),
+                                      BodyText("${e.startDate} - ${e.endDate}",
+                                          ttfLight),
+                                      pw.SizedBox(height: 10),
+                                      BodyText(e.studyCourse, ttfLight),
+                                    ]);
+                              }).toList()
+                            ]),
+                      )),
                     ],
                     //END OF STUDY SECTION
-                  ])
+                  ]),
+              pw.SizedBox(height: 50),
+              pw.Row(
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  pw.Expanded(
+                      child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: [
+                      //SUMMARY
+                      Heading("Summary"),
+                      pw.SizedBox(height: 12),
+                      BodyText(resume.profile.profileSummary, ttfLight),
+                      //END SUMMARY
+                      pw.SizedBox(height: 20),
+
+                      //SKILLS SECTION START
+
+                      if (resume.skills.isNotEmpty) ...[
+                        pw.SizedBox(height: 6),
+                        Heading("skills"),
+                        pw.SizedBox(height: 6),
+                        ...resume.skills.map((e) {
+                          return BulletPoint(item: e, font: ttfLight);
+                        }).toList()
+                      ]
+
+                      //SKILLS SECTION END
+                    ],
+                  )),
+                  if (resume.workExperience.isNotEmpty)
+                    pw.Expanded(
+                        child: pw.Padding(
+                            padding: const pw.EdgeInsets.only(left: 20),
+                            child: pw.Column(
+                              crossAxisAlignment: pw.CrossAxisAlignment.start,
+                              children: [
+                                Heading("Work Experience"),
+                                pw.SizedBox(height: 10),
+                                ...resume.workExperience.map((e) {
+                                      return pw.Stack(
+                                          fit: pw.StackFit.loose,
+                                          overflow: pw.Overflow.visible,
+                                          children: [
+                                            pw.Container(
+                                                padding:
+                                                    const pw.EdgeInsets.only(
+                                                        left: 10),
+                                                decoration: pw.BoxDecoration(
+                                                    border: pw.Border(
+                                                        left: pw.BorderSide(
+                                                            color: PdfColor
+                                                                .fromHex(
+                                                                    "#000000"),
+                                                            width: 2))),
+                                                child: pw.Column(
+                                                    crossAxisAlignment: pw
+                                                        .CrossAxisAlignment
+                                                        .start,
+                                                    children: [
+                                                      pw.SizedBox(height: 4),
+                                                      pw.Text(e.companyName,
+                                                          style: pw.TextStyle(
+                                                              letterSpacing: 2,
+                                                              fontWeight: pw
+                                                                  .FontWeight
+                                                                  .bold,
+                                                              fontSize: 10)),
+                                                      pw.SizedBox(height: 7),
+                                                      pw.Text(e.designation,
+                                                          style: pw.TextStyle(
+                                                              font: ttfRegular,
+                                                              fontSize: 10)),
+                                                      pw.SizedBox(height: 10),
+                                                      pw.Text(
+                                                          '${e.startDate} - ${e.endDate}'),
+                                                      ...e.jobResponsibilities
+                                                          .map((item) {
+                                                        return pw.Padding(
+                                                          padding: const pw
+                                                              .EdgeInsets.symmetric(
+                                                              vertical: 3.0),
+                                                          child: BulletPoint(
+                                                              item: item,
+                                                              font: ttfLight),
+                                                        );
+                                                      }).toList(),
+                                                      pw.SizedBox(height: 10)
+                                                    ])),
+                                            pw.Positioned(
+                                                left: -4,
+                                                top: 6,
+                                                child: pw.Container(
+                                                    width: 8,
+                                                    height: 8,
+                                                    decoration:
+                                                        pw.BoxDecoration(
+                                                            color: PdfColor
+                                                                .fromHex(
+                                                                    "#000000"),
+                                                            shape: pw.BoxShape
+                                                                .circle)))
+                                          ]);
+                                    }).toList() ??
+                                    [pw.SizedBox()]
+                              ],
+                            )))
+                ],
+              )
             ],
           ),
         ],
