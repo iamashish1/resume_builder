@@ -34,6 +34,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Profile Section'.toUpperCase(),
@@ -45,7 +46,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         const Gap(5),
         PrimaryTextfield(
           label: "Job Title",
-          hintText: 'Enter you job title',
+          hintText: 'Enter your job title',
           focusNode: njNode,
           onChanged: widget.onChangedTitle,
           nextFocus: nNode,

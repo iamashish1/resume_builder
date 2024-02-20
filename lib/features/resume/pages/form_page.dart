@@ -13,7 +13,8 @@ import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/custom_theme.dart';
 
 class FormPage extends StatefulWidget {
-  const FormPage({super.key});
+  final int id;
+  const FormPage({super.key, required this.id});
 
   @override
   State<FormPage> createState() => _FormPageState();
@@ -21,12 +22,19 @@ class FormPage extends StatefulWidget {
 
 class _FormPageState extends State<FormPage> {
   final _formKey = GlobalKey<FormState>();
-  ResumeModel resume = ResumeModel(
-      profile: Profile(),
-      workExperience: [],
-      certifications: [],
-      education: [],
-      skills: []);
+  late ResumeModel resume;
+
+  @override
+  void initState() {
+    resume = ResumeModel(
+        id: widget.id,
+        profile: Profile(),
+        workExperience: [],
+        certifications: [],
+        education: [],
+        skills: []);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

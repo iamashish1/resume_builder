@@ -125,13 +125,12 @@ class _HomeViewState extends State<HomeView> {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
+                    borderRadius: BorderRadius.circular(12),
                     onTap: () {
-                      print(templates.toList().toString() + "BEFORE BEFORE");
                       setState(() {
                         selectedImageIndex =
                             selectedImageIndex == index ? null : index;
                       });
-                      print(templates.toList().toString() + "BEFORE AFTER");
                     },
                     child: Stack(
                       alignment: Alignment.center,
@@ -159,7 +158,7 @@ class _HomeViewState extends State<HomeView> {
                             right: 0,
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: Colors.blueGrey.withOpacity(0.7),
+                                  color: Colors.blueGrey,
                                   borderRadius: BorderRadius.only(
                                       topRight: Radius.circular(12),
                                       bottomLeft: Radius.circular(12))),
@@ -191,7 +190,7 @@ class _HomeViewState extends State<HomeView> {
                                                 .instance.currentUser?.uid))
                                         ? Icons.favorite
                                         : Icons.favorite_outline,
-                                    color: AppColors.primaryRed,
+                                    color: Colors.white,
                                   )),
                             )),
                         Positioned(
@@ -209,10 +208,11 @@ class _HomeViewState extends State<HomeView> {
                               ),
                               onPressed: (selectedImageIndex == index)
                                   ? () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const FormPage()));
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (context) => FormPage(
+                                                    id: templates[index].id,
+                                                  )));
                                     }
                                   : null,
                               child: const Text(

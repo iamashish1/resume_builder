@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:resume_builder/core/widgets/primary_button.dart';
 import 'package:resume_builder/features/authentication/presentation/pages/signin_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -58,6 +59,10 @@ class _ProfileViewState extends State<ProfileView> {
 
                   await _auth.signOut();
                   await _googleSignIn.signOut();
+
+                  final prefs = await SharedPreferences.getInstance();
+                  //clears everything in sharedprefs
+                  await prefs.clear();
 
                   // ignore: use_build_context_synchronously
                   Navigator.of(context).pushReplacement(

@@ -11,6 +11,8 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:resume_builder/features/home/template_model/template_model.dart';
 
+import 'document_bulder_functions.dart';
+
 class ResumePreview extends StatefulWidget {
   final ResumeModel resume;
   const ResumePreview({
@@ -128,7 +130,6 @@ Future<Uint8List> generateResume(format, ResumeModel resume) async {
       await rootBundle.load('assets/font/Montserrat-Regular.ttf');
   final boldFont = await rootBundle.load('assets/font/Montserrat-Bold.ttf');
   final lightFont = await rootBundle.load('assets/font/Montserrat-Light.ttf');
-  final italic = await rootBundle.load('assets/font/Montserrat-Italic.ttf');
 
   final doc = pw.Document();
 
@@ -136,150 +137,11 @@ Future<Uint8List> generateResume(format, ResumeModel resume) async {
   final ttfRegular = pw.Font.ttf(regularFont);
   final ttfBold = pw.Font.ttf(boldFont);
   final ttfLight = pw.Font.ttf(lightFont);
-  final ttfItalic = pw.Font.ttf(lightFont);
 
   pw.RichText.debug = true;
 
-  doc.addPage(
-    pw.MultiPage(
-      theme: pw.ThemeData(
-          defaultTextStyle: pw.TextStyle(
-              letterSpacing: 0.5,
-              wordSpacing: 2,
-              lineSpacing: 5,
-              font: ttfRegular,
-              fontBold: ttfBold,
-              fontNormal: ttfRegular)),
-      build: (pw.Context context) => [
-        pw.Column(
-          crossAxisAlignment: pw.CrossAxisAlignment.start,
-          children: <pw.Widget>[
-            pw.Align(
-              child: pw.Text(resume.profile.name.toUpperCase(),
-                  textScaleFactor: 2,
-                  textAlign: pw.TextAlign.center,
-                  style: pw.TextStyle(
-                      fontWeight: pw.FontWeight.bold, letterSpacing: 6)),
-            ),
-            pw.SizedBox(height: 10),
-            pw.Align(
-              child: pw.Text(resume.profile.title,
-                  textScaleFactor: 1.2,
-                  style: pw.TextStyle(
-                      fontWeight: pw.FontWeight.bold, letterSpacing: 3)),
-            ),
-            pw.SizedBox(height: 20),
-            pw.Container(
-              // color: PdfColor(1, 0, 0.3),
-              width: double.infinity,
-              child: pw.Wrap(
-                alignment: pw.WrapAlignment.center,
-                runAlignment: pw.WrapAlignment.center,
-                // crossAxisAlignment: pw.CrossAxisAlignment.center,
-                children: <pw.Widget>[
-                  pw.Text('${resume.profile?.phoneNumber}'),
-                  pw.Text(" / "),
-                  pw.Text('${resume.profile?.email}'),
-                  if (resume.profile?.yourPortfolioSite != "") ...[
-                    pw.Text(" / "),
-                    pw.Text('${resume.profile?.yourPortfolioSite}'),
-                  ],
-                ],
-              ),
-            ),
-            pw.Divider(
-                height: 60, thickness: 1, color: const PdfColor(0.5, 0.5, 0.5)),
-            Heading("Profile"),
-            pw.SizedBox(height: 8),
-            BodyText(resume.profile.profileSummary, ttfLight),
-            pw.Divider(
-                height: 60, thickness: 1, color: const PdfColor(0.5, 0.5, 0.5)),
-            if (resume.workExperience?.isNotEmpty ?? false) ...[
-              Heading("Work Experience"),
-              ...resume.workExperience?.map((e) {
-                    return pw.Column(
-                        crossAxisAlignment: pw.CrossAxisAlignment.start,
-                        children: [
-                          pw.SizedBox(height: 4),
-                          pw.Text(e.designation.toUpperCase(),
-                              style:
-                                  pw.TextStyle(font: ttfRegular, fontSize: 10)),
-                          pw.SizedBox(height: 7),
-                          pw.Text(e.companyName,
-                              style: pw.TextStyle(
-                                  letterSpacing: 2,
-                                  fontWeight: pw.FontWeight.bold,
-                                  fontSize: 10)),
-                          pw.SizedBox(height: 10),
-                          pw.Text('${e.startDate} - ${e.endDate}'),
-                          ...e.jobResponsibilities.map((item) {
-                            return pw.Padding(
-                              padding:
-                                  const pw.EdgeInsets.symmetric(vertical: 3.0),
-                              child: BulletPoint(item: item, font: ttfLight),
-                            );
-                          }).toList(),
-                          pw.SizedBox(height: 10)
-                        ]);
-                  }).toList() ??
-                  [pw.SizedBox()]
-            ],
-            if (resume.education.isNotEmpty ||
-                resume.certifications.isNotEmpty ||
-                resume.skills.isNotEmpty)
-              pw.Divider(
-                  height: 10,
-                  thickness: 1,
-                  color: const PdfColor(0.5, 0.5, 0.5)),
-            pw.SizedBox(height: 10),
-            //START OF EDUCATION SECTION
-            if (resume.education?.isNotEmpty ?? false) ...[
-              Heading("Education"),
-              ...?resume.education?.map((e) {
-                return pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
-                      pw.Text(e.university,
-                          style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                      pw.SizedBox(height: 4),
-                      BodyText("${e.startDate} - ${e.endDate}", ttfLight),
-                      pw.SizedBox(height: 3),
-                      BodyText(e.studyCourse, ttfLight),
-                    ]);
-              }).toList()
-            ],
-            //END OF STUDY SECTION
-            pw.SizedBox(height: 20),
+  await buildPdf(doc, ttfRegular, ttfBold, ttfLight, resume);
 
-            //START OF CERTIFICATION SECTION
-            if (resume.certifications.isNotEmpty) ...[
-              Heading("Certifications"),
-              pw.SizedBox(height: 6),
-              ...?resume.certifications?.map((e) {
-                return BulletPoint(item: e, font: ttfLight);
-              }).toList()
-            ],
-            if (resume.certifications.isNotEmpty) pw.SizedBox(height: 30),
-
-            //END OF CERTIFICATION SECTION
-
-            //SKILLS SECTION START
-
-            if (resume.skills.isNotEmpty) ...[
-              pw.SizedBox(height: 6),
-              Heading("skills"),
-              pw.SizedBox(height: 6),
-              ...resume.skills.map((e) {
-                return BulletPoint(item: e, font: ttfLight);
-              }).toList()
-            ]
-
-            //SKILLS SECTION END
-          ],
-        ),
-      ],
-    ),
-  );
   return doc.save();
 }
 

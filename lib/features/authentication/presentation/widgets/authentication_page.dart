@@ -13,6 +13,7 @@ import 'package:resume_builder/features/authentication/presentation/pages/forgot
 import 'package:resume_builder/features/authentication/presentation/pages/signin_page.dart';
 import 'package:resume_builder/features/authentication/presentation/pages/signup_page.dart';
 import 'package:resume_builder/features/home/homepage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationPage extends StatefulWidget {
   final bool isSignIn;
@@ -153,14 +154,25 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                   if (_formKey.currentState!.validate()) {
                     if (widget.isSignIn == true) {
                       try {
-                        await FirebaseAuth.instance.signInWithEmailAndPassword(
-                            email: email.text.trim(),
-                            password: password.text.trim());
+                        final user = await FirebaseAuth.instance
+                            .signInWithEmailAndPassword(
+                                email: email.text.trim(),
+                                password: password.text.trim());
+
+                        //SAVE TO SAHREDPREFS
+
+                        final pref = await SharedPreferences.getInstance();
+
+                        pref.setString("user", user.toString());
+
+                        //END SHAREDPREFS
                         // ignore: use_build_context_synchronously
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const Homepage()));
+
+                        //
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'user-not-found') {
                           Fluttertoast.showToast(
@@ -186,10 +198,18 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                       }
                     } else {
                       try {
-                        await FirebaseAuth.instance
+                        final user = await FirebaseAuth.instance
                             .createUserWithEmailAndPassword(
                                 email: email.text.trim(),
                                 password: password.text.trim());
+
+                        //SAVE TO SAHREDPREFS
+
+                        final pref = await SharedPreferences.getInstance();
+
+                        pref.setString("user", user.toString());
+
+                        //END SHAREDPREFS
                         // ignore: use_build_context_synchronously
                         Navigator.pushReplacement(
                             context,
@@ -244,7 +264,14 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               SocialLoginButton(
                 onTap: () async {
                   try {
-                    await signInWithGoogle();
+                    final user = await signInWithGoogle();
+                    //SAVE TO SAHREDPREFS
+
+                    final pref = await SharedPreferences.getInstance();
+
+                    pref.setString("user", user.toString());
+
+                    //END SHAREDPREFS
                     if (mounted) {
                       Navigator.pushReplacement(
                           context,

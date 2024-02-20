@@ -9,7 +9,7 @@ class Profile {
   String profileSummary;
   Profile(
       {this.email = "",
-      this.title="",
+      this.title = "",
       this.name = "",
       this.phoneNumber = "",
       this.position = "",
@@ -52,6 +52,7 @@ class Education {
 }
 
 class ResumeModel {
+  int id;
   Profile profile;
   List<WorkExperience> workExperience;
   List<Education> education;
@@ -59,7 +60,8 @@ class ResumeModel {
   List<String> skills;
 
   ResumeModel(
-      {required this.profile,
+      {required this.id,
+      required this.profile,
       required this.workExperience,
       required this.education,
       required this.certifications,
