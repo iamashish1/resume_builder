@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resume_builder/core/theme/app_colors.dart';
 
 class CustomTheme {
   static ThemeData get lightTheme {
@@ -6,6 +7,8 @@ class CustomTheme {
   }
 
   static final ThemeData _lightTheme = ThemeData(
+    colorScheme: ColorScheme.fromSeed(
+        seedColor: AppColors.primaryGreen, brightness: Brightness.light),
     fontFamily: "Manrope",
     primaryColorLight: green,
     scaffoldBackgroundColor: Colors.white,
