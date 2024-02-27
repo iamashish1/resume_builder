@@ -178,6 +178,8 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                           Fluttertoast.showToast(
                             msg: "No user found for that email.",
                           );
+                        } else if (e.code == 'invalid-email') {
+                          Fluttertoast.showToast(msg: "The email is invalid.");
                         } else if (e.code == 'wrong-password') {
                           Fluttertoast.showToast(
                             msg: "Wrong password provided for that user.",
