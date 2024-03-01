@@ -23,6 +23,7 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
+    print(FirebaseAuth.instance.currentUser);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [

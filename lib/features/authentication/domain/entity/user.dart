@@ -1,4 +1,4 @@
-class User{
+class UserModel{
   int id;
-  User({required this.id});
+  UserModel({required this.id});
 }
