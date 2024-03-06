@@ -1,10 +1,17 @@
 part of 'sign_in_cubit.dart';
 
-sealed class SignInState extends Equatable {
-  const SignInState();
+@freezed
+class SignInState with _$SignInState {
+  const factory SignInState.initial({
+    @Default(false) bool isLoading,
+    String? error,
+  }) = _Initial;
+    const factory SignInState.fetched(
+      {
+    @Default(false) bool isLoading,
+    String? error,
+    required UserModel data,
+  }
+    ) = _Fetched;
 
-  @override
-  List<Object> get props => [];
 }
-
-final class SignInInitial extends SignInState {}
