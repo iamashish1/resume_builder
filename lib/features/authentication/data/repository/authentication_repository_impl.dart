@@ -13,8 +13,13 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   });
 
   @override
-  Future<Either<AppException, UserModel>> loginUser(LoginRequestModel params) {
-    // TODO: implement loginUser
-    throw UnimplementedError();
+  Future<Either<AppException, UserModel>> loginUser(
+      LoginRequestModel params) async {
+    try {
+      final res = await remoteDataSource.loginUser(params);
+      return Right(res);
+    } catch (e) {
+      return Left(AppException(code: '909', message: 'ERROR'));
+    }
   }
 }

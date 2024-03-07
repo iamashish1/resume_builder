@@ -338,6 +338,7 @@ class _FormPageState extends State<FormPage> {
 
                       const Gap(20),
                       PrimaryButton(
+                        isLoading: false,
                           label: "Generate Resume",
                           onPressed: () {
                             if (_formKey.currentState?.validate() ?? false) {

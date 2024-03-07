@@ -52,6 +52,7 @@ class _ProfileViewState extends State<ProfileView> {
         Padding(
           padding: EdgeInsets.all(18),
           child: PrimaryButton(
+            isLoading: false,
               label: "Logout",
               onPressed: () async {
                 try {

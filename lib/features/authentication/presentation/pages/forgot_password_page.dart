@@ -45,6 +45,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     hintText: "Enter your email"),
                 const Gap(20),
                 PrimaryButton(
+                  isLoading: false,
                     label: "Reset Password",
                     onPressed: () async {
                       if (_formKey.currentState?.validate() ?? false) {

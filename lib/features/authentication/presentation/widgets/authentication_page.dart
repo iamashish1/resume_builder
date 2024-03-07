@@ -10,6 +10,7 @@ import 'package:resume_builder/core/theme/app_colors.dart';
 import 'package:resume_builder/core/widgets/primary_button.dart';
 import 'package:resume_builder/core/widgets/primary_textfield.dart';
 import 'package:resume_builder/core/widgets/social_login_button.dart';
+import 'package:resume_builder/features/authentication/data/model/login_request_model.dart';
 import 'package:resume_builder/features/authentication/presentation/bloc/cubit/sign_in_cubit.dart';
 import 'package:resume_builder/features/authentication/presentation/pages/forgot_password_page.dart';
 import 'package:resume_builder/features/authentication/presentation/pages/signin_page.dart';
@@ -85,9 +86,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignInCubit, SignInState>(
-      listener: (context, state) {
-      
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -156,94 +155,24 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  PrimaryButton(
-                    label: isSignInpage ? 'Login' : 'Signup',
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        if (widget.isSignIn == true) {
-                          try {
-                            final user = await FirebaseAuth.instance
-                                .signInWithEmailAndPassword(
+                  BlocBuilder<SignInCubit, SignInState>(
+                      builder: (btnCtx, btnState) {
+                    return PrimaryButton(
+                      isLoading: (btnState.maybeWhen(
+                          loading: () => true, orElse: () => false)),
+                      label: isSignInpage ? 'Login' : 'Signup',
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          if (isSignInpage == true) {
+                            context.read<SignInCubit>().signInUser(
+                                LoginRequestModel(
                                     email: email.text.trim(),
-                                    password: password.text.trim());
-
-                            //SAVE TO SAHREDPREFS
-
-                            final pref = await SharedPreferences.getInstance();
-
-                            pref.setString("user", user.toString());
-
-                            //END SHAREDPREFS
-                            // ignore: use_build_context_synchronously
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Homepage()));
-
-                            //
-                          } on FirebaseAuthException catch (e) {
-                            if (e.code == 'user-not-found') {
-                              Fluttertoast.showToast(
-                                msg: "No user found for that email.",
-                              );
-                            } else if (e.code == 'invalid-email') {
-                              Fluttertoast.showToast(
-                                  msg: "The email is invalid.");
-                            } else if (e.code == 'wrong-password') {
-                              Fluttertoast.showToast(
-                                msg: "Wrong password provided for that user.",
-                              );
-                            } else if (e.code == 'too-many-requests') {
-                              Fluttertoast.showToast(
-                                msg: "Slow down- Too many requests.",
-                              );
-                            } else if (e.code == "user-disabled") {
-                              Fluttertoast.showToast(
-                                msg: "The user has been disabled by admin.",
-                              );
-                            } else if (e.code == 'operation-not-allowed') {
-                              Fluttertoast.showToast(
-                                msg: "The user has been disabled by admin.",
-                              );
-                            }
-                          }
-                        } else {
-                          try {
-                            final user = await FirebaseAuth.instance
-                                .createUserWithEmailAndPassword(
-                                    email: email.text.trim(),
-                                    password: password.text.trim());
-
-                            //SAVE TO SAHREDPREFS
-
-                            final pref = await SharedPreferences.getInstance();
-
-                            pref.setString("user", user.toString());
-
-                            //END SHAREDPREFS
-                            // ignore: use_build_context_synchronously
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Homepage()));
-                          } on FirebaseAuthException catch (e) {
-                            if (e.code == 'email-already-in-use') {
-                              Fluttertoast.showToast(
-                                msg: "Email already in use.",
-                              );
-                            } else if (e.code == 'weak-password') {
-                              Fluttertoast.showToast(
-                                msg: "The password is too weak.",
-                              );
-                            } else if (e.code == 'invalid-email') {
-                              Fluttertoast.showToast(
-                                  msg: "The email is invalid.");
-                            }
+                                    password: password.text.trim()));
                           }
                         }
-                      }
-                    },
-                  ),
+                      },
+                    );
+                  }),
                   const Gap(10),
                   if (isSignInpage)
                     InkWell(
@@ -304,3 +233,6 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
     );
   }
 }
+
+
+

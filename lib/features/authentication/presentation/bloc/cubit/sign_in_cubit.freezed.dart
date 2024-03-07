@@ -16,50 +16,55 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SignInState {
-  bool get isLoading => throw _privateConstructorUsedError;
-  String? get error => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isLoading, String? error) initial,
-    required TResult Function(bool isLoading, String? error, UserModel data)
-        fetched,
+    required TResult Function() initial,
+    required TResult Function(String error) error,
+    required TResult Function() loading,
+    required TResult Function(UserModel data) fetched,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isLoading, String? error)? initial,
-    TResult? Function(bool isLoading, String? error, UserModel data)? fetched,
+    TResult? Function()? initial,
+    TResult? Function(String error)? error,
+    TResult? Function()? loading,
+    TResult? Function(UserModel data)? fetched,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isLoading, String? error)? initial,
-    TResult Function(bool isLoading, String? error, UserModel data)? fetched,
+    TResult Function()? initial,
+    TResult Function(String error)? error,
+    TResult Function()? loading,
+    TResult Function(UserModel data)? fetched,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Fetched value) fetched,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
     TResult? Function(_Fetched value)? fetched,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Fetched value)? fetched,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $SignInStateCopyWith<SignInState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -68,8 +73,6 @@ abstract class $SignInStateCopyWith<$Res> {
   factory $SignInStateCopyWith(
           SignInState value, $Res Function(SignInState) then) =
       _$SignInStateCopyWithImpl<$Res, SignInState>;
-  @useResult
-  $Res call({bool isLoading, String? error});
 }
 
 /// @nodoc
@@ -81,35 +84,13 @@ class _$SignInStateCopyWithImpl<$Res, $Val extends SignInState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? isLoading = null,
-    Object? error = freezed,
-  }) {
-    return _then(_value.copyWith(
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$InitialImplCopyWith<$Res>
-    implements $SignInStateCopyWith<$Res> {
+abstract class _$$InitialImplCopyWith<$Res> {
   factory _$$InitialImplCopyWith(
           _$InitialImpl value, $Res Function(_$InitialImpl) then) =
       __$$InitialImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({bool isLoading, String? error});
 }
 
 /// @nodoc
@@ -119,89 +100,60 @@ class __$$InitialImplCopyWithImpl<$Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? isLoading = null,
-    Object? error = freezed,
-  }) {
-    return _then(_$InitialImpl(
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$InitialImpl implements _Initial {
-  const _$InitialImpl({this.isLoading = false, this.error});
-
-  @override
-  @JsonKey()
-  final bool isLoading;
-  @override
-  final String? error;
+  const _$InitialImpl();
 
   @override
   String toString() {
-    return 'SignInState.initial(isLoading: $isLoading, error: $error)';
+    return 'SignInState.initial()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$InitialImpl &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            (identical(other.error, error) || other.error == error));
+        (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, error);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isLoading, String? error) initial,
-    required TResult Function(bool isLoading, String? error, UserModel data)
-        fetched,
+    required TResult Function() initial,
+    required TResult Function(String error) error,
+    required TResult Function() loading,
+    required TResult Function(UserModel data) fetched,
   }) {
-    return initial(isLoading, error);
+    return initial();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isLoading, String? error)? initial,
-    TResult? Function(bool isLoading, String? error, UserModel data)? fetched,
+    TResult? Function()? initial,
+    TResult? Function(String error)? error,
+    TResult? Function()? loading,
+    TResult? Function(UserModel data)? fetched,
   }) {
-    return initial?.call(isLoading, error);
+    return initial?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isLoading, String? error)? initial,
-    TResult Function(bool isLoading, String? error, UserModel data)? fetched,
+    TResult Function()? initial,
+    TResult Function(String error)? error,
+    TResult Function()? loading,
+    TResult Function(UserModel data)? fetched,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(isLoading, error);
+      return initial();
     }
     return orElse();
   }
@@ -210,6 +162,8 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Fetched value) fetched,
   }) {
     return initial(this);
@@ -219,6 +173,8 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
     TResult? Function(_Fetched value)? fetched,
   }) {
     return initial?.call(this);
@@ -228,6 +184,8 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Fetched value)? fetched,
     required TResult orElse(),
   }) {
@@ -239,28 +197,275 @@ class _$InitialImpl implements _Initial {
 }
 
 abstract class _Initial implements SignInState {
-  const factory _Initial({final bool isLoading, final String? error}) =
-      _$InitialImpl;
+  const factory _Initial() = _$InitialImpl;
+}
+
+/// @nodoc
+abstract class _$$ErrorImplCopyWith<$Res> {
+  factory _$$ErrorImplCopyWith(
+          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
+      __$$ErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String error});
+}
+
+/// @nodoc
+class __$$ErrorImplCopyWithImpl<$Res>
+    extends _$SignInStateCopyWithImpl<$Res, _$ErrorImpl>
+    implements _$$ErrorImplCopyWith<$Res> {
+  __$$ErrorImplCopyWithImpl(
+      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? error = null,
+  }) {
+    return _then(_$ErrorImpl(
+      null == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ErrorImpl implements _Error {
+  const _$ErrorImpl(this.error);
 
   @override
-  bool get isLoading;
+  final String error;
+
   @override
-  String? get error;
+  String toString() {
+    return 'SignInState.error(error: $error)';
+  }
+
   @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ErrorImpl &&
+            (identical(other.error, error) || other.error == error));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, error);
+
   @JsonKey(ignore: true)
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
+      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String error) error,
+    required TResult Function() loading,
+    required TResult Function(UserModel data) fetched,
+  }) {
+    return error(this.error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String error)? error,
+    TResult? Function()? loading,
+    TResult? Function(UserModel data)? fetched,
+  }) {
+    return error?.call(this.error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String error)? error,
+    TResult Function()? loading,
+    TResult Function(UserModel data)? fetched,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this.error);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Fetched value) fetched,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Fetched value)? fetched,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Fetched value)? fetched,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Error implements SignInState {
+  const factory _Error(final String error) = _$ErrorImpl;
+
+  String get error;
+  @JsonKey(ignore: true)
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$FetchedImplCopyWith<$Res>
-    implements $SignInStateCopyWith<$Res> {
+abstract class _$$LoadingImplCopyWith<$Res> {
+  factory _$$LoadingImplCopyWith(
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+      __$$LoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LoadingImplCopyWithImpl<$Res>
+    extends _$SignInStateCopyWithImpl<$Res, _$LoadingImpl>
+    implements _$$LoadingImplCopyWith<$Res> {
+  __$$LoadingImplCopyWithImpl(
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$LoadingImpl implements _Loading {
+  const _$LoadingImpl();
+
+  @override
+  String toString() {
+    return 'SignInState.loading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String error) error,
+    required TResult Function() loading,
+    required TResult Function(UserModel data) fetched,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String error)? error,
+    TResult? Function()? loading,
+    TResult? Function(UserModel data)? fetched,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String error)? error,
+    TResult Function()? loading,
+    TResult Function(UserModel data)? fetched,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Fetched value) fetched,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Fetched value)? fetched,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Fetched value)? fetched,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Loading implements SignInState {
+  const factory _Loading() = _$LoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$FetchedImplCopyWith<$Res> {
   factory _$$FetchedImplCopyWith(
           _$FetchedImpl value, $Res Function(_$FetchedImpl) then) =
       __$$FetchedImplCopyWithImpl<$Res>;
-  @override
   @useResult
-  $Res call({bool isLoading, String? error, UserModel data});
+  $Res call({UserModel data});
 }
 
 /// @nodoc
@@ -274,19 +479,9 @@ class __$$FetchedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoading = null,
-    Object? error = freezed,
     Object? data = null,
   }) {
     return _then(_$FetchedImpl(
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -298,19 +493,14 @@ class __$$FetchedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$FetchedImpl implements _Fetched {
-  const _$FetchedImpl({this.isLoading = false, this.error, required this.data});
+  const _$FetchedImpl({required this.data});
 
-  @override
-  @JsonKey()
-  final bool isLoading;
-  @override
-  final String? error;
   @override
   final UserModel data;
 
   @override
   String toString() {
-    return 'SignInState.fetched(isLoading: $isLoading, error: $error, data: $data)';
+    return 'SignInState.fetched(data: $data)';
   }
 
   @override
@@ -318,14 +508,11 @@ class _$FetchedImpl implements _Fetched {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FetchedImpl &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            (identical(other.error, error) || other.error == error) &&
             (identical(other.data, data) || other.data == data));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, error, data);
+  int get hashCode => Object.hash(runtimeType, data);
 
   @JsonKey(ignore: true)
   @override
@@ -336,31 +523,36 @@ class _$FetchedImpl implements _Fetched {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isLoading, String? error) initial,
-    required TResult Function(bool isLoading, String? error, UserModel data)
-        fetched,
+    required TResult Function() initial,
+    required TResult Function(String error) error,
+    required TResult Function() loading,
+    required TResult Function(UserModel data) fetched,
   }) {
-    return fetched(isLoading, error, data);
+    return fetched(data);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isLoading, String? error)? initial,
-    TResult? Function(bool isLoading, String? error, UserModel data)? fetched,
+    TResult? Function()? initial,
+    TResult? Function(String error)? error,
+    TResult? Function()? loading,
+    TResult? Function(UserModel data)? fetched,
   }) {
-    return fetched?.call(isLoading, error, data);
+    return fetched?.call(data);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isLoading, String? error)? initial,
-    TResult Function(bool isLoading, String? error, UserModel data)? fetched,
+    TResult Function()? initial,
+    TResult Function(String error)? error,
+    TResult Function()? loading,
+    TResult Function(UserModel data)? fetched,
     required TResult orElse(),
   }) {
     if (fetched != null) {
-      return fetched(isLoading, error, data);
+      return fetched(data);
     }
     return orElse();
   }
@@ -369,6 +561,8 @@ class _$FetchedImpl implements _Fetched {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Fetched value) fetched,
   }) {
     return fetched(this);
@@ -378,6 +572,8 @@ class _$FetchedImpl implements _Fetched {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
     TResult? Function(_Fetched value)? fetched,
   }) {
     return fetched?.call(this);
@@ -387,6 +583,8 @@ class _$FetchedImpl implements _Fetched {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Fetched value)? fetched,
     required TResult orElse(),
   }) {
@@ -398,17 +596,9 @@ class _$FetchedImpl implements _Fetched {
 }
 
 abstract class _Fetched implements SignInState {
-  const factory _Fetched(
-      {final bool isLoading,
-      final String? error,
-      required final UserModel data}) = _$FetchedImpl;
+  const factory _Fetched({required final UserModel data}) = _$FetchedImpl;
 
-  @override
-  bool get isLoading;
-  @override
-  String? get error;
   UserModel get data;
-  @override
   @JsonKey(ignore: true)
   _$$FetchedImplCopyWith<_$FetchedImpl> get copyWith =>
       throw _privateConstructorUsedError;
