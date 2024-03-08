@@ -86,7 +86,14 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignInCubit, SignInState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        state.maybeWhen(
+          orElse: () {},
+          error: (error) {
+            Fluttertoast.showToast(msg: error);
+          },
+        );
+      },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -166,8 +173,16 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                           if (isSignInpage == true) {
                             context.read<SignInCubit>().signInUser(
                                 LoginRequestModel(
+                                  isSignUp: false,
                                     email: email.text.trim(),
                                     password: password.text.trim()));
+                          }else{
+                             context.read<SignInCubit>().signInUser(
+                                LoginRequestModel(
+                                  isSignUp: true,
+                                    email: email.text.trim(),
+                                    password: password.text.trim()));
+
                           }
                         }
                       },
@@ -233,6 +248,3 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
     );
   }
 }
-
-
-

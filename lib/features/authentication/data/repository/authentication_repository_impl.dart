@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:resume_builder/core/app_exceptions/app_exceptions.dart';
+import 'package:resume_builder/core/app_exceptions/check_exceptions.dart';
 import 'package:resume_builder/features/authentication/data/data_source/remote_data_source.dart';
 import 'package:resume_builder/features/authentication/data/model/login_request_model.dart';
 import 'package:resume_builder/features/authentication/domain/entity/user.dart';
@@ -19,7 +20,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       final res = await remoteDataSource.loginUser(params);
       return Right(res);
     } catch (e) {
-      return Left(AppException(code: '909', message: 'ERROR'));
+      return Left(ExceptionHandler.handleException(e));
     }
   }
 }

@@ -10,9 +10,14 @@ abstract class RemoteDataSource {
 class RemoteDataSourceImpl implements RemoteDataSource {
   @override
   Future<FirebaseUser> loginUser(LoginRequestModel params) async {
-    final user = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: params.email, password: params.password);
-
+    UserCredential? user;
+    if (params.isSignUp = true) {
+      user = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: params.email, password: params.password);
+    } else {
+      user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: params.email, password: params.password);
+    }
     //SAVE TO SAHREDPREFS
 
     final pref = await SharedPreferences.getInstance();
@@ -24,5 +29,3 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     return Future.value(FirebaseUser(id: user.user?.displayName ?? ""));
   }
 }
-
-
