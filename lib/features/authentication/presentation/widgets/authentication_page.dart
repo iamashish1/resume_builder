@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:resume_builder/core/app_exceptions/app_exceptions.dart';
+import 'package:resume_builder/core/constants/app_constants.dart';
 import 'package:resume_builder/core/theme/app_colors.dart';
 import 'package:resume_builder/core/widgets/primary_button.dart';
 import 'package:resume_builder/core/widgets/primary_textfield.dart';
@@ -133,14 +134,28 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                     width: double.infinity,
                   ),
                   PrimaryTextfield(
+                      validator: (v) {
+                        if (emailRegex.hasMatch(v ?? "")) {
+                          return null;
+                        } else {
+                          return ('Enter valid email');
+                        }
+                      },
                       controller: email,
                       hintText: 'Email',
                       focusNode: emailFocus,
                       nextFocus: passwordFocus),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   PrimaryTextfield(
+                    validator: (v) {
+                      if ((v?.length ?? 0) > 4) {
+                        return null;
+                      } else {
+                        return ('Password must at least be 5 characters');
+                      }
+                    },
                     controller: password,
                     isObscure: obscureText,
                     hintText: 'Password',
@@ -151,7 +166,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                           obscureText = !obscureText;
                         });
                       },
-                      child: Text(
+                      child: const Text(
                         "Show",
                         style: TextStyle(
                             color: Color(0xff5DB075),
@@ -159,7 +174,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   BlocBuilder<SignInCubit, SignInState>(
@@ -170,20 +185,11 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                       label: isSignInpage ? 'Login' : 'Signup',
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          if (isSignInpage == true) {
-                            context.read<SignInCubit>().signInUser(
-                                LoginRequestModel(
-                                  isSignUp: false,
-                                    email: email.text.trim(),
-                                    password: password.text.trim()));
-                          }else{
-                             context.read<SignInCubit>().signInUser(
-                                LoginRequestModel(
-                                  isSignUp: true,
-                                    email: email.text.trim(),
-                                    password: password.text.trim()));
-
-                          }
+                          context.read<SignInCubit>().signInUser(
+                              LoginRequestModel(
+                                  isSignUp: !isSignInpage,
+                                  email: email.text.trim(),
+                                  password: password.text.trim()));
                         }
                       },
                     );

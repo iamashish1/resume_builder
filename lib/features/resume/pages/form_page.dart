@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:resume_builder/core/ads/show_interstitial_ads.dart';
 import 'package:resume_builder/core/theme/app_colors.dart';
 import 'package:resume_builder/core/widgets/primary_button.dart';
 import 'package:resume_builder/features/home/template_model/template_model.dart';
@@ -338,13 +339,15 @@ class _FormPageState extends State<FormPage> {
 
                       const Gap(20),
                       PrimaryButton(
-                        isLoading: false,
+                          isLoading: false,
                           label: "Generate Resume",
                           onPressed: () {
                             if (_formKey.currentState?.validate() ?? false) {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) =>
                                       ResumePreview(resume: resume)));
+
+                              showInterstitialAd();
                             }
                           }),
                     ],

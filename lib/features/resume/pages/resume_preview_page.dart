@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -110,8 +108,6 @@ class _ResumePreviewState extends State<ResumePreview> {
         allowPrinting: false,
         canChangePageFormat: false,
         canChangeOrientation: false,
-        // useActions: false,
-        // maxPageWidth: 700,
         build: (format) async => generateResume(format, myResume),
         actions: [
           PdfPreviewAction(
@@ -200,5 +196,25 @@ class BodyText extends pw.StatelessWidget {
             letterSpacing: 0.5,
             wordSpacing: 2,
             lineSpacing: 5));
+  }
+}
+
+class GreyHeading extends pw.StatelessWidget {
+  String title;
+
+  GreyHeading(this.title);
+  @override
+  pw.Widget build(pw.Context context) {
+    return pw.Container(
+
+        padding: const pw.EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        decoration: pw.BoxDecoration(
+          borderRadius: pw.BorderRadius.circular(6),
+          color: PdfColor.fromHex("#F1F1ED")),
+        child: pw.Text(title.toUpperCase(),
+            style: pw.TextStyle(
+                fontWeight: pw.FontWeight.bold,
+                fontSize: 13,
+                letterSpacing: 3)));
   }
 }

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
+import 'package:resume_builder/core/constants/app_constants.dart';
 import 'package:resume_builder/core/widgets/primary_button.dart';
 import 'package:resume_builder/core/widgets/primary_textfield.dart';
 
@@ -16,7 +17,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _formKey = GlobalKey<FormState>();
 
   final email = TextEditingController();
-  RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
   @override
   Widget build(BuildContext context) {

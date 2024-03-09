@@ -11,7 +11,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   @override
   Future<FirebaseUser> loginUser(LoginRequestModel params) async {
     UserCredential? user;
-    if (params.isSignUp = true) {
+    if (params.isSignUp == false) {
       user = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: params.email, password: params.password);
     } else {
@@ -19,13 +19,10 @@ class RemoteDataSourceImpl implements RemoteDataSource {
           email: params.email, password: params.password);
     }
     //SAVE TO SAHREDPREFS
-
     final pref = await SharedPreferences.getInstance();
-
     pref.setString("user", user.toString());
-
     //END SHAREDPREFS
 
-    return Future.value(FirebaseUser(id: user.user?.displayName ?? ""));
+    return Future.value(FirebaseUser(id: user?.user?.displayName ?? ""));
   }
 }

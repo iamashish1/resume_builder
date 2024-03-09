@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:resume_builder/core/theme/app_colors.dart';
-import 'package:resume_builder/core/theme/custom_theme.dart';
 import 'package:resume_builder/features/home/downloads_page.dart';
 import 'package:resume_builder/features/home/home_view.dart';
 
@@ -17,8 +16,6 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static final List<Widget> _widgetOptions = <Widget>[
      HomeView(key: UniqueKey(),isHome: true,),
      HomeView(key: UniqueKey(),isHome: false,),
@@ -28,15 +25,6 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton: FloatingActionButton.extended(
-      //     backgroundColor: Colors.white,
-      //     onPressed: () {},
-      //     label: Row(
-      //       children: [
-      //         Icon(LineIcons.plus),
-      //         Text('Create New Resume'),
-      //       ],
-      //     )),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,

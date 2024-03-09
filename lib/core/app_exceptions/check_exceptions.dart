@@ -4,7 +4,11 @@ import 'package:resume_builder/core/app_exceptions/app_exceptions.dart';
 class ExceptionHandler {
   static AppException handleException(exception) {
     if (exception is FirebaseAuthException) {
+      print(exception);
       switch (exception.code) {
+         case 'weak-password':
+          return AppException(
+              code: "email_in_use_code", message: "The password is too weak");
         case 'email-already-in-use':
           return AppException(
               code: "email_in_use_code", message: "Email is already in use.");

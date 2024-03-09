@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:resume_builder/core/theme/app_colors.dart';
+import 'package:resume_builder/core/ads/banner_add_widget.dart';
+import 'package:resume_builder/core/ads/show_interstitial_ads.dart';
 import 'package:resume_builder/features/resume/pages/form_page.dart';
 
 class HomeView extends StatefulWidget {
@@ -99,138 +100,187 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
-  //
   bool isLoading = true;
+  // BannerAd? _bannerAd;
+
+  // /// Loads a banner ad.
+  // void _loadAd() {
+  //   final bannerAd = BannerAd(
+  //     size: AdSize.banner,
+  //     adUnitId: 'ca-app-pub-3940256099942544/9214589741',
+  //     request: const AdRequest(),
+  //     listener: BannerAdListener(
+  //       // Called when an ad is successfully received.
+  //       onAdLoaded: (ad) {
+  //         if (!mounted) {
+  //           ad.dispose();
+  //           return;
+  //         }
+  //         setState(() {
+  //           _bannerAd = ad as BannerAd;
+  //         });
+  //       },
+  //       // Called when an ad request failed.
+  //       onAdFailedToLoad: (ad, error) {
+  //         debugPrint('BannerAd failed to load: $error');
+  //         ad.dispose();
+  //       },
+  //     ),
+  //   );
+
+  //   // Start loading.
+  //   bannerAd.load();
+  // }
 
   @override
   void initState() {
+    // _loadAd();
     widget.isHome == true ? getImageUrls() : getLikedTemplates();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    } else {
-      return templates.isEmpty
-          ? const Center(
-              child: Text('No Items found'),
-            )
-          : ListView.builder(
-              itemCount: templates.length,
-              itemBuilder: (ctx, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(12),
-                    onTap: () {
-                      setState(() {
-                        selectedImageIndex =
-                            selectedImageIndex == index ? null : index;
-                      });
-                    },
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 300),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              width: selectedImageIndex == index ? 3 : 1,
-                              color: selectedImageIndex == index
-                                  ? Colors.blueGrey
-                                  : Colors.grey,
-                            ),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.network(
-                              templates[index].url,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                            top: 0,
-                            right: 0,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.blueGrey,
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(12),
-                                      bottomLeft: Radius.circular(12))),
-                              padding: const EdgeInsets.all(3),
-                              child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () async {
-                                    // Toggle like
-                                    await toggleLike((templates[index]));
-
-                                    // Update the like status in the templates list
-                                    setState(() {
-                                      if (templates[index].likedBy.contains(
-                                          FirebaseAuth
-                                              .instance.currentUser?.uid)) {
-                                        templates[index].likedBy.remove(
-                                            FirebaseAuth
-                                                .instance.currentUser?.uid);
-                                      } else {
-                                        templates[index].likedBy.add(
-                                            FirebaseAuth
-                                                .instance.currentUser?.uid);
-                                      }
-                                    });
-                                  },
-                                  icon: Icon(
-                                    (templates[index].likedBy.contains(
-                                            FirebaseAuth
-                                                .instance.currentUser?.uid))
-                                        ? Icons.favorite
-                                        : Icons.favorite_outline,
-                                    color: Colors.white,
-                                  )),
-                            )),
-                        Positioned(
-                          bottom: 10,
-                          child: AnimatedOpacity(
-                            opacity: selectedImageIndex == index ? 1.0 : 0.0,
-                            duration: const Duration(milliseconds: 300),
-                            child: OutlinedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all(Colors.blueGrey),
-                                side: MaterialStateProperty.all(BorderSide(
-                                    color: Colors
-                                        .grey)), // Set the color of the outline
-                              ),
-                              onPressed: (selectedImageIndex == index)
-                                  ? () {
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                              builder: (context) => FormPage(
-                                                    id: templates[index].id,
-                                                  )));
-                                    }
-                                  : null,
-                              child: const Text(
-                                'Select Template',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Montserrat'),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+    return Column(
+      children: [
+        Expanded(
+          child: Builder(
+            builder: (context) {
+              if (isLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
-              },
-            );
-    }
+              } else {
+                if (templates.isEmpty) {
+                  return const Center(child: Text('No Templates Found'));
+                } else {
+                  return ListView.builder(
+                    itemCount: templates.length,
+                    itemBuilder: (ctx, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(12),
+                          onTap: () {
+                            setState(() {
+                              selectedImageIndex =
+                                  selectedImageIndex == index ? null : index;
+                            });
+                          },
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              AnimatedContainer(
+                                duration: const Duration(milliseconds: 300),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    width: selectedImageIndex == index ? 3 : 1,
+                                    color: selectedImageIndex == index
+                                        ? Colors.blueGrey
+                                        : Colors.grey,
+                                  ),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Image.network(
+                                    templates[index].url,
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: 0,
+                                right: 0,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.blueGrey,
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(12),
+                                          bottomLeft: Radius.circular(12))),
+                                  padding: const EdgeInsets.all(3),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () async {
+                                      // Toggle like
+                                      await toggleLike((templates[index]));
+
+                                      // Update the like status in the templates list
+                                      setState(() {
+                                        if (templates[index].likedBy.contains(
+                                            FirebaseAuth
+                                                .instance.currentUser?.uid)) {
+                                          templates[index].likedBy.remove(
+                                              FirebaseAuth
+                                                  .instance.currentUser?.uid);
+                                        } else {
+                                          templates[index].likedBy.add(
+                                              FirebaseAuth
+                                                  .instance.currentUser?.uid);
+                                        }
+                                      });
+                                    },
+                                    icon: Icon(
+                                      (templates[index].likedBy.contains(
+                                              FirebaseAuth
+                                                  .instance.currentUser?.uid))
+                                          ? Icons.favorite
+                                          : Icons.favorite_outline,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 10,
+                                child: AnimatedOpacity(
+                                  opacity:
+                                      selectedImageIndex == index ? 1.0 : 0.0,
+                                  duration: const Duration(milliseconds: 300),
+                                  child: OutlinedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.blueGrey),
+                                      side: MaterialStateProperty.all(BorderSide(
+                                          color: Colors
+                                              .grey)), // Set the color of the outline
+                                    ),
+                                    onPressed: (selectedImageIndex == index)
+                                        ? () {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        FormPage(
+                                                          id: templates[index]
+                                                              .id,
+                                                        ))).then((value) {
+                                                          showInterstitialAd();
+                                                        });
+                                          }
+                                        : null,
+                                    child: const Text(
+                                      'Select Template',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'Montserrat'),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+              }
+            },
+          ),
+        ),
+
+      ],
+    );
   }
 }
 
