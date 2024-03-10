@@ -23,6 +23,6 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     pref.setString("user", user.toString());
     //END SHAREDPREFS
 
-    return Future.value(FirebaseUser(id: user?.user?.displayName ?? ""));
+    return Future.value(FirebaseUser(id: user.user?.displayName ?? ""));
   }
 }

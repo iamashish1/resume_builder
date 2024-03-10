@@ -45,7 +45,7 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
           alignment: Alignment.topLeft,
           child: Text(
             "Experience ${widget.index + 1} ",
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.blueGrey,
               fontWeight: FontWeight.w400,
             ),
@@ -82,7 +82,7 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'From',
                                 style:
                                     TextStyle(color: Colors.grey, fontSize: 10),
@@ -93,7 +93,7 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
                                   : 'Select Date'),
                             ],
                           ),
-                          IconButton(
+                          const IconButton(
                               onPressed: null, icon: Icon(Icons.expand_more))
                         ]),
                   ),
@@ -110,7 +110,7 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'To',
                                     style: TextStyle(
                                         color: Colors.grey, fontSize: 10),
@@ -120,13 +120,13 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
                                             widget.experience?.endDate != null
                                         ? (widget.experience?.endDate ?? "")
                                         : "Select Date",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.black,
                                     ),
                                   ),
                                 ],
                               ),
-                              IconButton(
+                              const IconButton(
                                   onPressed: null,
                                   icon: Icon(Icons.expand_more))
                             ]),
@@ -135,7 +135,7 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Flexible(child: Text('Currently Working')),
+                          const Flexible(child: Text('Currently Working')),
                           Checkbox(
                               value: widget.experience?.isCurrentlyWorking ??
                                   false,
@@ -147,7 +147,7 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             ListView.builder(
@@ -193,7 +193,7 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
                             onPressed: () {
                               widget.onDeleteResponsibility!(resIndex);
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.delete,
                             ),
                             splashColor: Colors.green,
@@ -206,7 +206,7 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
                                   1)
                             IconButton(
                               tooltip: 'Add Responsibility',
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.add_box_outlined,
                               ),
                               splashColor: Colors.green,
@@ -229,8 +229,8 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
                             Border.all(color: AppColors.primaryRed, width: 2),
                         // color: Color.fromARGB(255, 246, 102, 102),
                         borderRadius: BorderRadius.circular(20)),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Text(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: const Text(
                       "Delete",
                       style: TextStyle(
                           color: AppColors.primaryRed,

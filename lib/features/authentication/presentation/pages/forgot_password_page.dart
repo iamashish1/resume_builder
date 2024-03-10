@@ -23,7 +23,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
-          title: Text(
+          title: const Text(
             "Forgot Password",
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
           )),

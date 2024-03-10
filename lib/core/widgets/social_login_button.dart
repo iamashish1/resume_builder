@@ -24,10 +24,10 @@ class SocialLoginButton extends StatelessWidget {
                 height: 35,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 15,
             ),
-            Expanded(
+            const Expanded(
               child: Text(
                 'Continue with google',
                 style: TextStyle(color: Colors.white),

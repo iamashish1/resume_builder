@@ -84,7 +84,7 @@ class _FormPageState extends State<FormPage> {
                         children: [
                           Text(
                             'EXPERIENCE section'.toUpperCase(),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: blueAccent),
@@ -96,7 +96,7 @@ class _FormPageState extends State<FormPage> {
                                     WorkExperience(jobResponsibilities: ['']));
                               });
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.add_circle,
                               color: AppColors.primaryGreen,
                             ),
@@ -202,7 +202,7 @@ class _FormPageState extends State<FormPage> {
                         children: [
                           Text(
                             'Education section'.toUpperCase(),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: blueAccent),
@@ -213,7 +213,7 @@ class _FormPageState extends State<FormPage> {
                                 resume.education.add(Education());
                               });
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.add_circle,
                               color: AppColors.primaryGreen,
                             ),
@@ -296,7 +296,7 @@ class _FormPageState extends State<FormPage> {
                         children: [
                           Text(
                             'Skills Section'.toUpperCase(),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: blueAccent),
@@ -307,7 +307,7 @@ class _FormPageState extends State<FormPage> {
                                 resume.skills.add("");
                               });
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.add_circle,
                               color: AppColors.primaryGreen,
                             ),

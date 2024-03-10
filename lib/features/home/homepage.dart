@@ -44,11 +44,11 @@ class _HomepageState extends State<Homepage> {
               gap: 8,
               activeColor: Colors.black,
               iconSize: 24,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              duration: Duration(milliseconds: 400),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              duration: const Duration(milliseconds: 400),
               tabBackgroundColor: Colors.grey[100]!,
               color: Colors.black,
-              tabs: [
+              tabs: const [
                 GButton(
                   icon: LineIcons.home,
                   text: 'Home',
@@ -80,7 +80,7 @@ class _HomepageState extends State<Homepage> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(

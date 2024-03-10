@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:resume_builder/core/ads/banner_add_widget.dart';
 import 'package:resume_builder/core/ads/show_interstitial_ads.dart';
 import 'package:resume_builder/features/resume/pages/form_page.dart';
 
@@ -192,7 +191,7 @@ class _HomeViewState extends State<HomeView> {
                                 top: 0,
                                 right: 0,
                                 child: Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       color: Colors.blueGrey,
                                       borderRadius: BorderRadius.only(
                                           topRight: Radius.circular(12),
@@ -241,7 +240,7 @@ class _HomeViewState extends State<HomeView> {
                                       backgroundColor:
                                           MaterialStateProperty.all(
                                               Colors.blueGrey),
-                                      side: MaterialStateProperty.all(BorderSide(
+                                      side: MaterialStateProperty.all(const BorderSide(
                                           color: Colors
                                               .grey)), // Set the color of the outline
                                     ),

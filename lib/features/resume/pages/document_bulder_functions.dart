@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:resume_builder/features/home/template_model/template_model.dart';
@@ -45,12 +44,12 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
                   runAlignment: pw.WrapAlignment.center,
                   // crossAxisAlignment: pw.CrossAxisAlignment.center,
                   children: <pw.Widget>[
-                    pw.Text('${resume.profile?.phoneNumber}'),
+                    pw.Text(resume.profile.phoneNumber),
                     pw.Text(" / "),
-                    pw.Text('${resume.profile?.email}'),
-                    if (resume.profile?.yourPortfolioSite != "") ...[
+                    pw.Text(resume.profile.email),
+                    if (resume.profile.yourPortfolioSite != "") ...[
                       pw.Text(" / "),
-                      pw.Text('${resume.profile?.yourPortfolioSite}'),
+                      pw.Text(resume.profile.yourPortfolioSite),
                     ],
                   ],
                 ),
@@ -66,9 +65,9 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
                   height: 60,
                   thickness: 1,
                   color: const PdfColor(0.5, 0.5, 0.5)),
-              if (resume.workExperience?.isNotEmpty ?? false) ...[
+              if (resume.workExperience.isNotEmpty) ...[
                 Heading("Work Experience"),
-                ...resume.workExperience?.map((e) {
+                ...resume.workExperience.map((e) {
                       return pw.Column(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
@@ -93,8 +92,7 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
                             }).toList(),
                             pw.SizedBox(height: 10)
                           ]);
-                    }).toList() ??
-                    [pw.SizedBox()]
+                    }).toList() 
               ],
               if (resume.education.isNotEmpty ||
                   resume.certifications.isNotEmpty ||
@@ -105,9 +103,9 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
                     color: const PdfColor(0.5, 0.5, 0.5)),
               pw.SizedBox(height: 10),
               //START OF EDUCATION SECTION
-              if (resume.education?.isNotEmpty ?? false) ...[
+              if (resume.education.isNotEmpty) ...[
                 Heading("Education"),
-                ...?resume.education?.map((e) {
+                ...resume.education.map((e) {
                   return pw.Column(
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
@@ -128,7 +126,7 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
               if (resume.certifications.isNotEmpty) ...[
                 Heading("Certifications"),
                 pw.SizedBox(height: 6),
-                ...?resume.certifications?.map((e) {
+                ...resume.certifications.map((e) {
                   return BulletPoint(item: e, font: ttfLight);
                 }).toList()
               ],
@@ -254,7 +252,7 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
                             children: [
                               Heading("Education"),
                               pw.SizedBox(height: 10),
-                              ...?resume.education?.map((e) {
+                              ...resume.education.map((e) {
                                 return pw.Column(
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
@@ -376,8 +374,7 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
                                                             shape: pw.BoxShape
                                                                 .circle)))
                                           ]);
-                                    }).toList() ??
-                                    [pw.SizedBox()]
+                                    }).toList() 
                               ],
                             )))
                 ],
@@ -663,7 +660,7 @@ else if (resume.id == 4) {
       ),
       build: (pw.Context context) => [
         pw.Container(
-          padding: pw.EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          padding: const pw.EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           child: pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: <pw.Widget>[
@@ -720,7 +717,7 @@ else if (resume.id == 4) {
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
                     pw.Text(
-                      "${education.university}",
+                      education.university,
                       style: pw.TextStyle(
                         fontWeight: pw.FontWeight.bold,
                         fontSize: 14,
@@ -728,7 +725,7 @@ else if (resume.id == 4) {
                       ),
                     ),
                     pw.Text("${education.startDate} - ${education.endDate}"),
-                    pw.Text("${education.studyCourse}"),
+                    pw.Text(education.studyCourse),
                     pw.SizedBox(height: 10),
                   ],
                 ),
@@ -815,7 +812,7 @@ else if (resume.id == 5) {
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
                   pw.Text(
-                    "${education.university}",
+                    education.university,
                     style: pw.TextStyle(
                       fontWeight: pw.FontWeight.bold,
                       fontSize: 14,
@@ -823,7 +820,7 @@ else if (resume.id == 5) {
                     ),
                   ),
                   pw.Text("${education.startDate} - ${education.endDate}", style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                  pw.Text("${education.studyCourse}", style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                  pw.Text(education.studyCourse, style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                   pw.SizedBox(height: 10),
                 ],
               ),

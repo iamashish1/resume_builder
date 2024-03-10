@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:resume_builder/core/app_exceptions/app_exceptions.dart';
 import 'package:resume_builder/features/authentication/data/model/login_request_model.dart';
 import 'package:resume_builder/features/authentication/domain/entity/user.dart';
 import 'package:resume_builder/features/authentication/domain/usecases/sign_in_cubit.dart';

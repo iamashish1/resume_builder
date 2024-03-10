@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:resume_builder/core/theme/app_colors.dart';
 import 'package:resume_builder/core/widgets/primary_textfield.dart';
 import 'package:resume_builder/features/home/template_model/template_model.dart';
 
-import '../../../core/theme/custom_theme.dart';
 
 class EducationWidget extends StatefulWidget {
   final Education? education;
@@ -43,7 +41,7 @@ class _EducationWidgetState<T> extends State<EducationWidget> {
           alignment: Alignment.topLeft,
           child: Text(
             "Education ${widget.index + 1} ",
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.blueGrey,
               fontWeight: FontWeight.w400,
             ),
@@ -52,7 +50,7 @@ class _EducationWidgetState<T> extends State<EducationWidget> {
         Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 3),
+              padding: const EdgeInsets.only(top: 3),
               child: PrimaryTextfield(
                   hintText: "Institution Name",
                   label: 'Institution Name',
@@ -80,7 +78,7 @@ class _EducationWidgetState<T> extends State<EducationWidget> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'From',
                                 style:
                                     TextStyle(color: Colors.grey, fontSize: 10),
@@ -91,7 +89,7 @@ class _EducationWidgetState<T> extends State<EducationWidget> {
                                   : 'Select Date'),
                             ],
                           ),
-                          IconButton(
+                          const IconButton(
                               onPressed: null, icon: Icon(Icons.expand_more))
                         ]),
                   ),
@@ -109,7 +107,7 @@ class _EducationWidgetState<T> extends State<EducationWidget> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'To',
                                     style: TextStyle(
                                         color: Colors.grey, fontSize: 10),
@@ -119,13 +117,13 @@ class _EducationWidgetState<T> extends State<EducationWidget> {
                                             widget.education?.endDate != null
                                         ? (widget.education?.endDate ?? "")
                                         : "Select Date",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.black,
                                     ),
                                   ),
                                 ],
                               ),
-                              IconButton(
+                              const IconButton(
                                   onPressed: null,
                                   icon: Icon(Icons.expand_more))
                             ]),
@@ -134,7 +132,7 @@ class _EducationWidgetState<T> extends State<EducationWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Flexible(child: Text('Currently Studying')),
+                          const Flexible(child: Text('Currently Studying')),
                           Checkbox(
                             value:
                                 widget.education?.isCurrentlyStudying ?? false,
@@ -149,7 +147,7 @@ class _EducationWidgetState<T> extends State<EducationWidget> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Align(
@@ -162,8 +160,8 @@ class _EducationWidgetState<T> extends State<EducationWidget> {
                             Border.all(color: AppColors.primaryRed, width: 2),
                         // color: Color.fromARGB(255, 246, 102, 102),
                         borderRadius: BorderRadius.circular(20)),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Text(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: const Text(
                       "Delete",
                       style: TextStyle(
                           color: AppColors.primaryRed,

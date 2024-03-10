@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:resume_builder/core/theme/app_colors.dart';
-import 'package:resume_builder/core/theme/custom_theme.dart';
 
 class SkillsSection extends StatefulWidget {
   final String skill;
@@ -40,7 +38,7 @@ class _SkillsSectionState extends State<SkillsSection> {
                 onChanged: (value) {
                   widget.onChnaged?.call(value, widget.index);
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Mention a skill',
                   contentPadding: EdgeInsets.zero,
                   border: InputBorder.none,
@@ -50,7 +48,7 @@ class _SkillsSectionState extends State<SkillsSection> {
             onPressed: () {
               widget.onSkillDeleted?.call(widget.index);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.delete,
             ),
             splashColor: Colors.green,
@@ -58,6 +56,5 @@ class _SkillsSectionState extends State<SkillsSection> {
             color: Colors.grey,
           ),
         ]);
-    ;
   }
 }

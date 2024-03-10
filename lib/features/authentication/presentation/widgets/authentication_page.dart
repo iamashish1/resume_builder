@@ -113,23 +113,23 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                       },
                       child: Text(
                         isSignInpage ? 'Signup' : 'Login',
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16, color: AppColors.primaryGreen),
                       )),
                 ),
               ],
               title: Text(
                 isSignInpage ? 'Login' : 'Sign up',
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+                style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
               )),
           body: Form(
             key: _formKey,
             child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 18),
+              padding: const EdgeInsets.symmetric(horizontal: 18),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                     width: double.infinity,
                   ),
@@ -210,16 +210,16 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                               color: AppColors.primaryGreen,
                               fontWeight: FontWeight.w600),
                         )),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   // Text('Not a member?'),
-                  Text(
+                  const Text(
                     'Or use google login:',
                     style: TextStyle(color: Color.fromARGB(255, 122, 120, 120)),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
 

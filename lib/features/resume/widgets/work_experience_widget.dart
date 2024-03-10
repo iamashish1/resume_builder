@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:intl/intl.dart';
 import 'package:resume_builder/core/widgets/primary_textfield.dart';
 import 'package:resume_builder/features/home/template_model/template_model.dart';
 
@@ -37,7 +35,7 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
           children: [
             Text(
               'EXPERIENCE section'.toUpperCase(),
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16, fontWeight: FontWeight.bold, color: blueAccent),
             ),
             IconButton(
@@ -46,7 +44,7 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                   exp.add(WorkExperience(jobResponsibilities: ['']));
                 });
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.add_circle,
                 color: AppColors.primaryGreen,
               ),
@@ -67,7 +65,7 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     "Experience ${index + 1} ",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.blueGrey,
                       fontWeight: FontWeight.w400,
                     ),
@@ -117,18 +115,17 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'From',
                                         style: TextStyle(
                                             color: Colors.grey, fontSize: 10),
                                       ),
-                                      Text(workExp?.startDate != "" &&
-                                              workExp?.startDate != null
-                                          ? (workExp?.startDate ?? '')
+                                      Text(workExp.startDate != ""
+                                          ? (workExp.startDate )
                                           : 'Select Date'),
                                     ],
                                   ),
-                                  IconButton(
+                                  const IconButton(
                                       onPressed: null,
                                       icon: Icon(Icons.expand_more))
                                 ]),
@@ -162,24 +159,23 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
+                                          const Text(
                                             'To',
                                             style: TextStyle(
                                                 color: Colors.grey,
                                                 fontSize: 10),
                                           ),
                                           Text(
-                                            workExp?.endDate != "" &&
-                                                    workExp?.endDate != null
-                                                ? (workExp?.endDate ?? "")
+                                            workExp.endDate != ""
+                                                ? (workExp.endDate)
                                                 : "Select Date",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: Colors.black,
                                             ),
                                           ),
                                         ],
                                       ),
-                                      IconButton(
+                                      const IconButton(
                                           onPressed: null,
                                           icon: Icon(Icons.expand_more))
                                     ]),
@@ -189,9 +185,9 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                                     MainAxisAlignment.spaceBetween,
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  Flexible(child: Text('Currently Working')),
+                                  const Flexible(child: Text('Currently Working')),
                                   Checkbox(
-                                    value: workExp?.isCurrentlyWorking ?? false,
+                                    value: workExp.isCurrentlyWorking,
                                     onChanged: (value) {
                                       // setState(() {
                                       //   workExp?.isCurrentlyWorking =
@@ -214,7 +210,7 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     ListView.builder(
@@ -241,7 +237,7 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                                     onChanged: (v) {
                                       workExp.jobResponsibilities[resIndex] = v;
                                     },
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       hintText: 'Mention a job responsibilty',
                                       contentPadding: EdgeInsets.zero,
                                       border: InputBorder.none,
@@ -257,7 +253,7 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                                             .removeAt(resIndex);
                                       });
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.delete,
                                     ),
                                     splashColor: Colors.green,
@@ -265,8 +261,7 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                                     color: Colors.red,
                                   ),
                                   if (resIndex ==
-                                      (workExp?.jobResponsibilities.length ??
-                                              0) -
+                                      (workExp.jobResponsibilities.length) -
                                           1)
                                     IconButton(
                                       tooltip: 'Add Responsibility',
@@ -276,7 +271,7 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                                         });
                                         // resBloc.addJobResponsibility(index);
                                       },
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.add_box_outlined,
                                       ),
                                       splashColor: Colors.green,
@@ -302,9 +297,9 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                                     color: AppColors.primaryRed, width: 2),
                                 // color: Color.fromARGB(255, 246, 102, 102),
                                 borderRadius: BorderRadius.circular(20)),
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 5),
-                            child: Text(
+                            child: const Text(
                               "Delete",
                               style: TextStyle(
                                   color: AppColors.primaryRed,

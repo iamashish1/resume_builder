@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -29,7 +28,7 @@ class _ProfileViewState extends State<ProfileView> {
       children: [
         Expanded(
             child: SingleChildScrollView(
-          padding: EdgeInsets.all(18),
+          padding: const EdgeInsets.all(18),
           child: Column(
             children: [
               CircleAvatar(
@@ -40,27 +39,27 @@ class _ProfileViewState extends State<ProfileView> {
               ),
               Text(
                 FirebaseAuth.instance.currentUser?.displayName ?? "",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               Text(
                 FirebaseAuth.instance.currentUser?.email ?? '',
-                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17),
+                style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 17),
               ),
             ],
           ),
         )),
         Padding(
-          padding: EdgeInsets.all(18),
+          padding: const EdgeInsets.all(18),
           child: PrimaryButton(
             isLoading: false,
               label: "Logout",
               onPressed: () async {
                 try {
-                  final FirebaseAuth _auth = FirebaseAuth.instance;
-                  final GoogleSignIn _googleSignIn = GoogleSignIn();
+                  final FirebaseAuth auth = FirebaseAuth.instance;
+                  final GoogleSignIn googleSignIn = GoogleSignIn();
 
-                  await _auth.signOut();
-                  await _googleSignIn.signOut();
+                  await auth.signOut();
+                  await googleSignIn.signOut();
 
                   final prefs = await SharedPreferences.getInstance();
                   //clears everything in sharedprefs
@@ -68,7 +67,7 @@ class _ProfileViewState extends State<ProfileView> {
 
                   // ignore: use_build_context_synchronously
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (ctx) => SigninPage()));
+                      MaterialPageRoute(builder: (ctx) => const SigninPage()));
                 } catch (_) {
                   Fluttertoast.showToast(msg: 'Error Signing out');
                 }
