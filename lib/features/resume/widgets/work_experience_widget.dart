@@ -51,7 +51,6 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
             ),
           ],
         ),
-       
         ListView.separated(
           shrinkWrap: true,
           primary: false,
@@ -121,7 +120,7 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                                             color: Colors.grey, fontSize: 10),
                                       ),
                                       Text(workExp.startDate != ""
-                                          ? (workExp.startDate )
+                                          ? (workExp.startDate)
                                           : 'Select Date'),
                                     ],
                                   ),
@@ -185,7 +184,8 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                                     MainAxisAlignment.spaceBetween,
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  const Flexible(child: Text('Currently Working')),
+                                  const Flexible(
+                                      child: Text('Currently Working')),
                                   Checkbox(
                                     value: workExp.isCurrentlyWorking,
                                     onChanged: (value) {
@@ -261,8 +261,7 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                                     color: Colors.red,
                                   ),
                                   if (resIndex ==
-                                      (workExp.jobResponsibilities.length) -
-                                          1)
+                                      (workExp.jobResponsibilities.length) - 1)
                                     IconButton(
                                       tooltip: 'Add Responsibility',
                                       onPressed: () {
@@ -311,7 +310,6 @@ class _WorkExperienceWidgetState<T> extends State<WorkExperienceWidget> {
                 ),
               ],
             );
-          
           },
         ),
       ],

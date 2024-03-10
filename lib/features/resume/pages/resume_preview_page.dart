@@ -144,6 +144,7 @@ Future<Uint8List> generateResume(format, ResumeModel resume) async {
 class BulletPoint extends pw.StatelessWidget {
   final String item;
   pw.Font font;
+  
 
   BulletPoint({required this.item, required this.font});
 
