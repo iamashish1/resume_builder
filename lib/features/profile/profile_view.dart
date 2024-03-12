@@ -66,8 +66,8 @@ class _ProfileViewState extends State<ProfileView> {
                   await prefs.clear();
 
                   // ignore: use_build_context_synchronously
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (ctx) => const SigninPage()));
+                  // Navigator.of(context).pushReplacement(
+                  //     MaterialPageRoute(builder: (ctx) => const SigninPage()));
                 } catch (_) {
                   Fluttertoast.showToast(msg: 'Error Signing out');
                 }

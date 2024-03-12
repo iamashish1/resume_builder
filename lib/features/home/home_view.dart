@@ -100,40 +100,9 @@ class _HomeViewState extends State<HomeView> {
   }
 
   bool isLoading = true;
-  // BannerAd? _bannerAd;
-
-  // /// Loads a banner ad.
-  // void _loadAd() {
-  //   final bannerAd = BannerAd(
-  //     size: AdSize.banner,
-  //     adUnitId: 'ca-app-pub-3940256099942544/9214589741',
-  //     request: const AdRequest(),
-  //     listener: BannerAdListener(
-  //       // Called when an ad is successfully received.
-  //       onAdLoaded: (ad) {
-  //         if (!mounted) {
-  //           ad.dispose();
-  //           return;
-  //         }
-  //         setState(() {
-  //           _bannerAd = ad as BannerAd;
-  //         });
-  //       },
-  //       // Called when an ad request failed.
-  //       onAdFailedToLoad: (ad, error) {
-  //         debugPrint('BannerAd failed to load: $error');
-  //         ad.dispose();
-  //       },
-  //     ),
-  //   );
-
-  //   // Start loading.
-  //   bannerAd.load();
-  // }
 
   @override
   void initState() {
-    // _loadAd();
     widget.isHome == true ? getImageUrls() : getLikedTemplates();
     super.initState();
   }
@@ -184,6 +153,7 @@ class _HomeViewState extends State<HomeView> {
                                   borderRadius: BorderRadius.circular(12),
                                   child: Image.network(
                                     templates[index].url,
+                                    errorBuilder: (context, error, stackTrace) => const SizedBox(),
                                   ),
                                 ),
                               ),

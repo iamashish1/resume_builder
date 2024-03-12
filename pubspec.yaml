@@ -42,7 +42,6 @@ dependencies:
   line_icons: ^2.0.3
   pdf: ^3.6.0
   path_provider: ^2.1.2
-  open_file_plus: ^3.4.1
   # printing: ^5.11.1
   printing:
     git:
@@ -67,6 +66,7 @@ dependencies:
   freezed_annotation: ^2.4.1
   google_mobile_ads: 
   flutter_dotenv: ^5.1.0
+  open_file_plus: ^3.4.1
 
 dev_dependencies:
   flutter_test:
@@ -79,13 +79,6 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   build_runner: ^2.4.8
-
-flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/launcher.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

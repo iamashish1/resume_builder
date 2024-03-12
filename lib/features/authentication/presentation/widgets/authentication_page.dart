@@ -120,7 +120,8 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               ],
               title: Text(
                 isSignInpage ? 'Login' : 'Sign up',
-                style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+                style:
+                    const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
               )),
           body: Form(
             key: _formKey,
@@ -232,14 +233,6 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                         final pref = await SharedPreferences.getInstance();
 
                         pref.setString("user", user.toString());
-
-                        //END SHAREDPREFS
-                        if (mounted) {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Homepage()));
-                        }
                       } catch (_) {
                         Fluttertoast.showToast(msg: "Something went wrong!");
                       }

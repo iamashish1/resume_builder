@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file_plus/open_file_plus.dart';
@@ -111,8 +112,12 @@ class _DownloadedPDFsPageState extends State<DownloadedPDFsPage> {
                   ],
                 ),
                 onTap: () async {
-                  // final file = File("pdfFiles[index].path");
-                  await OpenFile.open(pdfFiles[index].path);
+                  final res =
+                      await OpenFile.open(pdfFiles[index].path );
+                      debugPrint(res.type.toString()+'LADO');
+                  if (res.type == ResultType.fileNotFound) {
+                    Fluttertoast.showToast(msg: 'File Not Found');
+                  }
 
                   // Open the PDF file using your preferred PDF viewer
                   // You can use a package like 'flutter_pdfview' for this purpose

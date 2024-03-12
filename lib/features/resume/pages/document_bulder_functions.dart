@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:resume_builder/features/home/template_model/template_model.dart';
@@ -152,6 +151,8 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
         ],
       ),
     );
+  
+  
   } else if (resume.id == 2) {
     final ByteData phoneData =
         await rootBundle.load('assets/icons/phone-call.png');
@@ -730,7 +731,7 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
     );
   } else if (resume.id == 5) {
     doc.addPage(
-      pw.MultiPage(
+      pw.Page(
         margin: pw.EdgeInsets.zero,
         theme: pw.ThemeData(
           defaultTextStyle: pw.TextStyle(
@@ -740,150 +741,225 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
             fontSize: 12,
           ),
         ),
-        build: (pw.Context context) => [
-          pw.Column(
-            children: [
-              pw.Row(
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    pw.Container(
-                        margin: const pw.EdgeInsets.all(8),
-                        height: 825,
-                        width: 200,
-                        color: PdfColor.fromHex("#323B4C"),
-                        child: pw.Padding(
-                            padding: const pw.EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 20),
-                            child: pw.Column(
-                                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                                children: [
-                                  pw.Column(
+        build: (pw.Context context) => 
+          pw.Row(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Container(
+                    margin: const pw.EdgeInsets.all(8),
+                    width: 200,
+                    color: PdfColor.fromHex("#323B4C"),
+                    child: pw.Padding(
+                        padding: const pw.EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 20),
+                        child: pw.Column(
+                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                            children: [
+                              pw.Column(
+                                  crossAxisAlignment:
+                                      pw.CrossAxisAlignment.start,
+                                  children: [
+                                    pw.Text("Contact".toUpperCase(),
+                                        style: pw.TextStyle(
+                                            color: PdfColors.white,
+                                            fontWeight: pw.FontWeight.bold,
+                                            fontSize: 16,
+                                            letterSpacing: 2)),
+                                    pw.Divider(
+                                        color: PdfColor.fromHex("#ffffff"),
+                                        thickness: 3),
+                                    pw.SizedBox(height: 15),
+                                    pw.Column(
                                       crossAxisAlignment:
                                           pw.CrossAxisAlignment.start,
                                       children: [
-                                        pw.Text("Contact".toUpperCase(),
+                                        pw.Text('Phone',
                                             style: pw.TextStyle(
+                                              fontSize: 13,
+                                              color: PdfColors.white,
+                                              fontWeight:
+                                                  pw.FontWeight.bold,
+                                            )),
+                                        pw.SizedBox(width: 2),
+                                        pw.Text(resume.profile.phoneNumber,
+                                            style: pw.TextStyle(
+                                                color: PdfColors.white))
+                                      ],
+                                    ),
+                                    pw.SizedBox(height: 10),
+                                    pw.Column(
+                                      crossAxisAlignment:
+                                          pw.CrossAxisAlignment.start,
+                                      children: [
+                                        pw.Text('Email',
+                                            style: pw.TextStyle(
+                                              fontSize: 13,
+                                              color: PdfColors.white,
+                                              fontWeight:
+                                                  pw.FontWeight.bold,
+                                            )),
+                                        pw.SizedBox(width: 2),
+                                        pw.Text(resume.profile.email,
+                                            style: pw.TextStyle(
+                                                color: PdfColors.white))
+                                      ],
+                                    ),
+                                    pw.SizedBox(height: 10),
+                                    pw.Column(
+                                      crossAxisAlignment:
+                                          pw.CrossAxisAlignment.start,
+                                      children: [
+                                        pw.Text('Your Site',
+                                            style: pw.TextStyle(
+                                              fontSize: 13,
+                                              color: PdfColors.white,
+                                              fontWeight:
+                                                  pw.FontWeight.bold,
+                                            )),
+                                        pw.SizedBox(width: 2),
+                                        pw.Text(
+                                            resume
+                                                .profile.yourPortfolioSite,
+                                            style: pw.TextStyle(
+                                                color: PdfColors.white))
+                                      ],
+                                    ),
+                                  ]),
+                              pw.SizedBox(height: 15),
+                              pw.Text("Education".toUpperCase(),
+                                  style: pw.TextStyle(
+                                      color: PdfColors.white,
+                                      fontWeight: pw.FontWeight.bold,
+                                      fontSize: 16,
+                                      letterSpacing: 2)),
+                              pw.Divider(
+                                  color: PdfColor.fromHex("#ffffff"),
+                                  thickness: 3),
+                              pw.SizedBox(height: 15),
+                              ...resume.education.map((e) {
+                                return pw.Column(
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.Text(e.university,
+                                          style: pw.TextStyle(
+                                            fontSize: 13,
+                                            color: PdfColors.white,
+                                            fontWeight: pw.FontWeight.bold,
+                                          )),
+                                      pw.SizedBox(height: 10),
+                                      pw.Text(
+                                          "${e.startDate} - ${e.endDate}",
+                                          style: pw.TextStyle(
+                                              fontSize: 10,
+                                              font: ttfRegular,
+                                              letterSpacing: 0.5,
+                                              color: PdfColors.white,
+                                              wordSpacing: 2,
+                                              lineSpacing: 5)),
+                                      pw.SizedBox(height: 10),
+                                      pw.Text(e.studyCourse,
+                                          style: pw.TextStyle(
+                                              fontSize: 10,
+                                              font: ttfRegular,
+                                              color: PdfColors.white,
+                                              letterSpacing: 0.5,
+                                              wordSpacing: 2,
+                                              lineSpacing: 5)),
+                                    ]);
+                              }).toList(),
+                              pw.SizedBox(height: 15),
+                              pw.Text("Skills".toUpperCase(),
+                                  style: pw.TextStyle(
+                                      color: PdfColors.white,
+                                      fontWeight: pw.FontWeight.bold,
+                                      fontSize: 16,
+                                      letterSpacing: 2)),
+                              pw.Divider(
+                                  color: PdfColor.fromHex("#ffffff"),
+                                  thickness: 3),
+                              pw.SizedBox(height: 15),
+                              pw.SizedBox(height: 6),
+                              ...resume.skills.map((e) {
+                                return pw.Row(
+                                  crossAxisAlignment:
+                                      pw.CrossAxisAlignment.start,
+                                  children: [
+                                    pw.Padding(
+                                      padding: const pw.EdgeInsets.only(
+                                          top: 4.0, right: 5.0),
+                                      child: pw.Container(
+                                        height: 4,
+                                        width: 4,
+                                        decoration: pw.BoxDecoration(
+                                          color:
+                                              PdfColor.fromHex("#ffffff"),
+                                          shape: pw.BoxShape.circle,
+                                        ),
+                                      ),
+                                    ),
+                                    pw.Expanded(
+                                        child: pw.Text(e,
+                                            style: pw.TextStyle(
+                                                fontSize: 10,
+                                                font: ttfRegular,
                                                 color: PdfColors.white,
-                                                fontWeight: pw.FontWeight.bold,
-                                                fontSize: 16,
-                                                letterSpacing: 2)),
-                                        pw.Divider(
-                                            color: PdfColor.fromHex("#ffffff"),
-                                            thickness: 3),
-                                        pw.SizedBox(height: 15),
-                                        pw.Column(
-                                          crossAxisAlignment:
-                                              pw.CrossAxisAlignment.start,
-                                          children: [
-                                            pw.Text('Phone',
-                                                style: pw.TextStyle(
-                                                  fontSize: 13,
-                                                  color: PdfColors.white,
-                                                  fontWeight:
-                                                      pw.FontWeight.bold,
-                                                )),
-                                            pw.SizedBox(width: 2),
-                                            pw.Text(resume.profile.phoneNumber,
-                                                style: pw.TextStyle(
-                                                    color: PdfColors.white))
-                                          ],
-                                        ),
-                                        pw.SizedBox(height: 10),
-                                        pw.Column(
-                                          crossAxisAlignment:
-                                              pw.CrossAxisAlignment.start,
-                                          children: [
-                                            pw.Text('Email',
-                                                style: pw.TextStyle(
-                                                  fontSize: 13,
-                                                  color: PdfColors.white,
-                                                  fontWeight:
-                                                      pw.FontWeight.bold,
-                                                )),
-                                            pw.SizedBox(width: 2),
-                                            pw.Text(resume.profile.email,
-                                                style: pw.TextStyle(
-                                                    color: PdfColors.white))
-                                          ],
-                                        ),
-                                        pw.SizedBox(height: 10),
-                                        pw.Column(
-                                          crossAxisAlignment:
-                                              pw.CrossAxisAlignment.start,
-                                          children: [
-                                            pw.Text('Your Site',
-                                                style: pw.TextStyle(
-                                                  fontSize: 13,
-                                                  color: PdfColors.white,
-                                                  fontWeight:
-                                                      pw.FontWeight.bold,
-                                                )),
-                                            pw.SizedBox(width: 2),
-                                            pw.Text(
-                                                resume
-                                                    .profile.yourPortfolioSite,
-                                                style: pw.TextStyle(
-                                                    color: PdfColors.white))
-                                          ],
-                                        ),
-                                      ]),
-                                  pw.SizedBox(height: 15),
-                                  pw.Text("Education".toUpperCase(),
-                                      style: pw.TextStyle(
-                                          color: PdfColors.white,
-                                          fontWeight: pw.FontWeight.bold,
-                                          fontSize: 16,
-                                          letterSpacing: 2)),
-                                  pw.Divider(
-                                      color: PdfColor.fromHex("#ffffff"),
-                                      thickness: 3),
-                                  pw.SizedBox(height: 15),
-                                  ...resume.education.map((e) {
-                                    return pw.Column(
-                                        crossAxisAlignment:
-                                            pw.CrossAxisAlignment.start,
-                                        children: [
-                                          pw.Text(e.university,
-                                              style: pw.TextStyle(
-                                                fontSize: 13,
-                                                color: PdfColors.white,
-                                                fontWeight: pw.FontWeight.bold,
-                                              )),
-                                          pw.SizedBox(height: 10),
-                                          pw.Text(
-                                              "${e.startDate} - ${e.endDate}",
-                                              style: pw.TextStyle(
-                                                  fontSize: 10,
-                                                  font: ttfRegular,
-                                                  letterSpacing: 0.5,
-                                                  color: PdfColors.white,
-                                                  wordSpacing: 2,
-                                                  lineSpacing: 5)),
-                                          pw.SizedBox(height: 10),
-                                          pw.Text(e.studyCourse,
-                                              style: pw.TextStyle(
-                                                  fontSize: 10,
-                                                  font: ttfRegular,
-                                                  color: PdfColors.white,
-                                                  letterSpacing: 0.5,
-                                                  wordSpacing: 2,
-                                                  lineSpacing: 5)),
-                                        ]);
-                                  }).toList(),
-                                  pw.SizedBox(height: 15),
-                                  pw.Text("Skills".toUpperCase(),
-                                      style: pw.TextStyle(
-                                          color: PdfColors.white,
-                                          fontWeight: pw.FontWeight.bold,
-                                          fontSize: 16,
-                                          letterSpacing: 2)),
-                                  pw.Divider(
-                                      color: PdfColor.fromHex("#ffffff"),
-                                      thickness: 3),
-                                  pw.SizedBox(height: 15),
-                                  pw.SizedBox(height: 6),
-                                  ...resume.skills.map((e) {
-                                    return pw.Row(
+                                                letterSpacing: 0.5,
+                                                wordSpacing: 2,
+                                                lineSpacing: 5))),
+                                  ],
+                                );
+                              }).toList()
+                            ]))),
+          
+                //RIGHT SIDE
+          pw.Padding(padding: const pw.EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                          
+                          child:  pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                
+                  children: [
+                    pw.Text(resume.profile.name.toUpperCase(),
+                        textScaleFactor: 2,
+                        textAlign: pw.TextAlign.start,
+                        style: pw.TextStyle(
+                          color: PdfColor.fromHex("#062A6D"),
+                            fontWeight: pw.FontWeight.bold,
+                            letterSpacing: 6)),
+                    pw.SizedBox(height: 10),
+                    pw.Text(resume.profile.title,
+                        textScaleFactor: 1.2,
+                        style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.bold,
+                            letterSpacing: 3)),
+                    pw.SizedBox(height: 20),
+                    BodyText(
+                        resume.profile.profileSummary, ttfRegular),
+                    pw.SizedBox(height: 20),
+                    GreyHeading("Work Experience"),
+                    pw.SizedBox(height: 10),
+                    ...resume.workExperience.map((e) {
+                      return pw.Column(
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          children: [
+                            pw.SizedBox(height: 4),
+                            pw.Text(e.designation.toUpperCase(),
+                                style: pw.TextStyle(
+                                    font: ttfRegular, fontSize: 10)),
+                            pw.SizedBox(height: 7),
+                            pw.Text(e.companyName,
+                                style: pw.TextStyle(
+                                    letterSpacing: 2,
+                                    fontWeight: pw.FontWeight.bold,
+                                    fontSize: 10)),
+                            pw.SizedBox(height: 10),
+                            pw.Text('${e.startDate} - ${e.endDate}'),
+                            ...e.jobResponsibilities.map((item) {
+                              return pw.Padding(
+                                  padding: const pw.EdgeInsets.symmetric(
+                                      vertical: 3.0),
+                                  child: pw.Row(
                                       crossAxisAlignment:
                                           pw.CrossAxisAlignment.start,
                                       children: [
@@ -893,109 +969,29 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
                                           child: pw.Container(
                                             height: 4,
                                             width: 4,
-                                            decoration: pw.BoxDecoration(
-                                              color:
-                                                  PdfColor.fromHex("#ffffff"),
+                                            decoration:
+                                                const pw.BoxDecoration(
+                                              color: PdfColor.fromInt(
+                                                  0x000000),
                                               shape: pw.BoxShape.circle,
                                             ),
                                           ),
                                         ),
-                                        pw.Expanded(
-                                            child: pw.Text(e,
-                                                style: pw.TextStyle(
-                                                    fontSize: 10,
-                                                    font: ttfRegular,
-                                                    color: PdfColors.white,
-                                                    letterSpacing: 0.5,
-                                                    wordSpacing: 2,
-                                                    lineSpacing: 5))),
-                                      ],
-                                    );
-                                  }).toList()
-                                ]))),
-
-                    //RIGHT SIDE
-pw.Padding(padding: const pw.EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                              
-                              child:  pw.Column(
-                      crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    
-                      children: [
-                        pw.Text(resume.profile.name.toUpperCase(),
-                            textScaleFactor: 2,
-                            textAlign: pw.TextAlign.start,
-                            style: pw.TextStyle(
-                              color: PdfColor.fromHex("#062A6D"),
-                                fontWeight: pw.FontWeight.bold,
-                                letterSpacing: 6)),
-                        pw.SizedBox(height: 10),
-                        pw.Text(resume.profile.title,
-                            textScaleFactor: 1.2,
-                            style: pw.TextStyle(
-                                fontWeight: pw.FontWeight.bold,
-                                letterSpacing: 3)),
-                        pw.SizedBox(height: 20),
-                        BodyText(
-                            resume.profile.profileSummary, ttfRegular),
-                        pw.SizedBox(height: 20),
-                        GreyHeading("Work Experience"),
-                        pw.SizedBox(height: 10),
-                        ...resume.workExperience.map((e) {
-                          return pw.Column(
-                              crossAxisAlignment: pw.CrossAxisAlignment.start,
-                              children: [
-                                pw.SizedBox(height: 4),
-                                pw.Text(e.designation.toUpperCase(),
-                                    style: pw.TextStyle(
-                                        font: ttfRegular, fontSize: 10)),
-                                pw.SizedBox(height: 7),
-                                pw.Text(e.companyName,
-                                    style: pw.TextStyle(
-                                        letterSpacing: 2,
-                                        fontWeight: pw.FontWeight.bold,
-                                        fontSize: 10)),
-                                pw.SizedBox(height: 10),
-                                pw.Text('${e.startDate} - ${e.endDate}'),
-                                ...e.jobResponsibilities.map((item) {
-                                  return pw.Padding(
-                                      padding: const pw.EdgeInsets.symmetric(
-                                          vertical: 3.0),
-                                      child: pw.Row(
-                                          crossAxisAlignment:
-                                              pw.CrossAxisAlignment.start,
-                                          children: [
-                                            pw.Padding(
-                                              padding: const pw.EdgeInsets.only(
-                                                  top: 4.0, right: 5.0),
-                                              child: pw.Container(
-                                                height: 4,
-                                                width: 4,
-                                                decoration:
-                                                    const pw.BoxDecoration(
-                                                  color: PdfColor.fromInt(
-                                                      0x000000),
-                                                  shape: pw.BoxShape.circle,
-                                                ),
-                                              ),
-                                            ),
-                                            BodyText(item, ttfRegular),
-                                          ]));
-
-                                  // child: BulletPoint(item: item, font: ttfLight),
-                                }).toList(),
-                                pw.SizedBox(height: 10)
-                              ]);
-                        }).toList()
-                      ],
-                    )
-                 )
-                   
-                 
-                  ]),
-            ],
-          )
-        ],
+                                        BodyText(item, ttfRegular),
+                                      ]));
+          
+                              // child: BulletPoint(item: item, font: ttfLight),
+                            }).toList(),
+                            pw.SizedBox(height: 10)
+                          ]);
+                    }).toList()
+                  ],
+                )
+             )
+               
+             
+              ])
+        
       ),
     );
   }

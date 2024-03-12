@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-    unawaited(MobileAds.instance.initialize());
+  unawaited(MobileAds.instance.initialize());
   // Load environment variables from .env file
   await dotenv.load();
 
@@ -44,7 +45,33 @@ class MyApp extends StatelessWidget {
       title: '',
       debugShowCheckedModeBanner: false,
       theme: CustomTheme.lightTheme,
-      home: (user != null) ? const Homepage() : const SigninPage(),
+      home: const AuthWidget(),
+    );
+  }
+}
+
+class AuthWidget extends StatelessWidget {
+  final String? user;
+  const AuthWidget({super.key, this.user});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting &&
+            (user == null || user == "")) {
+          // Show a loading indicator while checking the authentication state
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasData && snapshot.data != null ||
+            (user != null && user != "")) {
+          // User is authenticated, navigate to the home screen
+          return const Homepage();
+        } else {
+          // User is not authenticated, show the login page
+          return const SigninPage();
+        }
+      },
     );
   }
 }
