@@ -12,8 +12,6 @@ import 'package:resume_builder/features/authentication/data/repository/authentic
 import 'package:resume_builder/features/authentication/domain/usecases/sign_in_cubit.dart';
 import 'package:resume_builder/features/authentication/presentation/bloc/cubit/sign_in_cubit.dart';
 import 'package:resume_builder/features/authentication/presentation/pages/signin_page.dart';
-import 'package:resume_builder/features/authentication/presentation/widgets/authentication_page.dart';
-import 'package:resume_builder/features/home/home_view.dart';
 import 'package:resume_builder/features/home/homepage.dart';
 import 'package:resume_builder/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,8 +21,11 @@ void main() async {
   unawaited(MobileAds.instance.initialize());
   // Load environment variables from .env file
   await dotenv.load();
-
+//Initialize firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  //GET FROM SHAREDPREFS
+  final prefs = await SharedPreferences.getInstance();
+  final savedUser = prefs.getString("user");
 
   runApp(StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
@@ -32,7 +33,8 @@ void main() async {
         UserStatus status =
             (snapshot.connectionState == ConnectionState.waiting)
                 ? UserStatus.loading
-                : (snapshot.hasData && snapshot.data != null)
+                : ((snapshot.hasData && snapshot.data != null) ||
+                        (savedUser != null && savedUser != ""))
                     ? UserStatus.auth
                     : UserStatus.unauth;
         return BlocProvider<SignInCubit>(
@@ -69,6 +71,5 @@ class MyApp extends StatelessWidget {
         }));
   }
 }
-
 
 enum UserStatus { auth, unauth, loading }
