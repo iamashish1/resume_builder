@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -49,26 +52,32 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Future<void> getImageUrls() async {
-    QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
-        .instance
-        .collection('Template')
-        .orderBy('id')
-        .get();
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+          .instance
+          .collection('Template')
+          .orderBy('id')
+          .get();
 
-    for (var doc in snapshot.docs) {
-      var data = doc.data();
-      FirebaseTemplateModel template = FirebaseTemplateModel(
-        id: data['id'] ?? 0,
-        likedBy: List.from(data['likedBy'] ?? []),
-        url: data['url'] ?? "",
-        docId: doc.id,
-      );
-      templates.add(template);
-    }
-    if (mounted) {
-      setState(() {
-        isLoading = false;
-      });
+      for (var doc in snapshot.docs) {
+        var data = doc.data();
+        FirebaseTemplateModel template = FirebaseTemplateModel(
+          id: data['id'] ?? 0,
+          likedBy: List.from(data['likedBy'] ?? []),
+          url: data['url'] ?? "",
+          docId: doc.id,
+        );
+        templates.add(template);
+      }
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    } on SocketException catch (e) {
+      debugPrint(e.toString());
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 
@@ -151,9 +160,10 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
-                                  child: Image.network(
-                                    templates[index].url,
-                                    errorBuilder: (context, error, stackTrace) => const SizedBox(),
+                                  child: CachedNetworkImage(
+                                    imageUrl: templates[index].url,
+                                    errorWidget: (context, error, stackTrace) =>
+                                        const Icon(Icons.image_sharp),
                                   ),
                                 ),
                               ),
@@ -210,21 +220,23 @@ class _HomeViewState extends State<HomeView> {
                                       backgroundColor:
                                           MaterialStateProperty.all(
                                               Colors.blueGrey),
-                                      side: MaterialStateProperty.all(const BorderSide(
-                                          color: Colors
-                                              .grey)), // Set the color of the outline
+                                      side: MaterialStateProperty.all(
+                                          const BorderSide(
+                                              color: Colors
+                                                  .grey)), // Set the color of the outline
                                     ),
                                     onPressed: (selectedImageIndex == index)
                                         ? () {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(
                                                     builder: (context) =>
                                                         FormPage(
                                                           id: templates[index]
                                                               .id,
-                                                        ))).then((value) {
-                                                          showInterstitialAd();
-                                                        });
+                                                        )))
+                                                .then((value) {
+                                              showInterstitialAd();
+                                            });
                                           }
                                         : null,
                                     child: const Text(
@@ -247,7 +259,6 @@ class _HomeViewState extends State<HomeView> {
             },
           ),
         ),
-
       ],
     );
   }

@@ -16,7 +16,6 @@ import 'package:resume_builder/features/authentication/presentation/bloc/cubit/s
 import 'package:resume_builder/features/authentication/presentation/pages/forgot_password_page.dart';
 import 'package:resume_builder/features/authentication/presentation/pages/signin_page.dart';
 import 'package:resume_builder/features/authentication/presentation/pages/signup_page.dart';
-import 'package:resume_builder/features/home/homepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationPage extends StatefulWidget {

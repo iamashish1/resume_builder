@@ -39,11 +39,13 @@ class _ProfileViewState extends State<ProfileView> {
               ),
               Text(
                 FirebaseAuth.instance.currentUser?.displayName ?? "",
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               Text(
                 FirebaseAuth.instance.currentUser?.email ?? '',
-                style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 17),
+                style:
+                    const TextStyle(fontWeight: FontWeight.w400, fontSize: 17),
               ),
             ],
           ),
@@ -51,7 +53,7 @@ class _ProfileViewState extends State<ProfileView> {
         Padding(
           padding: const EdgeInsets.all(18),
           child: PrimaryButton(
-            isLoading: false,
+              isLoading: false,
               label: "Logout",
               onPressed: () async {
                 try {
@@ -64,10 +66,6 @@ class _ProfileViewState extends State<ProfileView> {
                   final prefs = await SharedPreferences.getInstance();
                   //clears everything in sharedprefs
                   await prefs.clear();
-
-                  // ignore: use_build_context_synchronously
-                  // Navigator.of(context).pushReplacement(
-                  //     MaterialPageRoute(builder: (ctx) => const SigninPage()));
                 } catch (_) {
                   Fluttertoast.showToast(msg: 'Error Signing out');
                 }

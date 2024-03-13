@@ -67,6 +67,7 @@ dependencies:
   google_mobile_ads: 
   flutter_dotenv: ^5.1.0
   open_file_plus: ^3.4.1
+  cached_network_image: ^3.3.1
 
 dev_dependencies:
   flutter_test:

@@ -12,6 +12,8 @@ import 'package:resume_builder/features/authentication/data/repository/authentic
 import 'package:resume_builder/features/authentication/domain/usecases/sign_in_cubit.dart';
 import 'package:resume_builder/features/authentication/presentation/bloc/cubit/sign_in_cubit.dart';
 import 'package:resume_builder/features/authentication/presentation/pages/signin_page.dart';
+import 'package:resume_builder/features/authentication/presentation/widgets/authentication_page.dart';
+import 'package:resume_builder/features/home/home_view.dart';
 import 'package:resume_builder/features/home/homepage.dart';
 import 'package:resume_builder/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,55 +25,50 @@ void main() async {
   await dotenv.load();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  final prefs = await SharedPreferences.getInstance();
-  final user = prefs.getString("user");
-  runApp(BlocProvider<SignInCubit>(
-    create: (context) => SignInCubit(SignIn(AuthenticationRepositoryImpl(
-        remoteDataSource: RemoteDataSourceImpl()))),
-    child: MyApp(
-      user: user,
-    ),
-  ));
+
+  runApp(StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        UserStatus status =
+            (snapshot.connectionState == ConnectionState.waiting)
+                ? UserStatus.loading
+                : (snapshot.hasData && snapshot.data != null)
+                    ? UserStatus.auth
+                    : UserStatus.unauth;
+        return BlocProvider<SignInCubit>(
+          create: (context) => SignInCubit(SignIn(AuthenticationRepositoryImpl(
+              remoteDataSource: RemoteDataSourceImpl()))),
+          child: MyApp(
+            user: status,
+          ),
+        );
+      }));
 }
 
 class MyApp extends StatelessWidget {
-  final String? user;
-  const MyApp({super.key, this.user});
+  final UserStatus user;
+  const MyApp({super.key, required this.user});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '',
-      debugShowCheckedModeBanner: false,
-      theme: CustomTheme.lightTheme,
-      home: const AuthWidget(),
-    );
+        key: UniqueKey(),
+        title: '',
+        debugShowCheckedModeBanner: false,
+        theme: CustomTheme.lightTheme,
+        home: Builder(builder: (context) {
+          if (user == UserStatus.loading) {
+            return const CircularProgressIndicator();
+          } else if (user == UserStatus.auth) {
+            return const Homepage();
+          } else if (user == UserStatus.unauth) {
+            return const SigninPage();
+          } else {
+            return const Placeholder();
+          }
+        }));
   }
 }
 
-class AuthWidget extends StatelessWidget {
-  final String? user;
-  const AuthWidget({super.key, this.user});
 
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting &&
-            (user == null || user == "")) {
-          // Show a loading indicator while checking the authentication state
-          return const CircularProgressIndicator();
-        } else if (snapshot.hasData && snapshot.data != null ||
-            (user != null && user != "")) {
-          // User is authenticated, navigate to the home screen
-          return const Homepage();
-        } else {
-          // User is not authenticated, show the login page
-          return const SigninPage();
-        }
-      },
-    );
-  }
-}
+enum UserStatus { auth, unauth, loading }
