@@ -31,7 +31,6 @@ class _FormPageState extends State<FormPage> {
         id: widget.id,
         profile: Profile(),
         workExperience: [],
-        certifications: [],
         education: [],
         skills: []);
     super.initState();
@@ -342,13 +341,13 @@ class _FormPageState extends State<FormPage> {
                           isLoading: false,
                           label: "Generate Resume",
                           onPressed: () {
-                            if (_formKey.currentState?.validate() ?? false) {
+                            // if (_formKey.currentState?.validate() ?? false) {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) =>
                                       ResumePreview(resume: resume)));
 
-                              showInterstitialAd();
-                            }
+                              // showInterstitialAd();
+                            // }
                           }),
                     ],
                   ),

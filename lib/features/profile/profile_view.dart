@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -33,9 +34,9 @@ class _ProfileViewState extends State<ProfileView> {
             children: [
               CircleAvatar(
                 radius: MediaQuery.of(context).size.width / 4,
-                backgroundImage: NetworkImage(
-                    FirebaseAuth.instance.currentUser?.photoURL ??
-                        "https://www.w3schools.com/howto/img_avatar.png"),
+                backgroundImage: CachedNetworkImageProvider(
+                  FirebaseAuth.instance.currentUser?.photoURL ?? "",
+                ),
               ),
               Text(
                 FirebaseAuth.instance.currentUser?.displayName ?? "",

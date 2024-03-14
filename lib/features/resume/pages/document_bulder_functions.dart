@@ -95,7 +95,7 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
                 }).toList()
               ],
               if (resume.education.isNotEmpty ||
-                  resume.certifications.isNotEmpty ||
+                  
                   resume.skills.isNotEmpty)
                 pw.Divider(
                     height: 10,
@@ -123,14 +123,14 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
               pw.SizedBox(height: 20),
 
               //START OF CERTIFICATION SECTION
-              if (resume.certifications.isNotEmpty) ...[
-                Heading("Certifications"),
-                pw.SizedBox(height: 6),
-                ...resume.certifications.map((e) {
-                  return BulletPoint(item: e, font: ttfLight);
-                }).toList()
-              ],
-              if (resume.certifications.isNotEmpty) pw.SizedBox(height: 30),
+              // if (resume.certifications.isNotEmpty) ...[
+              //   Heading("Certifications"),
+              //   pw.SizedBox(height: 6),
+              //   ...resume.certifications.map((e) {
+              //     return BulletPoint(item: e, font: ttfLight);
+              //   }).toList()
+              // ],
+              // if (resume.certifications.isNotEmpty) pw.SizedBox(height: 30),
 
               //END OF CERTIFICATION SECTION
 
@@ -717,8 +717,7 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
                       pw.SizedBox(height: 10),
                     ],
                   ),
-                for (var certification in resume.certifications)
-                  pw.Text("• $certification"),
+               
                 pw.Divider(height: 30, thickness: 1, color: PdfColors.grey),
                 _CustomHeading("Skills"),
                 pw.SizedBox(height: 8),

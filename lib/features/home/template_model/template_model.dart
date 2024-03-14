@@ -56,7 +56,6 @@ class ResumeModel {
   Profile profile;
   List<WorkExperience> workExperience;
   List<Education> education;
-  List<String> certifications;
   List<String> skills;
 
   ResumeModel(
@@ -64,6 +63,5 @@ class ResumeModel {
       required this.profile,
       required this.workExperience,
       required this.education,
-      required this.certifications,
       required this.skills});
 }

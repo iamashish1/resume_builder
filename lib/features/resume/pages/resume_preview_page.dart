@@ -93,7 +93,62 @@ class _ResumePreviewState extends State<ResumePreview> {
 
   @override
   Widget build(BuildContext context) {
-    final myResume = widget.resume;
+    // final myResume = widget.resume;
+
+    ResumeModel myResume = ResumeModel(
+      id: 1,
+      profile: Profile(
+        title: "Software Engineer",
+        name: "John Doe",
+        position: "Software Engineer",
+        phoneNumber: "123-456-7890",
+        email: "john.doe@example.com",
+        yourPortfolioSite: "www.johndoeportfolio.com",
+        profileSummary:
+            "Experienced software engineer with a passion for developing innovative solutions.",
+      ),
+      workExperience: [
+        WorkExperience(
+          designation: "Senior Software Engineer",
+          companyName: "Tech Solutions Inc.",
+          startDate: "2018-01-01",
+          endDate: "2022-12-31",
+          jobResponsibilities: [
+            "Led a team of developers in the design and implementation of a new CRM system.",
+            "Improved application performance by optimizing database queries.",
+            "Collaborated with product managers to define project requirements and timelines.",
+          ],
+          isCurrentlyWorking: false,
+        ),
+        WorkExperience(
+          designation: "Software Engineer",
+          companyName: "Innovative Tech Co.",
+          startDate: "2015-05-01",
+          endDate: "2017-12-31",
+          jobResponsibilities: [
+            "Developed and maintained backend services for a large-scale e-commerce platform.",
+            "Participated in code reviews and provided constructive feedback to team members.",
+          ],
+          isCurrentlyWorking: false,
+        ),
+      ],
+      education: [
+        Education(
+          university: "University of Science and Technology",
+          startDate: "2011-09-01",
+          endDate: "2015-05-31",
+          studyCourse: "Bachelor of Science in Computer Science",
+          isCurrentlyStudying: false,
+        ),
+      ],
+      skills: [
+        "Communication Skills",
+        "Interpersonal Skills",
+        "Technical Skills",
+        "Problem-Solving Skills"
+      ],
+    );
+
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
@@ -144,7 +199,6 @@ Future<Uint8List> generateResume(format, ResumeModel resume) async {
 class BulletPoint extends pw.StatelessWidget {
   final String item;
   pw.Font font;
-  
 
   BulletPoint({required this.item, required this.font});
 
@@ -207,11 +261,10 @@ class GreyHeading extends pw.StatelessWidget {
   @override
   pw.Widget build(pw.Context context) {
     return pw.Container(
-
         padding: const pw.EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         decoration: pw.BoxDecoration(
-          borderRadius: pw.BorderRadius.circular(6),
-          color: PdfColor.fromHex("#F1F1ED")),
+            borderRadius: pw.BorderRadius.circular(6),
+            color: PdfColor.fromHex("#F1F1ED")),
         child: pw.Text(title.toUpperCase(),
             style: pw.TextStyle(
                 fontWeight: pw.FontWeight.bold,

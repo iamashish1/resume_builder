@@ -79,6 +79,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             hintText: 'Enter your portfolio site',
             focusNode: poNode,
             nextFocus: sNode,
+            validator: (value) {
+              return null;
+            },
             onChanged: widget.onChangedPortfolio),
         const Gap(10),
         PrimaryTextfield(
