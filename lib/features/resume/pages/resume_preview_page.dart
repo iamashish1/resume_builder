@@ -96,14 +96,14 @@ class _ResumePreviewState extends State<ResumePreview> {
     // final myResume = widget.resume;
 
     ResumeModel myResume = ResumeModel(
-      id: 1,
+      id: 5,
       profile: Profile(
         title: "Software Engineer",
         name: "John Doe",
         position: "Software Engineer",
         phoneNumber: "123-456-7890",
         email: "john.doe@example.com",
-        yourPortfolioSite: "www.johndoeportfolio.com",
+        yourPortfolioSite: "",
         profileSummary:
             "Experienced software engineer with a passion for developing innovative solutions.",
       ),
@@ -121,16 +121,30 @@ class _ResumePreviewState extends State<ResumePreview> {
           isCurrentlyWorking: false,
         ),
         WorkExperience(
-          designation: "Software Engineer",
-          companyName: "Innovative Tech Co.",
-          startDate: "2015-05-01",
-          endDate: "2017-12-31",
+          designation: "Senior Software Engineer",
+          companyName: "Tech Solutions Inc.",
+          startDate: "2018-01-01",
+          endDate: "2022-12-31",
           jobResponsibilities: [
-            "Developed and maintained backend services for a large-scale e-commerce platform.",
-            "Participated in code reviews and provided constructive feedback to team members.",
+            "Led a team of developers in the design and implementation of a new CRM system.",
+            "Improved application performance by optimizing database queries.",
+            "Collaborated with product managers to define project requirements and timelines.",
           ],
           isCurrentlyWorking: false,
         ),
+          WorkExperience(
+          designation: "Senior Software Engineer",
+          companyName: "Tech Solutions Inc.",
+          startDate: "2018-01-01",
+          endDate: "2022-12-31",
+          jobResponsibilities: [
+            "Led a team of developers in the design and implementation of a new CRM system.",
+            "Improved application performance by optimizing database queries.",
+            "Collaborated with product managers to define project requirements and timelines.",
+          ],
+          isCurrentlyWorking: false,
+        ),
+        
       ],
       education: [
         Education(
@@ -145,7 +159,7 @@ class _ResumePreviewState extends State<ResumePreview> {
         "Communication Skills",
         "Interpersonal Skills",
         "Technical Skills",
-        "Problem-Solving Skills"
+     
       ],
     );
 

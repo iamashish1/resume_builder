@@ -36,6 +36,9 @@ class _ProfileViewState extends State<ProfileView> {
                 radius: MediaQuery.of(context).size.width / 4,
                 backgroundImage: CachedNetworkImageProvider(
                   FirebaseAuth.instance.currentUser?.photoURL ?? "",
+                  errorListener: (p0) {
+                    debugPrint('');
+                  },
                 ),
               ),
               Text(
