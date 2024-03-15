@@ -17,8 +17,14 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
-     HomeView(key: UniqueKey(),isHome: true,),
-     HomeView(key: UniqueKey(),isHome: false,),
+    HomeView(
+      key: UniqueKey(),
+      isHome: true,
+    ),
+    HomeView(
+      key: UniqueKey(),
+      isHome: false,
+    ),
     const DownloadedPDFsPage(),
     const ProfileView()
   ];
@@ -94,47 +100,10 @@ class _HomepageState extends State<Homepage> {
               Icons.forest,
               color: AppColors.primaryGreen,
             ),
-            // Expanded(
-            //   child: Center(
-            //     child: Text(
-            //       'Homepage',
-            //       style: TextStyle(
-            //           fontSize: 16,
-            //           fontWeight: FontWeight.w800,
-            //           color: Colors.black),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
         centerTitle: true,
-        //  actions: [
-        //   Padding(
-        //     padding:
-        //         const EdgeInsets.symmetric(horizontal: 18.0, vertical: 5),
-        //     child: Column(
-        //       crossAxisAlignment: CrossAxisAlignment.start,
-        //       children: [
-        //         CircleAvatar(
-        //           radius: 15,
-        //           backgroundImage: NetworkImage(
-        //               'https://lh3.googleusercontent.com/a/ACg8ocKYGU6CTxn2ZW5cKYxDx6IhyhtIr_qw8HknjVSiRi5B8W0=s96-c'),
-        //         ),
-        //         Text(
-        //           'Ash Ish',
-        //           style: TextStyle(fontSize: 10),
-        //         ),
-        //       ],
-        //     ),
-        //   )
-        // ]
       ),
     );
   }
 }
-
-
-//HOme ma sabai designs dekhaune //create resume lai disable suruma //home bata click garexi enable gardine
-//Love ma favorite gareko dekhaune 
-//downloads ma downloaded
-//Recent dekhaune 3rd ma or your designs 

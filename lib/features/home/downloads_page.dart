@@ -114,15 +114,11 @@ class _DownloadedPDFsPageState extends State<DownloadedPDFsPage> {
                 onTap: () async {
                   final res =
                       await OpenFile.open(pdfFiles[index].path );
-                      debugPrint(res.type.toString()+'LADO');
                   if (res.type == ResultType.fileNotFound) {
                     Fluttertoast.showToast(msg: 'File Not Found');
                   }
 
-                  // Open the PDF file using your preferred PDF viewer
-                  // You can use a package like 'flutter_pdfview' for this purpose
-                  // Example: https://pub.dev/packages/flutter_pdfview
-                  // print('Opening PDF: ${pdfFiles[index].path}');
+
                 },
               );
             },

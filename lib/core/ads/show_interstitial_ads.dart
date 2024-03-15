@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -15,8 +14,7 @@ void showInterstitialAd() {
         );
         ad.show();
       },
-      onAdFailedToLoad: (LoadAdError error) {
-        debugPrint('InterstitialAd failed to load: $error');
+      onAdFailedToLoad: (_) {
       },
     ),
   );

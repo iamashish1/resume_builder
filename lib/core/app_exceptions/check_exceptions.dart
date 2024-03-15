@@ -4,7 +4,6 @@ import 'package:resume_builder/core/app_exceptions/app_exceptions.dart';
 class ExceptionHandler {
   static AppException handleException(exception) {
     if (exception is FirebaseAuthException) {
-      print(exception);
       switch (exception.code) {
          case 'weak-password':
           return AppException(

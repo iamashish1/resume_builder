@@ -37,12 +37,10 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
               ),
               pw.SizedBox(height: 20),
               pw.Container(
-                // color: PdfColor(1, 0, 0.3),
                 width: double.infinity,
                 child: pw.Wrap(
                   alignment: pw.WrapAlignment.center,
                   runAlignment: pw.WrapAlignment.center,
-                  // crossAxisAlignment: pw.CrossAxisAlignment.center,
                   children: <pw.Widget>[
                     pw.Text(resume.profile.phoneNumber),
                     pw.Text(" / "),
@@ -120,17 +118,7 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
               //END OF STUDY SECTION
               pw.SizedBox(height: 20),
 
-              //START OF CERTIFICATION SECTION
-              // if (resume.certifications.isNotEmpty) ...[
-              //   Heading("Certifications"),
-              //   pw.SizedBox(height: 6),
-              //   ...resume.certifications.map((e) {
-              //     return BulletPoint(item: e, font: ttfLight);
-              //   }).toList()
-              // ],
-              // if (resume.certifications.isNotEmpty) pw.SizedBox(height: 30),
 
-              //END OF CERTIFICATION SECTION
 
               //SKILLS SECTION START
 
@@ -983,7 +971,6 @@ Future<void> buildPdf(pw.Document doc, pw.Font ttfRegular, pw.Font ttfBold,
                                                pw.Flexible(child:  BodyText(item, ttfRegular),)
                                               ]));
 
-                                      // child: BulletPoint(item: item, font: ttfLight),
                                     }).toList(),
                                     pw.SizedBox(height: 10)
                                   ]);

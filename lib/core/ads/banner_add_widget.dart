@@ -73,7 +73,6 @@ class _MyBannerAdWidgetState extends State<MyBannerAdWidget> {
         },
         // Called when an ad request failed.
         onAdFailedToLoad: (ad, error) {
-          debugPrint('BannerAd failed to load: $error');
           ad.dispose();
         },
       ),

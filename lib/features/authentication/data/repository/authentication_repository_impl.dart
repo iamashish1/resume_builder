@@ -17,7 +17,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<Either<AppException, UserModel>> loginUser(
       LoginRequestModel params) async {
     try {
-      print('${params.isSignUp}IN REPO');
       final res = await remoteDataSource.loginUser(params);
       return Right(res);
     } catch (e) {

@@ -93,75 +93,7 @@ class _ResumePreviewState extends State<ResumePreview> {
 
   @override
   Widget build(BuildContext context) {
-    // final myResume = widget.resume;
-
-    ResumeModel myResume = ResumeModel(
-      id: 5,
-      profile: Profile(
-        title: "Software Engineer",
-        name: "John Doe",
-        position: "Software Engineer",
-        phoneNumber: "123-456-7890",
-        email: "john.doe@example.com",
-        yourPortfolioSite: "",
-        profileSummary:
-            "Experienced software engineer with a passion for developing innovative solutions.",
-      ),
-      workExperience: [
-        WorkExperience(
-          designation: "Senior Software Engineer",
-          companyName: "Tech Solutions Inc.",
-          startDate: "2018-01-01",
-          endDate: "2022-12-31",
-          jobResponsibilities: [
-            "Led a team of developers in the design and implementation of a new CRM system.",
-            "Improved application performance by optimizing database queries.",
-            "Collaborated with product managers to define project requirements and timelines.",
-          ],
-          isCurrentlyWorking: false,
-        ),
-        WorkExperience(
-          designation: "Senior Software Engineer",
-          companyName: "Tech Solutions Inc.",
-          startDate: "2018-01-01",
-          endDate: "2022-12-31",
-          jobResponsibilities: [
-            "Led a team of developers in the design and implementation of a new CRM system.",
-            "Improved application performance by optimizing database queries.",
-            "Collaborated with product managers to define project requirements and timelines.",
-          ],
-          isCurrentlyWorking: false,
-        ),
-          WorkExperience(
-          designation: "Senior Software Engineer",
-          companyName: "Tech Solutions Inc.",
-          startDate: "2018-01-01",
-          endDate: "2022-12-31",
-          jobResponsibilities: [
-            "Led a team of developers in the design and implementation of a new CRM system.",
-            "Improved application performance by optimizing database queries.",
-            "Collaborated with product managers to define project requirements and timelines.",
-          ],
-          isCurrentlyWorking: false,
-        ),
-        
-      ],
-      education: [
-        Education(
-          university: "University of Science and Technology",
-          startDate: "2011-09-01",
-          endDate: "2015-05-31",
-          studyCourse: "Bachelor of Science in Computer Science",
-          isCurrentlyStudying: false,
-        ),
-      ],
-      skills: [
-        "Communication Skills",
-        "Interpersonal Skills",
-        "Technical Skills",
-     
-      ],
-    );
+    final myResume = widget.resume;
 
     return Scaffold(
       appBar: AppBar(

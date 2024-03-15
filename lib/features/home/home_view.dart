@@ -74,10 +74,8 @@ class _HomeViewState extends State<HomeView> {
           isLoading = false;
         });
       }
-    } on SocketException catch (e) {
-      debugPrint(e.toString());
-    } catch (e) {
-      debugPrint(e.toString());
+    } on SocketException catch (_) {
+    } catch (_) {
     }
   }
 

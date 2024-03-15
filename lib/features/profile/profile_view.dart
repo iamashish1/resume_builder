@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:resume_builder/core/widgets/primary_button.dart';
-import 'package:resume_builder/features/authentication/presentation/pages/signin_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileView extends StatefulWidget {
@@ -17,13 +16,11 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(FirebaseAuth.instance.currentUser);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -36,8 +33,7 @@ class _ProfileViewState extends State<ProfileView> {
                 radius: MediaQuery.of(context).size.width / 4,
                 backgroundImage: CachedNetworkImageProvider(
                   FirebaseAuth.instance.currentUser?.photoURL ?? "",
-                  errorListener: (p0) {
-                    debugPrint('');
+                  errorListener: (_) {
                   },
                 ),
               ),
